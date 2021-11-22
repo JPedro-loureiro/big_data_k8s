@@ -28,9 +28,6 @@ resource "kubernetes_manifest" "big_data_on_k8s_project" {
     metadata = {
       name = "big-data-on-k8s"
       namespace = "cicd"
-      # finalizers = [
-      #   "resources-finalizer.argocd.argoproj.io"
-      # ]
     }
 
     spec = {
@@ -68,9 +65,6 @@ resource "kubernetes_manifest" "app_test_application" {
     metadata = {
       name = "app-test"
       namespace = "cicd"
-      # finalizers = [
-      #   "resources-finalizer.argocd.argoproj.io"
-      # ]
     }
 
     spec = {
@@ -85,6 +79,58 @@ resource "kubernetes_manifest" "app_test_application" {
       destination = {
         server = "https://kubernetes.default.svc"
         namespace = "app-test"
+      }
+
+      syncPolicy = {
+        automated = {
+          prune = true
+          selfHeal = true
+          allowEmpty = false
+        }
+
+        syncOptions = [
+          "Validate=false",
+          "CreateNamespace=true",
+          "PrunePropagationPolicy=foreground",
+          "PruneLast=true"
+        ]
+
+        retry = {
+          limit = 5
+          backoff = {
+            duration = "5s"
+            factor = 2
+            maxDuration = "3m"
+          }
+        }
+      }
+    }
+  }
+}
+
+# Kafka application
+resource "kubernetes_manifest" "kafka_application" {
+  manifest = {
+    apiVersion = "argoproj.io/v1alpha1"
+    kind       = "Application"
+
+    metadata = {
+      name = "kafka"
+      namespace = "cicd"
+    }
+
+    spec = {
+      project = "big-data-on-k8s"
+
+      source = {
+        repoURL = "https://github.com/JPedro-loureiro/big_data_k8s"
+        targetRevision = "HEAD"
+        path = "kafka"
+      }
+
+      destination = {
+        server = "https://kubernetes.default.svc"
+        namespace = "ingestion"
       }
 
       syncPolicy = {
