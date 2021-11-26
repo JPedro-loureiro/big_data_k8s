@@ -217,7 +217,7 @@ resource "kubernetes_manifest" "kafka_cluster" {
 }
 
 # Kafka Topics
-resource "kubernetes_manifest" "kafka_cluste" {
+resource "kubernetes_manifest" "kafka_cluster" {
   manifest = {
     apiVersion = "argoproj.io/v1alpha1"
     kind       = "Application"
