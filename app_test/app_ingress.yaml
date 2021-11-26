@@ -11,7 +11,8 @@ spec:
   rules:
     - http:
         paths:
-          - path: /
-            backend:
-              serviceName: hello-kubernetes
-              servicePort: 80
+        - pathType: Prefix
+          path: /app-test
+          backend:
+            serviceName: hello-kubernetes
+            servicePort: 80
