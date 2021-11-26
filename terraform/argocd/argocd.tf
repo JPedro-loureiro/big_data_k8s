@@ -162,6 +162,10 @@ resource "kubernetes_manifest" "strimzi_operator" {
       }
     }
   }
+  
+  depends_on = [
+    kubernetes_manifest.big_data_on_k8s_project
+  ]
 }
 
 # Kafka Cluster
@@ -214,6 +218,10 @@ resource "kubernetes_manifest" "kafka_cluster" {
       }
     }
   }
+  
+  depends_on = [
+    kubernetes_manifest.strimzi_operator
+  ]
 }
 
 # Kafka Topics
@@ -266,4 +274,8 @@ resource "kubernetes_manifest" "kafka_topics" {
       }
     }
   }
+
+  depends_on = [
+    kubernetes_manifest.kafka_cluster
+  ]
 }
