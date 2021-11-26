@@ -9,7 +9,7 @@ spec:
     - http:
         paths:
         - pathType: Prefix
-          path: "/"
+          path: "/tt"
           backend:
             service:
               name: nginx
