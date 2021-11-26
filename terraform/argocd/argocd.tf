@@ -34,7 +34,8 @@ resource "kubernetes_manifest" "big_data_on_k8s_project" {
       description = "Big Data on k8s"
 
       sourceRepos = [
-        "https://github.com/JPedro-loureiro/big_data_k8s"
+        "https://github.com/JPedro-loureiro/big_data_k8s",
+        "https://strimzi.io/charts"
       ]
 
       destinations = [{
@@ -56,7 +57,7 @@ resource "kubernetes_manifest" "big_data_on_k8s_project" {
 
 #################### ArgoCD Applications ####################
 
-# App Test application
+# App Test
 resource "kubernetes_manifest" "app_test_application" {
   manifest = {
     apiVersion = "argoproj.io/v1alpha1"
@@ -100,7 +101,7 @@ resource "kubernetes_manifest" "app_test_application" {
           backoff = {
             duration = "5s"
             factor = 2
-            maxDuration = "3m"
+            maxDuration = "1m"
           }
         }
       }
@@ -108,14 +109,14 @@ resource "kubernetes_manifest" "app_test_application" {
   }
 }
 
-# Kafka application
-resource "kubernetes_manifest" "kafka_application" {
+# Strimzi Operator
+resource "kubernetes_manifest" "strimzi_operator" {
   manifest = {
     apiVersion = "argoproj.io/v1alpha1"
     kind       = "Application"
 
     metadata = {
-      name = "kafka"
+      name = "strimzi-kafka-operator"
       namespace = "cicd"
     }
 
@@ -123,9 +124,12 @@ resource "kubernetes_manifest" "kafka_application" {
       project = "big-data-on-k8s"
 
       source = {
-        repoURL = "https://github.com/JPedro-loureiro/big_data_k8s"
-        targetRevision = "HEAD"
-        path = "kafka"
+        repoURL = "https://strimzi.io/charts"
+        targetRevision = "0.26.0"
+        chart = "strimzi-kafka-operator"
+        helm = {
+          version = "v3"
+        }
       }
 
       destination = {
@@ -152,7 +156,111 @@ resource "kubernetes_manifest" "kafka_application" {
           backoff = {
             duration = "5s"
             factor = 2
-            maxDuration = "3m"
+            maxDuration = "1m"
+          }
+        }
+      }
+    }
+  }
+}
+
+# Kafka Cluster
+resource "kubernetes_manifest" "kafka_cluster" {
+  manifest = {
+    apiVersion = "argoproj.io/v1alpha1"
+    kind       = "Application"
+
+    metadata = {
+      name = "kafka-cluster"
+      namespace = "cicd"
+    }
+
+    spec = {
+      project = "big-data-on-k8s"
+
+      source = {
+        repoURL = "https://github.com/JPedro-loureiro/big_data_k8s"
+        targetRevision = "HEAD"
+        path = "kafka/kafka-cluster"
+      }
+
+      destination = {
+        server = "https://kubernetes.default.svc"
+        namespace = "ingestion"
+      }
+
+      syncPolicy = {
+        automated = {
+          prune = true
+          selfHeal = true
+          allowEmpty = false
+        }
+
+        syncOptions = [
+          "Validate=false",
+          "CreateNamespace=true",
+          "PrunePropagationPolicy=foreground",
+          "PruneLast=true"
+        ]
+
+        retry = {
+          limit = 5
+          backoff = {
+            duration = "5s"
+            factor = 2
+            maxDuration = "1m"
+          }
+        }
+      }
+    }
+  }
+}
+
+# Kafka Topics
+resource "kubernetes_manifest" "kafka_cluster" {
+  manifest = {
+    apiVersion = "argoproj.io/v1alpha1"
+    kind       = "Application"
+
+    metadata = {
+      name = "kafka-topics"
+      namespace = "cicd"
+    }
+
+    spec = {
+      project = "big-data-on-k8s"
+
+      source = {
+        repoURL = "https://github.com/JPedro-loureiro/big_data_k8s"
+        targetRevision = "HEAD"
+        path = "kafka/kafka-topics"
+      }
+
+      destination = {
+        server = "https://kubernetes.default.svc"
+        namespace = "ingestion"
+      }
+
+      syncPolicy = {
+        automated = {
+          prune = true
+          selfHeal = true
+          allowEmpty = false
+        }
+
+        syncOptions = [
+          "Validate=false",
+          "CreateNamespace=true",
+          "PrunePropagationPolicy=foreground",
+          "PruneLast=true"
+        ]
+
+        retry = {
+          limit = 5
+          backoff = {
+            duration = "5s"
+            factor = 2
+            maxDuration = "1m"
           }
         }
       }
