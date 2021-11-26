@@ -12,7 +12,7 @@ spec:
     - http:
         paths:
         - pathType: Prefix
-          path: /app-test
+          path: "/app-test"
           backend:
             serviceName: hello-kubernetes
             servicePort: 80
