@@ -23,7 +23,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   dns_prefix          = "${var.env}-aks-cluster"
-  # kubernetes_version  = var.k8s_version
+  kubernetes_version  = var.k8s_version
 
   default_node_pool {
     name       = "${var.env}master"
