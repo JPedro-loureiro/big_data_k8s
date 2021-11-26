@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-kubernetes
+  name: nginx
 spec:
   selector:
     matchLabels:
-      name: hello-kubernetes
+      name: nginx
   template:
     metadata:
       labels:
-        name: hello-kubernetes
+        name: nginx
     spec:
       containers:
         - name: app
-          image: paulbouwer/hello-kubernetes:1.8
+          image: nginx
           ports:
             - containerPort: 8080
