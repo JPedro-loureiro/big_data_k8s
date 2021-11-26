@@ -115,7 +115,7 @@ resource "kubernetes_manifest" "ingress_test_application" {
     kind       = "Application"
 
     metadata = {
-      name = "ingress_test"
+      name = "ingress-test"
       namespace = "cicd"
     }
 
@@ -125,7 +125,7 @@ resource "kubernetes_manifest" "ingress_test_application" {
       source = {
         repoURL = "https://github.com/JPedro-loureiro/big_data_k8s"
         targetRevision = "HEAD"
-        path = "ingress-test"
+        path = "ingress_test"
       }
 
       destination = {
