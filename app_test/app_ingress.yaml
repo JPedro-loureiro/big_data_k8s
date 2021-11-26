@@ -9,7 +9,7 @@ spec:
     - http:
         paths:
         - pathType: Prefix
-          path: "/sdfgsdfg"
+          path: "/"
           backend:
             service:
               name: hello-kubernetes
