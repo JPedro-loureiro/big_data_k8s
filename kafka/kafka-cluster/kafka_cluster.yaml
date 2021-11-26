@@ -1,7 +1,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
-  name: kafka-ingestion-cluster
+  name: kafka-cluster
 spec:
   kafka:
     version: 3.0.0
