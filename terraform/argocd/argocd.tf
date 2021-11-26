@@ -97,7 +97,7 @@ resource "kubernetes_manifest" "app_test_application" {
         ]
 
         retry = {
-          limit = 5
+          limit = 3
           backoff = {
             duration = "5s"
             factor = 2
@@ -152,7 +152,7 @@ resource "kubernetes_manifest" "strimzi_operator" {
         ]
 
         retry = {
-          limit = 5
+          limit = 3
           backoff = {
             duration = "5s"
             factor = 2
@@ -208,7 +208,7 @@ resource "kubernetes_manifest" "kafka_cluster" {
         ]
 
         retry = {
-          limit = 5
+          limit = 3
           backoff = {
             duration = "5s"
             factor = 2
@@ -264,7 +264,7 @@ resource "kubernetes_manifest" "kafka_topics" {
         ]
 
         retry = {
-          limit = 5
+          limit = 3
           backoff = {
             duration = "5s"
             factor = 2
