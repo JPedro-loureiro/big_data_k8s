@@ -6,7 +6,8 @@ metadata:
     kubernetes.io/ingress.class: addon-http-application-routing
 spec:
   rules:
-    - http:
+    - host: "nginx.com"
+      http:
         paths:
         - pathType: Prefix
           path: "/"
