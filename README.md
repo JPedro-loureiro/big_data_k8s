@@ -2,6 +2,6 @@
 [Intro]
 
 ## Roadmap:
-* TLS configuration: cert-manager with let's encrypt;
 * DNS: creating DNS with Terraform;
 * External ingress controller: nginx-ingress-controller;
+* TLS configuration: cert-manager with let's encrypt;
