@@ -40,7 +40,14 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   }
 }
 
-# # NODE POOLS
+# Get AKS cluster data
+data "azurerm_kubernetes_cluster" "aks_cluster" {
+  name                = azurerm_kubernetes_cluster.aks_cluster.name
+  resource_group_name = azurerm_kubernetes_cluster.aks_cluster.resource_group_name
+}
+
+#################### Node Pools ####################
+
 # resource "azurerm_kubernetes_cluster_node_pool" "memory_optimized" {
 #  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_cluster.id
 #  name                  = "${var.env}memopt"
@@ -48,11 +55,6 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
 #  vm_size               = "standard_d11_v2"
 # }
 
-# Get AKS cluster data
-data "azurerm_kubernetes_cluster" "aks_cluster" {
-  name                = azurerm_kubernetes_cluster.aks_cluster.name
-  resource_group_name = azurerm_kubernetes_cluster.aks_cluster.resource_group_name
-}
 #################### Public IP ####################
 
 resource "azurerm_public_ip" "aks_ingress_ip" {
@@ -88,11 +90,12 @@ resource "helm_release" "nginx_ingress_controller" {
     value = azurerm_public_ip.aks_ingress_ip.ip_address
   }
 
+  # To get de FQDN run:
+  # az network public-ip list --resource-group bigDataOnK8s-nodeResourceGroup --query "[?name=='aks-ingress-ip'].[dnsSettings.fqdn]" -o tsv
   set {
     name = "controller.service.annotations.\"service\\.beta\\.kubernetes\\.io/azure-dns-label-name\""
     value = "k8s-${var.env}"
   }
-# az network public-ip list --resource-group bigDataOnK8s-nodeResourceGroup --query "[?name=='aks-ingress-ip'].[dnsSettings.fqdn]" -o tsv
 }
 
 #################### ArgoCD ####################
