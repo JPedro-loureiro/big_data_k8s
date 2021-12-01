@@ -1,3 +1,5 @@
+#################### Azure Provider ####################
+
 terraform {
   required_providers {
     azurerm = {
@@ -50,15 +52,23 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
 #  vm_size               = "standard_d11_v2"
 # }
 
-#################### ArgoCD ####################
-
 # Get AKS cluster data
 data "azurerm_kubernetes_cluster" "aks_cluster" {
   name                = azurerm_kubernetes_cluster.aks_cluster.name
   resource_group_name = azurerm_kubernetes_cluster.aks_cluster.resource_group_name
 }
+#################### Public IP ####################
 
-# Config helm provider
+resource "azurerm_public_ip" "aks_ingress_ip" {
+  name = "aks-ingress-ip"
+  resource_group_name = azurerm_resource_group.rg.name
+  location = azurerm_resource_group.rg.location
+  allocation_method = "Static"
+  sku = "Standard"
+}
+
+#################### Helm Provider ####################
+
 provider "helm" {
   kubernetes {
     host                   = data.azurerm_kubernetes_cluster.aks_cluster.kube_config.0.host
@@ -68,7 +78,48 @@ provider "helm" {
   }
 }
 
-# ArgoCD Deploy
+#################### Nginx Ingress Controller ####################
+
+resource "helm_release" "nginx_ingress_controller" {
+  name = "nginx-ingress-controller"
+  namespace = "nginx-ingress-controller"
+  create_namespace = true
+  repository = "https://kubernetes.github.io/ingress-nginx"
+  chart = "ingress-nginx"
+
+  # set {
+  #   name = "controller.replicaCount"
+  #   value = 2
+  # }
+
+  # set {
+  #   name = "controller.nodeSelector.\"kubernetes\\.io/os\""
+  #   value = "linux"
+  # }
+
+  # set {
+  #   name = "controller.admissionWebhooks.patch.nodeSelector.\"kubernetes\\.io/os\""
+  #   value = "linux"
+  # }
+
+  # set {
+  #   name = "defaultBackend.nodeSelector.\"kubernetes\\.io/os\""
+  #   value = "linux"
+  # }
+
+  set {
+    name = "controller.service.loadBalancerIP"
+    value = azurerm_public_ip.aks_ingress_ip.ip_address
+  }
+
+  set {
+    name = "controller.service.annotations.\"service\\.beta\\.kubernetes\\.io/azure-dns-label-name\""
+    value = "k8s-${var.env}"
+  }
+}
+
+#################### ArgoCD ####################
+
 resource "helm_release" "argocd" {
   name             = "argocd"
   namespace        = "cicd"
