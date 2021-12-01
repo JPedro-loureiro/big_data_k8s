@@ -27,6 +27,8 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   dns_prefix          = "${var.env}-aks-cluster"
   kubernetes_version  = var.k8s_version
 
+  node_resource_group = "bigDataOnK8s-nodeResourceGroup"
+
   default_node_pool {
     name       = "${var.env}master"
     node_count = "1"
@@ -35,12 +37,6 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
 
   identity {
     type = "SystemAssigned"
-  }
-
-  addon_profile {
-    http_application_routing {
-      enabled = true
-    }
   }
 }
 
@@ -61,8 +57,8 @@ data "azurerm_kubernetes_cluster" "aks_cluster" {
 
 resource "azurerm_public_ip" "aks_ingress_ip" {
   name = "aks-ingress-ip"
-  resource_group_name = azurerm_resource_group.rg.name
-  location = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_kubernetes_cluster.aks_cluster.node_resource_group
+  location = var.region
   allocation_method = "Static"
   sku = "Standard"
 }
@@ -86,26 +82,6 @@ resource "helm_release" "nginx_ingress_controller" {
   create_namespace = true
   repository = "https://kubernetes.github.io/ingress-nginx"
   chart = "ingress-nginx"
-
-  # set {
-  #   name = "controller.replicaCount"
-  #   value = 2
-  # }
-
-  # set {
-  #   name = "controller.nodeSelector.\"kubernetes\\.io/os\""
-  #   value = "linux"
-  # }
-
-  # set {
-  #   name = "controller.admissionWebhooks.patch.nodeSelector.\"kubernetes\\.io/os\""
-  #   value = "linux"
-  # }
-
-  # set {
-  #   name = "defaultBackend.nodeSelector.\"kubernetes\\.io/os\""
-  #   value = "linux"
-  # }
 
   set {
     name = "controller.service.loadBalancerIP"
