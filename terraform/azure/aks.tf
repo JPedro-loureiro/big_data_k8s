@@ -92,6 +92,7 @@ resource "helm_release" "nginx_ingress_controller" {
     name = "controller.service.annotations.\"service\\.beta\\.kubernetes\\.io/azure-dns-label-name\""
     value = "k8s-${var.env}"
   }
+# az network public-ip list --resource-group bigDataOnK8s-nodeResourceGroup --query "[?name=='aks-ingress-ip'].[dnsSettings.fqdn]" -o tsv
 }
 
 #################### ArgoCD ####################

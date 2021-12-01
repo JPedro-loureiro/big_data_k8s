@@ -3,10 +3,11 @@ kind: Ingress
 metadata:
   name: hello-kubernetes
   annotations:
-    kubernetes.io/ingress.class: addon-http-application-routing
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
-    - http:
+    - host: "http://k8s-dev.eastus.cloudapp.azure.com/"
+      http:
         paths:
         - pathType: Prefix
           path: "/"
