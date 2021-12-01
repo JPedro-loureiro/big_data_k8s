@@ -6,7 +6,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-    - host: "http://k8s-dev.eastus.cloudapp.azure.com/"
+    - host: "k8s-dev.eastus.cloudapp.azure.com"
       http:
         paths:
         - pathType: Prefix
