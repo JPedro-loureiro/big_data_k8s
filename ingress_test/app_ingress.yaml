@@ -10,7 +10,7 @@ spec:
       http:
         paths:
         - pathType: Prefix
-          path: "/tt"
+          path: "/teste"
           backend:
             service:
               name: nginx
