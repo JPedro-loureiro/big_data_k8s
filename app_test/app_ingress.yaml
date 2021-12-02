@@ -10,7 +10,7 @@ spec:
     - http:
         paths:
         - pathType: Prefix
-          path: "/helloKubernetes"
+          path: "/hello"
           backend:
             service:
               name: hello-kubernetes
