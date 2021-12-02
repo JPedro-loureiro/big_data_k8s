@@ -9,7 +9,7 @@ spec:
     - http:
         paths:
         - pathType: Prefix
-          path: "/hello-world"
+          path: "/"
           backend:
             service:
               name: hello-world-service
