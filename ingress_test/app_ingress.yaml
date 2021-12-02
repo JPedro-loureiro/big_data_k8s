@@ -1,21 +1,3 @@
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: nginx
-#   annotations:
-#     kubernetes.io/ingress.class: nginx
-# spec:
-#   rules:
-#     - host: "k8s-dev.eastus.cloudapp.azure.com"
-#       http:
-#         paths:
-#         - pathType: Prefix
-#           path: "/teste"
-#           backend:
-#             service:
-#               name: nginx
-#               port:
-#                 number: 80
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -24,7 +6,8 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-    - http:
+    - host: "k8s-dev.eastus.cloudapp.azure.com"
+      http:
         paths:
         - pathType: Prefix
           path: "/nginx"
