@@ -109,6 +109,7 @@ resource "kubernetes_manifest" "app_test_application" {
   }
 }
 
+# Nginx test
 resource "kubernetes_manifest" "ingress_test_application" {
   manifest = {
     apiVersion = "argoproj.io/v1alpha1"
@@ -131,57 +132,6 @@ resource "kubernetes_manifest" "ingress_test_application" {
       destination = {
         server = "https://kubernetes.default.svc"
         namespace = "ingress-test"
-      }
-
-      syncPolicy = {
-        automated = {
-          prune = true
-          selfHeal = true
-          allowEmpty = false
-        }
-
-        syncOptions = [
-          "Validate=false",
-          "CreateNamespace=true",
-          "PrunePropagationPolicy=foreground",
-          "PruneLast=true"
-        ]
-
-        retry = {
-          limit = 3
-          backoff = {
-            duration = "5s"
-            factor = 2
-            maxDuration = "1m"
-          }
-        }
-      }
-    }
-  }
-}
-
-resource "kubernetes_manifest" "ingress_test_application_2" {
-  manifest = {
-    apiVersion = "argoproj.io/v1alpha1"
-    kind       = "Application"
-
-    metadata = {
-      name = "ingress-test-2"
-      namespace = "cicd"
-    }
-
-    spec = {
-      project = "big-data-on-k8s"
-
-      source = {
-        repoURL = "https://github.com/JPedro-loureiro/big_data_k8s"
-        targetRevision = "HEAD"
-        path = "ingress_test_2"
-      }
-
-      destination = {
-        server = "https://kubernetes.default.svc"
-        namespace = "ingress-test-2"
       }
 
       syncPolicy = {
