@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=2.48.0"
+    }
+  }
+}
+
 #################### Azure Provider ####################
 
 provider "azurerm" {
@@ -28,7 +37,7 @@ resource "kubernetes_manifest" "cluster_issuer" {
     kind       = "ClusterIssuer"
 
     metadata = {
-      name = "letsEncrypt-cluster-issuer"
+      name = "lets-encrypt-cluster-issuer"
     }
 
     spec = {
@@ -36,7 +45,7 @@ resource "kubernetes_manifest" "cluster_issuer" {
         server = "https://acme-v02.api.letsencrypt.org/directory"
         email  = "big_data_on_k8s@gmail.com"
         privateKeySecretRef = {
-          name = "letEncrypt-cluster-issuer-key"
+          name = "lets-encrypt-cluster-issuer-key"
         }
         solvers = [{
           http01 = {
@@ -49,5 +58,3 @@ resource "kubernetes_manifest" "cluster_issuer" {
     }
   }
 }
-
-# 13:15
