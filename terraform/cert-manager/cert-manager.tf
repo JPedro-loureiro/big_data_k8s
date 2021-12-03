@@ -68,28 +68,28 @@ resource "kubernetes_manifest" "cluster_issuer" {
 
 #################### TLS Certificate ####################
 
-resource "kubernetes_manifest" "tls_certificate" {
-  manifest = {
-    apiVersion = "cert-manager.io/v1"
-    kind       = "Certificate"
+# resource "kubernetes_manifest" "tls_certificate" {
+#   manifest = {
+#     apiVersion = "cert-manager.io/v1"
+#     kind       = "Certificate"
 
-    metadata = {
-      name = "ingress-cert"
-      namespace = "cert-manager"
-    }
+#     metadata = {
+#       name = "ingress-cert"
+#       namespace = "cert-manager"
+#     }
 
-    spec = {
-      secretName = "ingress-cert-secret"
-      ipAddresses = [
-        data.azurerm_public_ip.aks_ingress_ip.ip_address
-      ]
-      issuerRef = {
-        name = "lets-encrypt-cluster-issuer"
-        kind = "ClusterIssuer"
-      }
-    }
-  }
-  depends_on = [
-    kubernetes_manifest.cluster_issuer
-  ]
-}
+#     spec = {
+#       secretName = "ingress-cert-secret"
+#       ipAddresses = [
+#         data.azurerm_public_ip.aks_ingress_ip.ip_address
+#       ]
+#       issuerRef = {
+#         name = "lets-encrypt-cluster-issuer"
+#         kind = "ClusterIssuer"
+#       }
+#     }
+#   }
+#   depends_on = [
+#     kubernetes_manifest.cluster_issuer
+#   ]
+# }
