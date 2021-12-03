@@ -5,12 +5,15 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /
-    # cert-manager.io/cluster-issuer: lets-encrypt-cluster-issuer
+    cert-manager.io/cluster-issuer: lets-encrypt-cluster-issuer
 spec:
   tls:
   - secretName: app-tls-secret
+    hosts:
+      - k8s-dev.eastus.cloudapp.azure.com
   rules:
-    - http:
+    - host: k8s-dev.eastus.cloudapp.azure.com
+      http:
         paths:
         - pathType: Prefix
           path: "/"
