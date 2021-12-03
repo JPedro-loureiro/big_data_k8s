@@ -9,8 +9,8 @@ metadata:
 spec:
   tls:
   - secretName: app-tls-secret
-    # hosts:
-    #   - k8s-dev.eastus.cloudapp.azure.com
+    hosts:
+      - 20.81.69.22
   rules:
     - http:
         paths:
@@ -21,4 +21,4 @@ spec:
               name: hello-kubernetes
               port:
                 number: 80
-      # host: k8s-dev.eastus.cloudapp.azure.com
+      host: 20.81.69.22
