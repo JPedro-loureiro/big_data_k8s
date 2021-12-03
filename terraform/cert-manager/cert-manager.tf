@@ -23,7 +23,7 @@ data "azurerm_kubernetes_cluster" "aks_cluster" {
 #################### Ingress Public IP Data ####################
 
 data "azurerm_public_ip" "aks_ingress_ip" {
-  name = "aks-ingress-ip"
+  name                = "aks-ingress-ip"
   resource_group_name = data.azurerm_kubernetes_cluster.aks_cluster.node_resource_group
 }
 
