@@ -9,11 +9,8 @@ metadata:
 spec:
   tls:
   - secretName: app-tls-secret
-    hosts:
-      - k8s-dev.eastus.cloudapp.azure.com
   rules:
-    - host: k8s-dev.eastus.cloudapp.azure.com
-      http:
+    - http:
         paths:
         - pathType: Prefix
           path: "/"
