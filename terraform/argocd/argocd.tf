@@ -1,15 +1,18 @@
-# Get Azure provider
+#################### Azure Provider ####################
+
 provider "azurerm" {
   features {}
 }
 
-# Get AKS cluster data
+#################### AKS Cluster Data ####################
+
 data "azurerm_kubernetes_cluster" "aks_cluster" {
   name                = var.aks_cluster_name
   resource_group_name = var.resource_group_name
 }
 
-# Config kubernetes provider
+#################### Kubernetes Provider ####################
+
 provider "kubernetes" {
   host                   = data.azurerm_kubernetes_cluster.aks_cluster.kube_config.0.host
   client_certificate     = base64decode(data.azurerm_kubernetes_cluster.aks_cluster.kube_config.0.client_certificate)
@@ -26,7 +29,7 @@ resource "kubernetes_manifest" "big_data_on_k8s_project" {
     kind       = "AppProject"
 
     metadata = {
-      name = "big-data-on-k8s"
+      name      = "big-data-on-k8s"
       namespace = "cicd"
     }
 
@@ -40,12 +43,12 @@ resource "kubernetes_manifest" "big_data_on_k8s_project" {
 
       destinations = [{
         namespace = "*"
-        server = "https://kubernetes.default.svc"
+        server    = "https://kubernetes.default.svc"
       }]
 
       clusterResourceWhitelist = [{
         group = "*"
-        kind = "*"
+        kind  = "*"
       }]
 
       orphanedResources = {
@@ -64,7 +67,7 @@ resource "kubernetes_manifest" "app_test_application" {
     kind       = "Application"
 
     metadata = {
-      name = "app-test"
+      name      = "app-test"
       namespace = "cicd"
     }
 
@@ -72,20 +75,20 @@ resource "kubernetes_manifest" "app_test_application" {
       project = "big-data-on-k8s"
 
       source = {
-        repoURL = "https://github.com/JPedro-loureiro/big_data_k8s"
+        repoURL        = "https://github.com/JPedro-loureiro/big_data_k8s"
         targetRevision = "HEAD"
-        path = "app_test"
+        path           = "app_test"
       }
 
       destination = {
-        server = "https://kubernetes.default.svc"
+        server    = "https://kubernetes.default.svc"
         namespace = "app-test"
       }
 
       syncPolicy = {
         automated = {
-          prune = true
-          selfHeal = true
+          prune      = true
+          selfHeal   = true
           allowEmpty = false
         }
 
@@ -99,8 +102,8 @@ resource "kubernetes_manifest" "app_test_application" {
         retry = {
           limit = 3
           backoff = {
-            duration = "5s"
-            factor = 2
+            duration    = "5s"
+            factor      = 2
             maxDuration = "1m"
           }
         }
@@ -116,7 +119,7 @@ resource "kubernetes_manifest" "ingress_test_application" {
     kind       = "Application"
 
     metadata = {
-      name = "ingress-test"
+      name      = "ingress-test"
       namespace = "cicd"
     }
 
@@ -124,20 +127,20 @@ resource "kubernetes_manifest" "ingress_test_application" {
       project = "big-data-on-k8s"
 
       source = {
-        repoURL = "https://github.com/JPedro-loureiro/big_data_k8s"
+        repoURL        = "https://github.com/JPedro-loureiro/big_data_k8s"
         targetRevision = "HEAD"
-        path = "ingress_test"
+        path           = "ingress_test"
       }
 
       destination = {
-        server = "https://kubernetes.default.svc"
+        server    = "https://kubernetes.default.svc"
         namespace = "ingress-test"
       }
 
       syncPolicy = {
         automated = {
-          prune = true
-          selfHeal = true
+          prune      = true
+          selfHeal   = true
           allowEmpty = false
         }
 
@@ -151,8 +154,8 @@ resource "kubernetes_manifest" "ingress_test_application" {
         retry = {
           limit = 3
           backoff = {
-            duration = "5s"
-            factor = 2
+            duration    = "5s"
+            factor      = 2
             maxDuration = "1m"
           }
         }
@@ -168,7 +171,7 @@ resource "kubernetes_manifest" "strimzi_operator" {
     kind       = "Application"
 
     metadata = {
-      name = "strimzi-kafka-operator"
+      name      = "strimzi-kafka-operator"
       namespace = "cicd"
     }
 
@@ -176,23 +179,23 @@ resource "kubernetes_manifest" "strimzi_operator" {
       project = "big-data-on-k8s"
 
       source = {
-        repoURL = "https://strimzi.io/charts"
+        repoURL        = "https://strimzi.io/charts"
         targetRevision = "0.26.0"
-        chart = "strimzi-kafka-operator"
+        chart          = "strimzi-kafka-operator"
         helm = {
           version = "v3"
         }
       }
 
       destination = {
-        server = "https://kubernetes.default.svc"
+        server    = "https://kubernetes.default.svc"
         namespace = "ingestion"
       }
 
       syncPolicy = {
         automated = {
-          prune = true
-          selfHeal = true
+          prune      = true
+          selfHeal   = true
           allowEmpty = false
         }
 
@@ -206,15 +209,15 @@ resource "kubernetes_manifest" "strimzi_operator" {
         retry = {
           limit = 3
           backoff = {
-            duration = "5s"
-            factor = 2
+            duration    = "5s"
+            factor      = 2
             maxDuration = "1m"
           }
         }
       }
     }
   }
-  
+
   depends_on = [
     kubernetes_manifest.big_data_on_k8s_project
   ]
@@ -227,7 +230,7 @@ resource "kubernetes_manifest" "kafka_cluster" {
     kind       = "Application"
 
     metadata = {
-      name = "kafka-cluster"
+      name      = "kafka-cluster"
       namespace = "cicd"
     }
 
@@ -235,20 +238,20 @@ resource "kubernetes_manifest" "kafka_cluster" {
       project = "big-data-on-k8s"
 
       source = {
-        repoURL = "https://github.com/JPedro-loureiro/big_data_k8s"
+        repoURL        = "https://github.com/JPedro-loureiro/big_data_k8s"
         targetRevision = "HEAD"
-        path = "kafka/kafka-cluster"
+        path           = "kafka/kafka-cluster"
       }
 
       destination = {
-        server = "https://kubernetes.default.svc"
+        server    = "https://kubernetes.default.svc"
         namespace = "ingestion"
       }
 
       syncPolicy = {
         automated = {
-          prune = true
-          selfHeal = true
+          prune      = true
+          selfHeal   = true
           allowEmpty = false
         }
 
@@ -262,15 +265,15 @@ resource "kubernetes_manifest" "kafka_cluster" {
         retry = {
           limit = 3
           backoff = {
-            duration = "5s"
-            factor = 2
+            duration    = "5s"
+            factor      = 2
             maxDuration = "1m"
           }
         }
       }
     }
   }
-  
+
   depends_on = [
     kubernetes_manifest.strimzi_operator
   ]
@@ -283,7 +286,7 @@ resource "kubernetes_manifest" "kafka_topics" {
     kind       = "Application"
 
     metadata = {
-      name = "kafka-topics"
+      name      = "kafka-topics"
       namespace = "cicd"
     }
 
@@ -291,20 +294,20 @@ resource "kubernetes_manifest" "kafka_topics" {
       project = "big-data-on-k8s"
 
       source = {
-        repoURL = "https://github.com/JPedro-loureiro/big_data_k8s"
+        repoURL        = "https://github.com/JPedro-loureiro/big_data_k8s"
         targetRevision = "HEAD"
-        path = "kafka/kafka-topics"
+        path           = "kafka/kafka-topics"
       }
 
       destination = {
-        server = "https://kubernetes.default.svc"
+        server    = "https://kubernetes.default.svc"
         namespace = "ingestion"
       }
 
       syncPolicy = {
         automated = {
-          prune = true
-          selfHeal = true
+          prune      = true
+          selfHeal   = true
           allowEmpty = false
         }
 
@@ -318,8 +321,8 @@ resource "kubernetes_manifest" "kafka_topics" {
         retry = {
           limit = 3
           backoff = {
-            duration = "5s"
-            factor = 2
+            duration    = "5s"
+            factor      = 2
             maxDuration = "1m"
           }
         }
