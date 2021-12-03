@@ -5,7 +5,10 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: lets-encrypt-cluster-issuer
 spec:
+  tls:
+  - secretName: nginx-tls-secret
   rules:
     - http:
         paths:
