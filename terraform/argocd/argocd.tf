@@ -69,57 +69,57 @@ resource "kubernetes_manifest" "big_data_on_k8s_project" {
 
 #################### ArgoCD Applications ####################
 
-# # App Test
-# resource "kubernetes_manifest" "app_test_application" {
-#   manifest = {
-#     apiVersion = "argoproj.io/v1alpha1"
-#     kind       = "Application"
+# App Test
+resource "kubernetes_manifest" "app_test_application" {
+  manifest = {
+    apiVersion = "argoproj.io/v1alpha1"
+    kind       = "Application"
 
-#     metadata = {
-#       name      = "app-test"
-#       namespace = "cicd"
-#     }
+    metadata = {
+      name      = "app-test"
+      namespace = "cicd"
+    }
 
-#     spec = {
-#       project = "big-data-on-k8s"
+    spec = {
+      project = "big-data-on-k8s"
 
-#       source = {
-#         repoURL        = "https://github.com/JPedro-loureiro/big_data_k8s"
-#         targetRevision = "HEAD"
-#         path           = "app_test"
-#       }
+      source = {
+        repoURL        = "https://github.com/JPedro-loureiro/big_data_k8s"
+        targetRevision = "HEAD"
+        path           = "app_test"
+      }
 
-#       destination = {
-#         server    = "https://kubernetes.default.svc"
-#         namespace = "app-test"
-#       }
+      destination = {
+        server    = "https://kubernetes.default.svc"
+        namespace = "app-test"
+      }
 
-#       syncPolicy = {
-#         automated = {
-#           prune      = true
-#           selfHeal   = true
-#           allowEmpty = false
-#         }
+      syncPolicy = {
+        automated = {
+          prune      = true
+          selfHeal   = true
+          allowEmpty = false
+        }
 
-#         syncOptions = [
-#           "Validate=false",
-#           "CreateNamespace=true",
-#           "PrunePropagationPolicy=foreground",
-#           "PruneLast=true"
-#         ]
+        syncOptions = [
+          "Validate=false",
+          "CreateNamespace=true",
+          "PrunePropagationPolicy=foreground",
+          "PruneLast=true"
+        ]
 
-#         retry = {
-#           limit = 3
-#           backoff = {
-#             duration    = "5s"
-#             factor      = 2
-#             maxDuration = "1m"
-#           }
-#         }
-#       }
-#     }
-#   }
-# }
+        retry = {
+          limit = 3
+          backoff = {
+            duration    = "5s"
+            factor      = 2
+            maxDuration = "1m"
+          }
+        }
+      }
+    }
+  }
+}
 
 # Nginx test
 resource "kubernetes_manifest" "ingress_test_application" {
