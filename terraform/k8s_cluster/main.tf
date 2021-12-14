@@ -30,24 +30,6 @@ module "aks_cluster" {
   default_node_type = var.main_node_type
 }
 
-data "azurerm_kubernetes_cluster" "aks_cluster" {
-  count               = var.aks == true ? 1 : 0
-  name                = module.aks_cluster[0].aks_cluster_name
-  resource_group_name = module.aks_cluster[0].aks_cluster_resource_group_name
-  depends_on = [
-    module.aks_cluster
-  ]
-}
-
-data "azurerm_public_ip" "aks_load_balancer_ip" {
-  count               = var.aks == true ? 1 : 0
-  name                = module.aks_cluster[0].load_balancer_ip
-  resource_group_name = module.aks_cluster[0].aks_cluster_node_resource_group_name
-  depends_on = [
-    module.aks_cluster
-  ]
-}
-
 #################### EKS ####################
 
 
@@ -56,20 +38,43 @@ data "azurerm_public_ip" "aks_load_balancer_ip" {
 
 
 
-#################### Nginx Ingress Controller ####################
+#################### Cluster Configs ####################
 
-module "big_data" {
-  source = "./big_data"
-  host = data.azurerm_kubernetes_cluster.aks_cluster[0].kube_config.0.host
-  client_certificate = base64decode(data.azurerm_kubernetes_cluster[0].aks_cluster.kube_config.0.client_certificate)
-  client_key = base64decode(data.azurerm_kubernetes_cluster.aks_cluster[0].kube_config.0.client_key)
-  cluster_ca_certificate = base64decode(data.azurerm_kubernetes_cluster[0].aks_cluster.kube_config.0.cluster_ca_certificate)
-  load_balancer_ip = data.azurerm_public_ip.aks_load_balancer_ip[0].ip_address
-  env = var.env
+locals {
+  # Host
+  host = var.aks == true ? module.aks_cluster[0].aks_cluster_host : (
+    var.eks == true ? "eks_host" : "gke_host"
+  )
+
+  # Client Certificate
+  client_certificate = var.aks == true ? module.aks_cluster[0].aks_cluster_client_certificate : (
+    var.eks == true ? "eks_client_certificate" : "gke_client_certificate"
+  )
+
+  # Client Key
+  client_key = var.aks == true ? module.aks_cluster[0].aks_cluster_client_key : (
+    var.eks == true ? "eks_client_key" : "gke_client_key"
+  )
+
+  # Cluster CA Certificate
+  cluster_ca_certificate = var.aks == true ? module.aks_cluster[0].aks_cluster_ca_certificate : (
+    var.eks == true ? "eks_cluster_ca_certificate" : "gke_cluster_ca_certificate"
+  )
+
+  # Load Balancer IP
+  load_balancer_ip = var.aks == true ? module.aks_cluster[0].load_balancer_ip : (
+    var.eks == true ? "eks_load_balancer_ip" : "gke_load_balancer_ip"
+  )
 }
 
-#################### Cert-manager ####################
+#################### Big Data ####################
 
-
-
-#################### ArgoCD ####################
+module "big_data" {
+  source                 = "./big_data"
+  host                   = local.host
+  client_certificate     = local.client_certificate
+  client_key             = local.client_key
+  cluster_ca_certificate = local.cluster_ca_certificate
+  load_balancer_ip       = local.load_balancer_ip
+  env                    = var.env
+}

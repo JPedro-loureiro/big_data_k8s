@@ -3,9 +3,9 @@
 provider "helm" {
   kubernetes {
     host                   = var.host
-    client_certificate     = base64decode(var.client_certificate)
-    client_key             = base64decode(var.client_key)
-    cluster_ca_certificate = base64decode(var.cluster_ca_certificate)
+    client_certificate     = var.client_certificate
+    client_key             = var.client_key
+    cluster_ca_certificate = var.cluster_ca_certificate
   }
 }
 
@@ -29,4 +29,29 @@ resource "helm_release" "nginx_ingress_controller" {
     name  = "controller.service.annotations.\"service\\.beta\\.kubernetes\\.io/azure-dns-label-name\""
     value = "k8s-${var.env}"
   }
+}
+
+#################### Cert-manager ####################
+
+resource "helm_release" "cert-manager" {
+  name             = "cert-manager"
+  namespace        = "cert-manager"
+  create_namespace = true
+  repository       = "https://charts.jetstack.io"
+  chart            = "cert-manager"
+
+  set {
+    name  = "installCRDs"
+    value = true
+  }
+}
+
+#################### ArgoCD ####################
+
+resource "helm_release" "argocd" {
+  name             = "argocd"
+  namespace        = "cicd"
+  create_namespace = true
+  repository       = "https://argoproj.github.io/argo-helm"
+  chart            = "argo-cd"
 }
