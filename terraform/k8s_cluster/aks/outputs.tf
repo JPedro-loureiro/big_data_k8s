@@ -1,6 +1,6 @@
 resource "local_file" "kubeconfig" {
   depends_on = [azurerm_kubernetes_cluster.aks_cluster]
-  filename   = "kubeconfig"
+  filename   = var.kubeconfig_path
   content    = azurerm_kubernetes_cluster.aks_cluster.kube_config_raw
 }
 

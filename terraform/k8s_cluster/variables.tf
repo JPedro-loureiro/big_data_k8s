@@ -24,6 +24,11 @@ variable "main_node_type" {
   #   nullable    = false
 }
 
+variable "kubeconfig_path" {
+  description = "Default node type"
+  type = string
+}
+
 #################### AKS Variables ####################
 
 variable "aks" {

@@ -8,10 +8,6 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 3.27"
     }
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = ">= 2.7.0"
-    }
   }
 }
 
@@ -27,6 +23,7 @@ module "aks_cluster" {
   region            = var.region
   env               = var.env
   k8s_version       = var.k8s_version
+  kubeconfig_path = var.kubeconfig_path
   default_node_type = var.main_node_type
 }
 
