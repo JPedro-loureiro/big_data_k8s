@@ -45,3 +45,18 @@ resource "azurerm_public_ip" "load_balancer_ip" {
   allocation_method   = "Static"
   sku                 = "Standard"
 }
+
+#################### DNS Zone ####################
+
+resource "azurerm_dns_zone" "dns_zone" {
+  name                = "bigdataonk8s.com"
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
+resource "azurerm_dns_a_record" "example" {
+  name                = var.env
+  zone_name           = azurerm_dns_zone.dns_zone.name
+  resource_group_name = azurerm_resource_group.rg.name
+  ttl                 = 300
+  target_resource_id  = azurerm_public_ip.load_balancer_ip.id
+}
