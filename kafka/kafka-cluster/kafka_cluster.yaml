@@ -7,14 +7,18 @@ spec:
     version: 3.0.0
     replicas: 1
     listeners:
-      - name: plain
-        port: 9092
-        type: internal
-        tls: false
-      - name: tls
-        port: 9093
-        type: internal
+      - name: external
+        port: 9094
+        type: ingress
         tls: true
+        authentication:
+          type: tls
+        configuration:
+          bootstrap:
+            host: bootstrap.myingress.com
+          brokers:
+          - broker: 0
+            host: broker-0.myingress.com
     config:
       offsets.topic.replication.factor: 1
       transaction.state.log.replication.factor: 1

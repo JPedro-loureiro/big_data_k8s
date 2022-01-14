@@ -29,6 +29,11 @@ resource "helm_release" "nginx_ingress_controller" {
     name  = "controller.service.annotations.\"service\\.beta\\.kubernetes\\.io/azure-dns-label-name\""
     value = "k8s-${var.env}"
   }
+
+  set {
+    name  = "controller.enableTLSPassthrough"
+    value = "true"
+  }
 }
 
 #################### Cert-manager ####################
