@@ -15,7 +15,7 @@ spec:
     - http:
         paths:
         - pathType: Prefix
-          path: "/app-test"
+          path: "/"
           backend:
             service:
               name: hello-kubernetes
