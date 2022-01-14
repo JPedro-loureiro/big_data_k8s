@@ -15,10 +15,10 @@ spec:
           type: tls
         configuration:
           bootstrap:
-            host: bootstrap.myingress.com
+            host: kafka.bootstrap.k8s-dev.eastus.cloudapp.azure.com
           brokers:
           - broker: 0
-            host: broker-0.myingress.com
+            host: kafka.broker-0.k8s-dev.eastus.cloudapp.azure.com
     config:
       offsets.topic.replication.factor: 1
       transaction.state.log.replication.factor: 1
