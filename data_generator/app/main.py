@@ -203,7 +203,7 @@ def create_order_products(order_id: int):
 if __name__ == "__main__":
 
     engine = create_engine(
-        "postgresql://ifood_app:JPedro//14@my-postgresql:5432/ifood",
+        "postgresql://ifood_app:ifood123@my-postgresql:5432/ifood",
         echo=False
     )
 
