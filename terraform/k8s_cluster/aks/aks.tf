@@ -53,6 +53,8 @@ resource "azurerm_dns_zone" "dns_zone" {
   resource_group_name = azurerm_resource_group.rg.name
 }
 
+#################### DNS Zone ####################
+
 resource "azurerm_dns_a_record" "example" {
   name                = "app-test.${var.env}"
   zone_name           = azurerm_dns_zone.dns_zone.name

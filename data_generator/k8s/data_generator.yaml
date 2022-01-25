@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-generator
+  labels:
+    app: data-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: data-genergeneratoration
+  template:
+    metadata:
+      labels:
+        app: data-generator
+    spec:
+      containers:
+      - name: datae-generator
+        image: jpedroloureiro/data_source_generation:0.2.1
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "100m"
+          limits:
+            memory: "200Mi"
+            cpu: "200m"
