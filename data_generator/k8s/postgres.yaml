@@ -28,10 +28,10 @@ spec:
       selfHeal: true
       allowEmpty: false
     syncOptions:
-      - Validate: false
-      - CreateNamespace: true
-      - PrunePropagationPolicy: "foreground"
-      - PruneLast: true
+      - "Validate=false"
+      - "CreateNamespace=true"
+      - "PrunePropagationPolicy=foreground"
+      - "PruneLast=true"
     retry: 
       limit: 3
       backoff: 
