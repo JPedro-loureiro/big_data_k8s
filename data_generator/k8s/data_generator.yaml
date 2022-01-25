@@ -15,7 +15,7 @@ spec:
         app: data-generator
     spec:
       containers:
-      - name: datae-generator
+      - name: data-generator
         image: jpedroloureiro/data_generator:latest
         resources:
           requests:
