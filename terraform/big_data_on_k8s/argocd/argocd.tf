@@ -24,7 +24,8 @@ resource "kubernetes_manifest" "big_data_on_k8s_project" {
 
       sourceRepos = [
         "https://github.com/JPedro-loureiro/big_data_k8s",
-        "https://strimzi.io/charts"
+        "https://strimzi.io/charts",
+        "https://charts.bitnami.com/bitnami",
       ]
 
       destinations = [{
