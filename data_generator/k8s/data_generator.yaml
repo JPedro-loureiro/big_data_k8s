@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: datae-generator
-        image: jpedroloureiro/data_source_generation:0.1.0
+        image: jpedroloureiro/data_generator:0.1.0
         resources:
           requests:
             memory: "100Mi"
