@@ -63,8 +63,16 @@ resource "azurerm_dns_a_record" "app_test" {
   target_resource_id  = azurerm_public_ip.load_balancer_ip.id
 }
 
-resource "azurerm_dns_a_record" "kafka" {
-  name                = "kafka.${var.env}"
+resource "azurerm_dns_a_record" "kafka_bootstrap" {
+  name                = "kafka-bootstrap.${var.env}"
+  zone_name           = azurerm_dns_zone.dns_zone.name
+  resource_group_name = azurerm_resource_group.rg.name
+  ttl                 = 300
+  target_resource_id  = azurerm_public_ip.load_balancer_ip.id
+}
+
+resource "azurerm_dns_a_record" "kafka_broker_0" {
+  name                = "kafka-broker-0.${var.env}"
   zone_name           = azurerm_dns_zone.dns_zone.name
   resource_group_name = azurerm_resource_group.rg.name
   ttl                 = 300

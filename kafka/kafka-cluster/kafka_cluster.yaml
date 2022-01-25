@@ -15,10 +15,10 @@ spec:
           type: tls
         configuration:
           bootstrap:
-            host: kafka.dev.bigdataonk8s.com/kafka/bootstrap-server/
+            host: kafka-bootstrap.dev.bigdataonk8s.com
           brokers:
           - broker: 0
-            host: kafka.dev.bigdataonk8s.com/kafka/broker-0/
+            host: kafka-broker-0.dev.bigdataonk8s.com
     config:
       offsets.topic.replication.factor: 1
       transaction.state.log.replication.factor: 1
