@@ -98,7 +98,7 @@ resource "kubernetes_manifest" "app_test_application" {
   }
 }
 
-resource "kubernetes_manifest" "kafka_cluster" {
+resource "kubernetes_manifest" "data_generator" {
   manifest = {
     apiVersion = "argoproj.io/v1alpha1"
     kind       = "Application"
