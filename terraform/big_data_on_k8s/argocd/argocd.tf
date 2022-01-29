@@ -6,6 +6,48 @@ provider "kubernetes" {
     client_key             = var.client_key
     cluster_ca_certificate = var.cluster_ca_certificate
 }
+
+#################### ArgoCD Ingress ####################
+
+resource "kubernetes_ingress_v1" "argocd_ingress" {
+  metadata {
+    name = "argocd-server-ingress"
+    namespace = "cicd"
+    annotations = {
+      "cert-manager.io/cluster-issuer" = "lets-encrypt-cluster-issuer"
+      "kubernetes.io/ingress.class" = "nginx"
+      "kubernetes.io/tls-acme" = "true"
+      "nginx.ingress.kubernetes.io/ssl-passthrough" = "true"
+      "nginx.ingress.kubernetes.io/backend-protocol" = "HTTPS"
+    }
+  }
+  spec {
+    rule {
+      host = "argocd.dev.bigdataonk8s.com"
+      http {
+        path {
+          path = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "argocd-server"
+              port {
+                number = 443
+              }
+            }
+          }
+        }
+      }
+    }
+    tls {
+      hosts = [
+        "argocd.dev.bigdataonk8s.com"
+      ]
+      secret_name = "argocd-secret"
+    }
+  }
+}
+
 #################### ArgoCD Project ####################
 
 # The Big data on k8s ArgoCD Project
@@ -99,6 +141,7 @@ resource "kubernetes_manifest" "app_test_application" {
   }
 }
 
+# Data Gen
 resource "kubernetes_manifest" "data_generator" {
   manifest = {
     apiVersion = "argoproj.io/v1alpha1"

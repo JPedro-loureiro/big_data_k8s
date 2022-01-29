@@ -9,6 +9,15 @@ provider "helm" {
   }
 }
 
+#################### K8s Provider ####################
+
+provider "kubernetes" {
+    host                   = var.host
+    client_certificate     = var.client_certificate
+    client_key             = var.client_key
+    cluster_ca_certificate = var.cluster_ca_certificate
+}
+
 #################### Nginx Ingress Controller ####################
 
 resource "helm_release" "nginx_ingress_controller" {
@@ -38,7 +47,7 @@ resource "helm_release" "nginx_ingress_controller" {
 
 #################### Cert-manager ####################
 
-resource "helm_release" "cert-manager" {
+resource "helm_release" "cert_manager" {
   name             = "cert-manager"
   namespace        = "cert-manager"
   create_namespace = true
