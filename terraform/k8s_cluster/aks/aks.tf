@@ -29,12 +29,12 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
 
 #################### Node Pools ####################
 
-# resource "azurerm_kubernetes_cluster_node_pool" "memory_optimized" {
-#  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_cluster.id
-#  name                  = "${var.env}memopt"
-#  node_count            = "1"
-#  vm_size               = "standard_d11_v2"
-# }
+resource "azurerm_kubernetes_cluster_node_pool" "memory_optimized" {
+ kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_cluster.id
+ name                  = "${var.env}memopt"
+ node_count            = "1"
+ vm_size               = "standard_b2s"
+}
 
 #################### Public IP ####################
 
@@ -65,6 +65,14 @@ resource "azurerm_dns_a_record" "app_test" {
 
 resource "azurerm_dns_a_record" "argocd" {
   name                = "argocd.${var.env}"
+  zone_name           = azurerm_dns_zone.dns_zone.name
+  resource_group_name = azurerm_resource_group.rg.name
+  ttl                 = 300
+  target_resource_id  = azurerm_public_ip.load_balancer_ip.id
+}
+
+resource "azurerm_dns_a_record" "postgres_data_generator" {
+  name                = "postgres.${var.env}"
   zone_name           = azurerm_dns_zone.dns_zone.name
   resource_group_name = azurerm_resource_group.rg.name
   ttl                 = 300
