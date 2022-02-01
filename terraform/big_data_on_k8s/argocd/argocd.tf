@@ -366,13 +366,13 @@ resource "kubernetes_manifest" "kafka_topics" {
 }
 
 # Prometheus Operator
-resource "kubernetes_manifest" "prometheus_operator" {
+resource "kubernetes_manifest" "kube-prometheus-stack" {
   manifest = {
     apiVersion = "argoproj.io/v1alpha1"
     kind       = "Application"
 
     metadata = {
-      name      = "prometheus-operator"
+      name      = "kube-prometheus-stack"
       namespace = "cicd"
     }
 
