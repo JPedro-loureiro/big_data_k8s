@@ -68,6 +68,7 @@ resource "kubernetes_manifest" "big_data_on_k8s_project" {
         "https://github.com/JPedro-loureiro/big_data_k8s",
         "https://strimzi.io/charts",
         "https://charts.bitnami.com/bitnami",
+        "https://prometheus-community.github.io/helm-charts",
       ]
 
       destinations = [{
@@ -361,5 +362,59 @@ resource "kubernetes_manifest" "kafka_topics" {
 
   depends_on = [
     kubernetes_manifest.kafka_cluster
+  ]
+}
+
+# Prometheus Operator
+resource "kubernetes_manifest" "prometheus_operator" {
+  manifest = {
+    apiVersion = "argoproj.io/v1alpha1"
+    kind       = "Application"
+
+    metadata = {
+      name      = "prometheus-operator"
+      namespace = "cicd"
+    }
+
+    spec = {
+      project = "big-data-on-k8s"
+
+      source = {
+        repoURL        = "https://prometheus-community.github.io/helm-charts"
+        targetRevision = "30.2.0"
+        chart          = "kube-prometheus-stack"
+        helm = {
+          version = "v3"
+        }
+      }
+
+      destination = {
+        server    = "https://kubernetes.default.svc"
+        namespace = "monitoring"
+      }
+
+      syncPolicy = {
+        syncOptions = [
+          "Validate=false",
+          "CreateNamespace=true",
+          "PrunePropagationPolicy=foreground",
+          "PruneLast=true",
+          "Replace=true", # kubectl replace insted of apply: resource spec might be too big and won't fit into kubectl.kubernetes.io/last-applied-configuration
+        ]
+
+        retry = {
+          limit = 3
+          backoff = {
+            duration    = "5s"
+            factor      = 2
+            maxDuration = "1m"
+          }
+        }
+      }
+    }
+  }
+
+  depends_on = [
+    kubernetes_manifest.big_data_on_k8s_project
   ]
 }
