@@ -107,7 +107,7 @@ resource "kubernetes_manifest" "app_test_application" {
       source = {
         repoURL        = "https://github.com/JPedro-loureiro/big_data_k8s"
         targetRevision = "HEAD"
-        path           = "app_test"
+        path           = "apps/app_test"
       }
 
       destination = {
@@ -159,7 +159,7 @@ resource "kubernetes_manifest" "data_generator" {
       source = {
         repoURL        = "https://github.com/JPedro-loureiro/big_data_k8s"
         targetRevision = "HEAD"
-        path           = "data_generator/k8s"
+        path           = "apps/data_generator/k8s"
       }
 
       destination = {
@@ -270,7 +270,7 @@ resource "kubernetes_manifest" "kafka_cluster" {
       source = {
         repoURL        = "https://github.com/JPedro-loureiro/big_data_k8s"
         targetRevision = "HEAD"
-        path           = "kafka/kafka-cluster"
+        path           = "apps/ingestion/kafka/kafka-cluster"
       }
 
       destination = {
@@ -326,7 +326,7 @@ resource "kubernetes_manifest" "kafka_topics" {
       source = {
         repoURL        = "https://github.com/JPedro-loureiro/big_data_k8s"
         targetRevision = "HEAD"
-        path           = "kafka/kafka-topics"
+        path           = "apps/ingestion/kafka/kafka-topics"
       }
 
       destination = {
@@ -380,12 +380,12 @@ resource "kubernetes_manifest" "kube-prometheus-stack" {
       project = "big-data-on-k8s"
 
       source = {
-        repoURL        = "https://prometheus-community.github.io/helm-charts"
-        targetRevision = "30.2.0"
-        chart          = "kube-prometheus-stack"
-        helm = {
-          version = "v3"
-        }
+        repoURL        = "https://github.com/JPedro-loureiro/big_data_k8s"
+        path          = "apps/monitoring/kube-prometheus-stack"
+        targetRevision = "HEAD"
+        # helm = {
+        #   version = "v3"
+        # }
       }
 
       destination = {
@@ -399,7 +399,7 @@ resource "kubernetes_manifest" "kube-prometheus-stack" {
           "CreateNamespace=true",
           "PrunePropagationPolicy=foreground",
           "PruneLast=true",
-          "Replace=true", # kubectl replace insted of apply: resource spec might be too big and won't fit into kubectl.kubernetes.io/last-applied-configuration
+          # "Replace=true", # kubectl replace insted of apply: resource spec might be too big and won't fit into kubectl.kubernetes.io/last-applied-configuration
         ]
 
         retry = {
