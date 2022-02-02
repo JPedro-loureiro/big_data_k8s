@@ -658,11 +658,15 @@ grafana:
   ingress:
     ## If true, Grafana Ingress will be created
     ##
-    enabled: false
+    enabled: true
 
     ## Annotations for Grafana Ingress
     ##
-    annotations: {}
+    annotations: {
+      kubernetes.io/ingress.class: nginx,
+      nginx.ingress.kubernetes.io/rewrite-target: /,
+      cert-manager.io/cluster-issuer: lets-encrypt-cluster-issuer,
+    }
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
 
@@ -675,7 +679,9 @@ grafana:
     ##
     # hosts:
     #   - grafana.domain.com
-    hosts: []
+    hosts: [
+      grafana.dev.bigdataonk8s.com
+    ]
 
     ## Path for grafana ingress
     path: /
@@ -683,7 +689,12 @@ grafana:
     ## TLS configuration for grafana Ingress
     ## Secret must be manually created in the namespace
     ##
-    tls: []
+    tls: [
+        secretName: grafana-tls-secret,
+          hosts: [
+            grafana.dev.bigdataonk8s.com
+          ]
+    ]
     # - secretName: grafana-general-tls
     #   hosts:
     #   - grafana.example.com
