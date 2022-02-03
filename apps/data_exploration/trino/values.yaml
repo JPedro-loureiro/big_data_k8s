@@ -50,13 +50,13 @@ server:
         # JKS keystores always require a password, while PEM format certificates can optionally require a password
         key: ""
     query:
-      maxMemory: "3GB"
+      maxMemory: "1GB"
       maxMemoryPerNode: "1GB"
-      maxTotalMemory: "6GB"
+      maxTotalMemory: "3GB"
       maxTotalMemoryPerNode: "2GB"
     prestoCompatibleHeader: false
   jvm:
-    maxHeapSize: "7G"
+    maxHeapSize: "3G"
     gcMethod:
       type: "UseG1GC"
       g1:
