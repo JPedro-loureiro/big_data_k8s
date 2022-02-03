@@ -394,13 +394,17 @@ resource "kubernetes_manifest" "kube-prometheus-stack" {
       }
 
       syncPolicy = {
+        automated = {
+          prune      = true
+          selfHeal   = true
+          allowEmpty = false
+        }
         syncOptions = [
           "Validate=false",
           "CreateNamespace=true",
           "PrunePropagationPolicy=foreground",
           "PruneLast=true",
-          # "Replace=true", # kubectl replace insted of apply: resource spec might be too big and won't fit into kubectl.kubernetes.io/last-applied-configuration
-        ]
+          ]
 
         retry = {
           limit = 3
