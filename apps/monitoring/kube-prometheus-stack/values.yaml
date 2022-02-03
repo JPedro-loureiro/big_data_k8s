@@ -679,9 +679,8 @@ grafana:
     ##
     # hosts:
     #   - grafana.domain.com
-    hosts: [
-      grafana.prod.bigdataonk8s.com
-    ]
+    hosts: 
+      - grafana.prod.bigdataonk8s.com
 
     ## Path for grafana ingress
     path: /
@@ -689,12 +688,10 @@ grafana:
     ## TLS configuration for grafana Ingress
     ## Secret must be manually created in the namespace
     ##
-    tls: [
-        secretName: grafana-tls-secret,
-          hosts: [
-            grafana.prod.bigdataonk8s.com
-          ]
-    ]
+    tls: 
+        - secretName: grafana-tls-secret
+          hosts: 
+            - grafana.prod.bigdataonk8s.com
     # - secretName: grafana-general-tls
     #   hosts:
     #   - grafana.example.com
