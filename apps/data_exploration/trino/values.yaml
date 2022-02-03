@@ -269,12 +269,12 @@ resourceGroups: {}
 # If you want to provide your own secrets resource, you can use this field:
 # connectorsSecret:
 
-connectors: {}
+connectors:
   # Connectors configuration usually contains sensitive data (like passwords, usernames, ...)
   # so data is stored in a secret
-  mysql.properties: |-
-    connector.name=postgres
-    connection-url=jdbc:postgres://my-postgresql.data-generator:5432/ifood
+  postgresql.properties: |-
+    connector.name=postgresql
+    connection-url=jdbc:postgresql://my-postgresql.data-generator:5432/ifood
     connection-user=ifood_app
     connection-password=ifood123
   # elk.properties: |-
