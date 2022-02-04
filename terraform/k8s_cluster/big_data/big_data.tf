@@ -68,4 +68,14 @@ resource "helm_release" "argocd" {
   create_namespace = true
   repository       = "https://argoproj.github.io/argo-helm"
   chart            = "argo-cd"
+
+  set {
+    name = "configs.secret.argocdServerAdminPassword"
+    value = "$2a$10$kJvzpt.mYUvldwvk6YA4qeV7c1sa0nUPgOZLiff95H2fI76HNo4A2" #bigdataonk8s
+  }
+
+  set {
+    name = "configs.secret.argocdServerAdminPasswordMtime"
+    value = "${timestamp()}"
+  }
 }
