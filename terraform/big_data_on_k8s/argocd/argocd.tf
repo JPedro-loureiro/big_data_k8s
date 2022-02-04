@@ -23,7 +23,7 @@ resource "kubernetes_ingress_v1" "argocd_ingress" {
   }
   spec {
     rule {
-      host = "argocd.dev.bigdataonk8s.com"
+      host = "argocd.prod.bigdataonk8s.com"
       http {
         path {
           path = "/"
@@ -41,7 +41,7 @@ resource "kubernetes_ingress_v1" "argocd_ingress" {
     }
     tls {
       hosts = [
-        "argocd.dev.bigdataonk8s.com"
+        "argocd.prod.bigdataonk8s.com"
       ]
       secret_name = "argocd-secret"
     }
@@ -91,56 +91,56 @@ resource "kubernetes_manifest" "big_data_on_k8s_project" {
 #################### ArgoCD Applications ####################
 
 # App Test
-resource "kubernetes_manifest" "app_test_application" {
-  manifest = {
-    apiVersion = "argoproj.io/v1alpha1"
-    kind       = "Application"
+# resource "kubernetes_manifest" "app_test_application" {
+#   manifest = {
+#     apiVersion = "argoproj.io/v1alpha1"
+#     kind       = "Application"
 
-    metadata = {
-      name      = "app-test"
-      namespace = "cicd"
-    }
+#     metadata = {
+#       name      = "app-test"
+#       namespace = "cicd"
+#     }
 
-    spec = {
-      project = "big-data-on-k8s"
+#     spec = {
+#       project = "big-data-on-k8s"
 
-      source = {
-        repoURL        = "https://github.com/JPedro-loureiro/big_data_k8s"
-        targetRevision = "HEAD"
-        path           = "apps/app_test"
-      }
+#       source = {
+#         repoURL        = "https://github.com/JPedro-loureiro/big_data_k8s"
+#         targetRevision = "HEAD"
+#         path           = "apps/app_test"
+#       }
 
-      destination = {
-        server    = "https://kubernetes.default.svc"
-        namespace = "app-test"
-      }
+#       destination = {
+#         server    = "https://kubernetes.default.svc"
+#         namespace = "app-test"
+#       }
 
-      syncPolicy = {
-        automated = {
-          prune      = true
-          selfHeal   = true
-          allowEmpty = false
-        }
+#       syncPolicy = {
+#         automated = {
+#           prune      = true
+#           selfHeal   = true
+#           allowEmpty = false
+#         }
 
-        syncOptions = [
-          "Validate=false",
-          "CreateNamespace=true",
-          "PrunePropagationPolicy=foreground",
-          "PruneLast=true"
-        ]
+#         syncOptions = [
+#           "Validate=false",
+#           "CreateNamespace=true",
+#           "PrunePropagationPolicy=foreground",
+#           "PruneLast=true"
+#         ]
 
-        retry = {
-          limit = 3
-          backoff = {
-            duration    = "5s"
-            factor      = 2
-            maxDuration = "1m"
-          }
-        }
-      }
-    }
-  }
-}
+#         retry = {
+#           limit = 3
+#           backoff = {
+#             duration    = "5s"
+#             factor      = 2
+#             maxDuration = "1m"
+#           }
+#         }
+#       }
+#     }
+#   }
+# }
 
 # Data Gen
 resource "kubernetes_manifest" "data_generator" {
@@ -391,6 +391,61 @@ resource "kubernetes_manifest" "kube-prometheus-stack" {
       destination = {
         server    = "https://kubernetes.default.svc"
         namespace = "monitoring"
+      }
+
+      syncPolicy = {
+        automated = {
+          prune      = true
+          selfHeal   = true
+          allowEmpty = false
+        }
+        syncOptions = [
+          "Validate=false",
+          "CreateNamespace=true",
+          "PrunePropagationPolicy=foreground",
+          "PruneLast=true",
+          ]
+
+        retry = {
+          limit = 3
+          backoff = {
+            duration    = "5s"
+            factor      = 2
+            maxDuration = "1m"
+          }
+        }
+      }
+    }
+  }
+
+  depends_on = [
+    kubernetes_manifest.big_data_on_k8s_project
+  ]
+}
+
+# Trino
+resource "kubernetes_manifest" "trino" {
+  manifest = {
+    apiVersion = "argoproj.io/v1alpha1"
+    kind       = "Application"
+
+    metadata = {
+      name      = "trino"
+      namespace = "cicd"
+    }
+
+    spec = {
+      project = "big-data-on-k8s"
+
+      source = {
+        repoURL        = "https://github.com/JPedro-loureiro/big_data_k8s"
+        path          = "apps/data_exploration/trino"
+        targetRevision = "HEAD"
+      }
+
+      destination = {
+        server    = "https://kubernetes.default.svc"
+        namespace = "data-exploration"
       }
 
       syncPolicy = {
