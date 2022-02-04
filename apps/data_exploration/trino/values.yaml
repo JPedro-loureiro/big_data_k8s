@@ -26,7 +26,7 @@ ingress:
     secretName: "trino-tls-secret"
 
 server:
-  workers: 1
+  workers: 3
   node:
     environment: production
     dataDir: /data/trino
@@ -50,8 +50,8 @@ server:
         # JKS keystores always require a password, while PEM format certificates can optionally require a password
         key: ""
     query:
-      maxMemory: "1GB"
-      maxMemoryPerNode: "1GB"
+      maxMemory: "2GB"
+      maxMemoryPerNode: "2GB"
       maxTotalMemory: "3GB"
       maxTotalMemoryPerNode: "2GB"
     prestoCompatibleHeader: false
