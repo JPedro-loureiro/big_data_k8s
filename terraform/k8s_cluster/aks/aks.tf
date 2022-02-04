@@ -18,7 +18,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
 
   default_node_pool {
     name       = "${var.env}master"
-    node_count = "2"
+    node_count = "3"
     vm_size    = var.default_node_type # standard_b2s
   }
 
@@ -97,6 +97,14 @@ resource "azurerm_dns_a_record" "kafka_bootstrap" {
 
 resource "azurerm_dns_a_record" "kafka_broker_0" {
   name                = "kafka-broker-0.${var.env}"
+  zone_name           = azurerm_dns_zone.dns_zone.name
+  resource_group_name = azurerm_resource_group.rg.name
+  ttl                 = 300
+  target_resource_id  = azurerm_public_ip.load_balancer_ip.id
+}
+
+resource "azurerm_dns_a_record" "trino" {
+  name                = "trino.${var.env}"
   zone_name           = azurerm_dns_zone.dns_zone.name
   resource_group_name = azurerm_resource_group.rg.name
   ttl                 = 300
