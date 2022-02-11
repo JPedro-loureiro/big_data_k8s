@@ -50,7 +50,6 @@ resource "kubernetes_ingress_v1" "argocd_ingress" {
 
 #################### ArgoCD Project ####################
 
-# The Big data on k8s ArgoCD Project
 resource "kubernetes_manifest" "big_data_on_k8s_project" {
   manifest = {
     apiVersion = "argoproj.io/v1alpha1"
@@ -90,66 +89,13 @@ resource "kubernetes_manifest" "big_data_on_k8s_project" {
 
 #################### ArgoCD Applications ####################
 
-# App Test
-# resource "kubernetes_manifest" "app_test_application" {
-#   manifest = {
-#     apiVersion = "argoproj.io/v1alpha1"
-#     kind       = "Application"
-
-#     metadata = {
-#       name      = "app-test"
-#       namespace = "cicd"
-#     }
-
-#     spec = {
-#       project = "big-data-on-k8s"
-
-#       source = {
-#         repoURL        = "https://github.com/JPedro-loureiro/big_data_k8s"
-#         targetRevision = "HEAD"
-#         path           = "apps/app_test"
-#       }
-
-#       destination = {
-#         server    = "https://kubernetes.default.svc"
-#         namespace = "app-test"
-#       }
-
-#       syncPolicy = {
-#         automated = {
-#           prune      = true
-#           selfHeal   = true
-#           allowEmpty = false
-#         }
-
-#         syncOptions = [
-#           "Validate=false",
-#           "CreateNamespace=true",
-#           "PrunePropagationPolicy=foreground",
-#           "PruneLast=true"
-#         ]
-
-#         retry = {
-#           limit = 3
-#           backoff = {
-#             duration    = "5s"
-#             factor      = 2
-#             maxDuration = "1m"
-#           }
-#         }
-#       }
-#     }
-#   }
-# }
-
-# Data Gen
-resource "kubernetes_manifest" "data_generator" {
+resource "kubernetes_manifest" "argocd_applications" {
   manifest = {
     apiVersion = "argoproj.io/v1alpha1"
     kind       = "Application"
 
     metadata = {
-      name      = "data-generator"
+      name      = "argocd-applications"
       namespace = "cicd"
     }
 
@@ -159,12 +105,12 @@ resource "kubernetes_manifest" "data_generator" {
       source = {
         repoURL        = "https://github.com/JPedro-loureiro/big_data_k8s"
         targetRevision = "HEAD"
-        path           = "apps/data_generator/k8s"
+        path           = "apps/argocd_applications"
       }
 
       destination = {
         server    = "https://kubernetes.default.svc"
-        namespace = "data-generator"
+        namespace = "cicd"
       }
 
       syncPolicy = {
@@ -192,288 +138,4 @@ resource "kubernetes_manifest" "data_generator" {
       }
     }
   }
-}
-
-# Strimzi Operator
-resource "kubernetes_manifest" "strimzi_operator" {
-  manifest = {
-    apiVersion = "argoproj.io/v1alpha1"
-    kind       = "Application"
-
-    metadata = {
-      name      = "strimzi-kafka-operator"
-      namespace = "cicd"
-    }
-
-    spec = {
-      project = "big-data-on-k8s"
-
-      source = {
-        repoURL        = "https://strimzi.io/charts"
-        targetRevision = "0.26.0"
-        chart          = "strimzi-kafka-operator"
-        helm = {
-          version = "v3"
-        }
-      }
-
-      destination = {
-        server    = "https://kubernetes.default.svc"
-        namespace = "ingestion"
-      }
-
-      syncPolicy = {
-        automated = {
-          prune      = true
-          selfHeal   = true
-          allowEmpty = false
-        }
-
-        syncOptions = [
-          "Validate=false",
-          "CreateNamespace=true",
-          "PrunePropagationPolicy=foreground",
-          "PruneLast=true"
-        ]
-
-        retry = {
-          limit = 3
-          backoff = {
-            duration    = "5s"
-            factor      = 2
-            maxDuration = "1m"
-          }
-        }
-      }
-    }
-  }
-
-  depends_on = [
-    kubernetes_manifest.big_data_on_k8s_project
-  ]
-}
-
-# Kafka Cluster
-resource "kubernetes_manifest" "kafka_cluster" {
-  manifest = {
-    apiVersion = "argoproj.io/v1alpha1"
-    kind       = "Application"
-
-    metadata = {
-      name      = "kafka-cluster"
-      namespace = "cicd"
-    }
-
-    spec = {
-      project = "big-data-on-k8s"
-
-      source = {
-        repoURL        = "https://github.com/JPedro-loureiro/big_data_k8s"
-        targetRevision = "HEAD"
-        path           = "apps/ingestion/kafka/kafka-cluster"
-      }
-
-      destination = {
-        server    = "https://kubernetes.default.svc"
-        namespace = "ingestion"
-      }
-
-      syncPolicy = {
-        automated = {
-          prune      = true
-          selfHeal   = true
-          allowEmpty = false
-        }
-
-        syncOptions = [
-          "Validate=false",
-          "CreateNamespace=true",
-          "PrunePropagationPolicy=foreground",
-          "PruneLast=true"
-        ]
-
-        retry = {
-          limit = 3
-          backoff = {
-            duration    = "5s"
-            factor      = 2
-            maxDuration = "1m"
-          }
-        }
-      }
-    }
-  }
-
-  depends_on = [
-    kubernetes_manifest.strimzi_operator
-  ]
-}
-
-# Kafka Topics
-resource "kubernetes_manifest" "kafka_topics" {
-  manifest = {
-    apiVersion = "argoproj.io/v1alpha1"
-    kind       = "Application"
-
-    metadata = {
-      name      = "kafka-topics"
-      namespace = "cicd"
-    }
-
-    spec = {
-      project = "big-data-on-k8s"
-
-      source = {
-        repoURL        = "https://github.com/JPedro-loureiro/big_data_k8s"
-        targetRevision = "HEAD"
-        path           = "apps/ingestion/kafka/kafka-topics"
-      }
-
-      destination = {
-        server    = "https://kubernetes.default.svc"
-        namespace = "ingestion"
-      }
-
-      syncPolicy = {
-        automated = {
-          prune      = true
-          selfHeal   = true
-          allowEmpty = false
-        }
-
-        syncOptions = [
-          "Validate=false",
-          "CreateNamespace=true",
-          "PrunePropagationPolicy=foreground",
-          "PruneLast=true"
-        ]
-
-        retry = {
-          limit = 3
-          backoff = {
-            duration    = "5s"
-            factor      = 2
-            maxDuration = "1m"
-          }
-        }
-      }
-    }
-  }
-
-  depends_on = [
-    kubernetes_manifest.kafka_cluster
-  ]
-}
-
-# Prometheus Operator
-resource "kubernetes_manifest" "kube-prometheus-stack" {
-  manifest = {
-    apiVersion = "argoproj.io/v1alpha1"
-    kind       = "Application"
-
-    metadata = {
-      name      = "kube-prometheus-stack"
-      namespace = "cicd"
-    }
-
-    spec = {
-      project = "big-data-on-k8s"
-
-      source = {
-        repoURL        = "https://github.com/JPedro-loureiro/big_data_k8s"
-        path          = "apps/monitoring/kube-prometheus-stack"
-        targetRevision = "HEAD"
-        # helm = {
-        #   version = "v3"
-        # }
-      }
-
-      destination = {
-        server    = "https://kubernetes.default.svc"
-        namespace = "monitoring"
-      }
-
-      syncPolicy = {
-        automated = {
-          prune      = true
-          selfHeal   = true
-          allowEmpty = false
-        }
-        syncOptions = [
-          "Validate=false",
-          "CreateNamespace=true",
-          "PrunePropagationPolicy=foreground",
-          "PruneLast=true",
-          ]
-
-        retry = {
-          limit = 3
-          backoff = {
-            duration    = "5s"
-            factor      = 2
-            maxDuration = "1m"
-          }
-        }
-      }
-    }
-  }
-
-  depends_on = [
-    kubernetes_manifest.big_data_on_k8s_project
-  ]
-}
-
-# Trino
-resource "kubernetes_manifest" "trino" {
-  manifest = {
-    apiVersion = "argoproj.io/v1alpha1"
-    kind       = "Application"
-
-    metadata = {
-      name      = "trino"
-      namespace = "cicd"
-    }
-
-    spec = {
-      project = "big-data-on-k8s"
-
-      source = {
-        repoURL        = "https://github.com/JPedro-loureiro/big_data_k8s"
-        path          = "apps/data_exploration/trino"
-        targetRevision = "HEAD"
-      }
-
-      destination = {
-        server    = "https://kubernetes.default.svc"
-        namespace = "data-exploration"
-      }
-
-      syncPolicy = {
-        automated = {
-          prune      = true
-          selfHeal   = true
-          allowEmpty = false
-        }
-        syncOptions = [
-          "Validate=false",
-          "CreateNamespace=true",
-          "PrunePropagationPolicy=foreground",
-          "PruneLast=true",
-          ]
-
-        retry = {
-          limit = 3
-          backoff = {
-            duration    = "5s"
-            factor      = 2
-            maxDuration = "1m"
-          }
-        }
-      }
-    }
-  }
-
-  depends_on = [
-    kubernetes_manifest.big_data_on_k8s_project
-  ]
 }
