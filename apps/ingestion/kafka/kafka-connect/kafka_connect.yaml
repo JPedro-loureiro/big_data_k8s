@@ -32,7 +32,7 @@ spec:
     output:
       type: docker
       image: jpedroloureiro/kafka-connectors:latest
-      pushSecret: my-registry-credentials
+      pushSecret: docker-cfg
     plugins:
       - name: debezium-postgres-connector
         artifacts:
