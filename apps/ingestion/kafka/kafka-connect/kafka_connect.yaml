@@ -28,3 +28,7 @@ spec:
     limits:
         memory: 3Gi
         cpu: 1000m
+  build:
+    output:
+      type: docker
+      image: docker.io/jpedroloureiro/kafka-connectors/latest
