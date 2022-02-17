@@ -8,7 +8,7 @@ spec:
   version: 3.0.0
   replicas: 1
   bootstrapServers: kafka-cluster-kafka-bootstrap:9093
-  image: jpedroloureiro/kafka-connectors/latest
+  image: docker.io/jpedroloureiro/kafka-connectors:latest
   tls:
     trustedCertificates:
       - secretName: kafka-cluster-cluster-ca-cert
