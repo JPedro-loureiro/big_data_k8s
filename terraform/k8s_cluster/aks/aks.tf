@@ -18,8 +18,8 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
 
   default_node_pool {
     name       = "${var.env}master"
-    node_count = "3"
-    vm_size    = var.default_node_type # standard_b2s
+    node_count = "1"
+    vm_size    = var.default_node_type
   }
 
   identity {
@@ -29,12 +29,12 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
 
 #################### Node Pools ####################
 
-# resource "azurerm_kubernetes_cluster_node_pool" "memory_optimized" {
-#  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_cluster.id
-#  name                  = "${var.env}memopt"
-#  node_count            = "1"
-#  vm_size               = "standard_b2s"
-# }
+resource "azurerm_kubernetes_cluster_node_pool" "memory_optimized" {
+ kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_cluster.id
+ name                  = "${var.env}memopt"
+ node_count            = "1"
+ vm_size               = "standard_e2as_v4"
+}
 
 #################### Public IP ####################
 
