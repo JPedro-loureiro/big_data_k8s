@@ -7,7 +7,7 @@ spec:
   project: "big-data-on-k8s"
   source: 
     repoURL: "https://charts.bitnami.com/bitnami"
-    targetRevision: "10.16.2"
+    targetRevision: "11.0.8"
     chart: "postgresql"
     helm: 
       version: "v3"
