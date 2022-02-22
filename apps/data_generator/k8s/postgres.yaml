@@ -12,11 +12,11 @@ spec:
     helm: 
       version: "v3"
       parameters:
-        - name: global.postgresql.postgresqlDatabase
+        - name: global.postgresql.auth.postgresqlDatabase
           value: "ifood"
-        - name: global.postgresql.postgresqlUsername
+        - name: global.postgresql.auth.postgresqlUsername
           value: "ifood_app"
-        - name: global.postgresql.postgresqlPassword
+        - name: global.postgresql.auth.postgresqlPassword
           value: "ifood123"
       releaseName: my-postgresql
   destination: 
