@@ -18,6 +18,39 @@ provider "kubernetes" {
     cluster_ca_certificate = var.cluster_ca_certificate
 }
 
+#################### Docker config ####################
+
+resource "kubernetes_namespace" "ingestion" {
+  metadata {
+    annotations = {
+      name = "ingestion"
+    }
+
+    labels = {
+      mylabel = "ingestion"
+    }
+
+    name = "ingestion"
+  }
+}
+
+resource "kubernetes_secret" "docker_private_repo_auth" {
+  metadata {
+    name = "docker-cfg"
+    namespace = "ingestion"
+  }
+
+  data = {
+    ".dockerconfigjson" = "${file("${var.dockerconfig_path}")}"
+  }
+
+  type = "kubernetes.io/dockerconfigjson"
+  
+  depends_on = [
+    kubernetes_namespace.ingestion,
+  ]
+}
+
 #################### Nginx Ingress Controller ####################
 
 resource "helm_release" "nginx_ingress_controller" {
