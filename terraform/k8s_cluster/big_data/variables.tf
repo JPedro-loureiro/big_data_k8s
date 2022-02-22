@@ -20,3 +20,7 @@ variable "load_balancer_ip" {
 variable "env" {
   
 }
+
+variable "dockerconfig_path" {
+    
+}
