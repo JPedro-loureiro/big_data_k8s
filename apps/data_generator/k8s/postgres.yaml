@@ -12,12 +12,16 @@ spec:
     helm: 
       version: "v3"
       parameters:
-        - name: global.postgresql.auth.postgresqlDatabase
+        - name: auth.database
           value: "ifood"
-        - name: global.postgresql.auth.postgresqlUsername
+        - name: auth.username
           value: "ifood_app"
-        - name: global.postgresql.auth.postgresqlPassword
+        - name: auth.password
           value: "ifood123"
+        - name: auth.replicationUsername
+          value: "repl_user"
+        - name: auth.replicationPassword
+          value: "repl_user123"
       releaseName: my-postgresql
   destination: 
     server: "https://kubernetes.default.svc"
