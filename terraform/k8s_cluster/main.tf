@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=2.48.0"
+      version = "=2.95.0"
     }
     aws = {
       source  = "hashicorp/aws"
@@ -74,4 +74,5 @@ module "big_data" {
   cluster_ca_certificate = local.cluster_ca_certificate
   load_balancer_ip       = local.load_balancer_ip
   env                    = var.env
+  dockerconfig_path      = var.dockerconfig_path
 }

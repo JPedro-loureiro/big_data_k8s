@@ -25,7 +25,12 @@ variable "main_node_type" {
 }
 
 variable "kubeconfig_path" {
-  description = "Default node type"
+  description = "Kubeconfig path"
+  type = string
+}
+
+variable "dockerconfig_path" {
+  description = "Dockerconfig path"
   type = string
 }
 
