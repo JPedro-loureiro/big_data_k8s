@@ -15,8 +15,8 @@ spec:
     name: "src-data-generator-postgres"
     database.hostname: "my-postgresql.data-generator"
     database.port: 5432
-    database.user: "ifood_app"
-    database.password: "ifood123"
+    database.user: "repl_user"
+    database.password: "repl_user123"
     database.dbname: "ifood"
-    database.server.name: "ifood-app"
+    database.server.name: "src-data-generator-postgres"
     include.schema.changes: true
