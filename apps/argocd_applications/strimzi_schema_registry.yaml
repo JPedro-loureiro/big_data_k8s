@@ -1,17 +1,17 @@
 apiVersion: "argoproj.io/v1alpha1"
 kind: Application
 metadata:
-  name: data-generator
+  name: schema-registry
   namespace: cicd
 spec:
   project: big-data-on-k8s
   source:
     repoURL: https://github.com/JPedro-loureiro/big_data_k8s
     targetRevision: HEAD
-    path: apps/data_generator/k8s
+    path: apps/ingestion/kafka/kafka-schema-registry
   destination:
     server: https://kubernetes.default.svc
-    namespace: data-generator
+    namespace: ingestion
   syncPolicy:
     automated:
       prune: true

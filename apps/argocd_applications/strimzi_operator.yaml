@@ -1,7 +1,7 @@
 apiVersion: "argoproj.io/v1alpha1"
 kind: Application
 metadata:
-  name: strimzi-operator-application
+  name: strimzi-operator
   namespace: cicd
 spec:
   project: big-data-on-k8s
