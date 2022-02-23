@@ -279,6 +279,7 @@ connectors:
     connection-password=ifood123
   kafka.properties: |-
     connector.name=kafka
+    kafka.table-names=src-data-generator-postgres.public.orders,src-data-generator-postgres.public.products,src-data-generator-postgres.public.restaurants,src-data-generator-postgres.public.users
     kafka.nodes=kafka-cluster.ingestion:9092
     kafka.hide-internal-columns=false
   # elk.properties: |-
