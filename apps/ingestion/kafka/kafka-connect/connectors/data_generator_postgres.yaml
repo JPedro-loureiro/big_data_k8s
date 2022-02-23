@@ -20,3 +20,4 @@ spec:
     database.dbname: "ifood"
     database.server.name: "src-data-generator-postgres"
     include.schema.changes: true
+    plugin.name: "pgoutput"
