@@ -12,6 +12,8 @@ spec:
     helm: 
       version: "v3"
       parameters:
+        - name: auth.postgresPassword
+          value: "adminpassword"
         - name: auth.database
           value: "ifood"
         - name: auth.username
