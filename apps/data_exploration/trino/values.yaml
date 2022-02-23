@@ -277,6 +277,10 @@ connectors:
     connection-url=jdbc:postgresql://my-postgresql.data-generator:5432/ifood
     connection-user=ifood_app
     connection-password=ifood123
+  kafka.properties: |-
+    connector.name=kafka
+    kafka.nodes=kafka-cluster.ingestion:9092
+    kafka.hide-internal-columns=false
   # elk.properties: |-
   #   connector.name=elasticsearch
   #   elasticsearch.host=elasticsearchserver
