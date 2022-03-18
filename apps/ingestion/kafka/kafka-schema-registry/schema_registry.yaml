@@ -27,13 +27,22 @@ spec:
           limits:
             memory: "500Mi"
             cpu: "200m"
+        # env:
+        # - name: SCHEMA_REGISTRY_HOST_NAME
+        #   value: schema-registry
+        # - name: SCHEMA_REGISTRY_LISTENERS
+        #   value: http://0.0.0.0:8081
+        # - name: SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL
+        #   value: kafka-cluster-zookeeper-client:2181
+        # command:
+        # - bash
+        # - -c
+        # - unset SCHEMA_REGISTRY_PORT; /etc/confluent/docker/run
         env:
         - name: SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS
           value: PLAINTEXT://kafka-cluster:9092
         - name: SCHEMA_REGISTRY_HOST_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: status.podIP
+          value: schema-registry
         - name: SCHEMA_REGISTRY_LISTENERS
           value: http://0.0.0.0:8081
         - name: SCHEMA_REGISTRY_KAFKASTORE_SECURITY_PROTOCOL
