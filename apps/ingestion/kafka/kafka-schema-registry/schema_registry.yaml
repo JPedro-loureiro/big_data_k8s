@@ -47,6 +47,10 @@ spec:
           value: http://0.0.0.0:8081
         - name: SCHEMA_REGISTRY_KAFKASTORE_SECURITY_PROTOCOL
           value: PLAINTEXT
+        command:
+        - bash
+        - -c
+        - unset SCHEMA_REGISTRY_PORT
 
 
 # containers:
