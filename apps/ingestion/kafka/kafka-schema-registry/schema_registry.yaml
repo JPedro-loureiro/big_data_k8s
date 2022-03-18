@@ -50,7 +50,7 @@ spec:
         command:
         - bash
         - -c
-        - unset SCHEMA_REGISTRY_PORT
+        - unset SCHEMA_REGISTRY_PORT; /etc/confluent/docker/run
 
 
 # containers:
