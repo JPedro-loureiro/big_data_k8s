@@ -220,18 +220,13 @@ consoleIngress:
     # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     # nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
 
-  # path: /
-  # hosts:
-  #   - console.minio-example.local
-  # tls: [] 
-
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
-
-  host: "minio.dev.bigdataonk8s.com"
+  path: /
+  hosts:
+    - minio.dev.bigdataonk8s.com
   tls:
-    secretName: "minio-tls-secret"
+   - secretName: minio-tls-secret
+     hosts:
+       - minio.dev.bigdataonk8s.com
 
 ## Node labels for pod assignment
 ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
