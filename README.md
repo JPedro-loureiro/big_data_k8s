@@ -2,5 +2,5 @@
 [Intro]
 
 ## Roadmap:
-* Test kafka host with some kafka client;
-* Setup kafka connector for strimzi;
+* Kafka connect
+* kafka schema registry
