@@ -13,6 +13,7 @@ spec:
       - secretName: kafka-cluster-cluster-ca-cert
         certificate: ca.crt
   config:
+    # config connect cluster
     group.id: connect-cluster
     offset.storage.topic: connect-cluster-offsets
     config.storage.topic: connect-cluster-configs
@@ -21,6 +22,12 @@ spec:
     config.storage.replication.factor: -1
     offset.storage.replication.factor: -1
     status.storage.replication.factor: -1
+
+    # schema registry [sc] config
+    key.converter: io.confluent.connect.avro.AvroConverter
+    key.converter.schema.registry.url: "http://schema-registry:8081"
+    value.converter: io.confluent.connect.avro.AvroConverter
+    value.converter.schema.registry.url: "http://schema-registry:8081"
   resources:
     requests:
         memory: 2Gi
