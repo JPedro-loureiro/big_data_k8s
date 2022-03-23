@@ -324,6 +324,9 @@ users:
   - accessKey: console
     secretKey: console123
     policy: consoleAdmin
+  - accessKey: T11ZDXNGN4MCJF2PZ393
+    secretKey: gvrgSv49v4ZPgBqnOPQFh3iR7rxti+iEC8WOWM10
+    policy: readwrite
   # Or you can refer to specific secret
   #- accessKey: externalSecret
   #  existingSecret: my-secret
