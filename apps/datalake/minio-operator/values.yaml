@@ -109,7 +109,7 @@ tenants:
         ## Configure resource requests and limits for MinIO containers
         resources:
           limits:
-            memory: 2Gi
+            memory: 1Gi
           requests:
             memory: 1Gi
         ## Configure security context
