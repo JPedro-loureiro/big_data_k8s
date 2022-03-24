@@ -1,7 +1,7 @@
 apiVersion: "argoproj.io/v1alpha1"
 kind: Application
 metadata:
-  name: minio
+  name: minio-operator
   namespace: cicd
 spec:
   project: big-data-on-k8s
