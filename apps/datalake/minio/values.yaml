@@ -265,26 +265,26 @@ policies:
 ## writeexamplepolicy policy grants creation or deletion of buckets with name 
 ## starting with example. In addition, grants objects write permissions on buckets starting with
 ## example.
-- name: datalake_writer
-  statements:
-    - resources: 
-        - 'arn:aws:s3:::*'
-      actions:
-        - "s3:ListAllMyBuckets"
-    - resources: 
-        - 'arn:aws:s3:::datalake'
-      actions:
-        - "s3:ListBucket"
-        - "s3:GetBucketLocation"
-    - resources: 
-        - 'arn:aws:s3:::datalake/*'
-      actions:
-        - "s3:PutObject"
-        - "s3:GetObject"
-        - "s3:AbortMultipartUpload"
-        - "s3:ListMultipartUpload"
-        - "s3:ListMultipartUploadParts"
-        - "s3:ListBucketMultipartUploads"
+# - name: datalake_writer
+#   statements:
+#     - resources: 
+#         - 'arn:aws:s3:::*'
+#       actions:
+#         - "s3:ListAllMyBuckets"
+#     - resources: 
+#         - 'arn:aws:s3:::datalake'
+#       actions:
+#         - "s3:ListBucket"
+#         - "s3:GetBucketLocation"
+#     - resources: 
+#         - 'arn:aws:s3:::datalake/*'
+#       actions:
+#         - "s3:PutObject"
+#         - "s3:GetObject"
+#         - "s3:AbortMultipartUpload"
+#         - "s3:ListMultipartUpload"
+#         - "s3:ListMultipartUploadParts"
+#         - "s3:ListBucketMultipartUploads"
 
 
 ## readonlyexamplepolicy policy grants access to buckets with name starting with example. 
@@ -330,7 +330,7 @@ users:
     policy: consoleAdmin
   - accessKey: T11ZDXNGN4MCJF2PZ393
     secretKey: gvrgSv49v4ZPgBqnOPQFh3iR7rxti+iEC8WOWM10
-    policy: datalake_writer
+    policy: readwrite
   # Or you can refer to specific secret
   #- accessKey: externalSecret
   #  existingSecret: my-secret
