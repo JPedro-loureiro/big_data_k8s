@@ -50,24 +50,31 @@ console:
     runAsUser: 1000
     runAsNonRoot: true
   ingress:
-    enabled: false
+    enabled: true
     labels: {}
-    annotations: {}
-    tls: []
-    host: console.local
+    annotations: {
+      kubernetes.io/ingress.class: nginx,
+      nginx.ingress.kubernetes.io/rewrite-target: /,
+      cert-manager.io/cluster-issuer: lets-encrypt-cluster-issuer,
+    }
+    tls:
+      - secretName: minio-tls-secret
+        hosts:
+          - minio.prod.bigdataonk8s.com
+    host: minio.prod.bigdataonk8s.com
     path: /
 
 ## MinIO Tenant Definition
 tenants:
   # Tenant name
-  - name: owshq
+  - name: datalake
     ## Registry location and Tag to download MinIO Server image
     image:
       repository: minio/minio
       tag: RELEASE.2021-09-03T03-56-13Z
       pullPolicy: IfNotPresent
     ## Customize namespace for tenant deployment
-    namespace: deepstorage
+    namespace: datalake
     exposeServices:
       minio: true
       console: true
@@ -115,9 +122,9 @@ tenants:
     secrets:
       # create a kubernetes secret object with the accessKey and secretKey as defined here.
       enabled: true
-      name: owshq-secret
-      accessKey: minio
-      secretKey: minio123
+      name: datalake
+      accessKey: admin
+      secretKey: bigdataonk8s
     # pool metrics to be read by Prometheus
     metrics:
       enabled: false
