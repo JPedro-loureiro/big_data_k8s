@@ -261,28 +261,32 @@ resources:
 ##
 ## In addition to default policies [readonly|readwrite|writeonly|consoleAdmin|diagnostics]
 ## you can define additional policies with custom supported actions and resources
-policies: []
+policies:
 ## writeexamplepolicy policy grants creation or deletion of buckets with name 
 ## starting with example. In addition, grants objects write permissions on buckets starting with
 ## example.
-# - name: writeexamplepolicy
-#   statements:
-#     - resources: 
-#         - 'arn:aws:s3:::example*/*'
-#       actions:
-#         - "s3:AbortMultipartUpload"
-#         - "s3:GetObject"
-#         - "s3:DeleteObject"
-#         - "s3:PutObject"
-#         - "s3:ListMultipartUploadParts"
-#     - resources: 
-#         - 'arn:aws:s3:::example*'
-#       actions:
-#         - "s3:CreateBucket"
-#         - "s3:DeleteBucket"
-#         - "s3:GetBucketLocation"
-#         - "s3:ListBucket"
-#         - "s3:ListBucketMultipartUploads"
+- name: datalake_writer
+  statements:
+    - resources: 
+        - 'arn:aws:s3:::*'
+      actions:
+        - "s3:ListAllMyBuckets"
+    - resources: 
+        - 'arn:aws:s3:::datalake'
+      actions:
+        - "s3:ListBucket"
+        - "s3:GetBucketLocation"
+    - resources: 
+        - 'arn:aws:s3:::datalake/*'
+      actions:
+        - "s3:PutObject"
+        - "s3:GetObject"
+        - "s3:AbortMultipartUpload"
+        - "s3:ListMultipartUpload"
+        - "s3:ListMultipartUploadParts"
+        - "s3:ListBucketMultipartUploads"
+
+
 ## readonlyexamplepolicy policy grants access to buckets with name starting with example. 
 ## In addition, grants objects read permissions on buckets starting with example.
 # - name: readonlyexamplepolicy
@@ -326,7 +330,7 @@ users:
     policy: consoleAdmin
   - accessKey: T11ZDXNGN4MCJF2PZ393
     secretKey: gvrgSv49v4ZPgBqnOPQFh3iR7rxti+iEC8WOWM10
-    policy: readwrite
+    policy: datalake_writer
   # Or you can refer to specific secret
   #- accessKey: externalSecret
   #  existingSecret: my-secret
