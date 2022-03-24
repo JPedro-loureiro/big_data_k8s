@@ -38,3 +38,4 @@ spec:
     timestamp.extractor: "Record"
     s3.part.retries: 10
     s3.retry.backoff.ms: 900
+    schema.compatibility: "NONE"
