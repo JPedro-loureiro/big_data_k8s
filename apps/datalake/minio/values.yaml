@@ -255,7 +255,7 @@ podLabels: {}
 ##
 resources:
   requests:
-    memory: 2Gi
+    memory: 1Gi
 
 ## List of policies to be created after minio install
 ##
