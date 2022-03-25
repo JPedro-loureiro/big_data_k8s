@@ -16,11 +16,11 @@ spec:
     key.converter.schema.registry.url: "http://schema-registry:8081"
     value.converter: "io.confluent.connect.avro.AvroConverter"
     value.converter.schema.registry.url: "http://schema-registry:8081"
-    topics: "src-data-generator-postgres.public.orders,
-      src-data-generator-postgres.public.products,
-      src-data-generator-postgres.public.restaurants,
-      src-data-generator-postgres.public.users,
-      src-data-generator-postgres.public.order_products"
+    topics: "src_data_generator_postgres.public.orders,
+      src_data_generator_postgres.public.products,
+      src_data_generator_postgres.public.restaurants,
+      src_data_generator_postgres.public.users,
+      src_data_generator_postgres.public.order_products"
     s3.region: "us-east-1"
     s3.bucket.name: "datalake"
     topics.dir: "landing-zone"
