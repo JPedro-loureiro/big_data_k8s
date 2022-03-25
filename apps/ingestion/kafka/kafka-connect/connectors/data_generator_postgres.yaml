@@ -18,7 +18,7 @@ spec:
     database.user: "postgres"
     database.password: "adminpassword"
     database.dbname: "ifood"
-    database.server.name: "src-data-generator-postgres"
+    database.server.name: "src_data_generator_postgres"
     # include.schema.changes: true
     plugin.name: "pgoutput"
     key.converter.schema.registry.url: "http://schema-registry:8081"
