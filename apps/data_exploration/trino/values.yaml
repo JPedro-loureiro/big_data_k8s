@@ -282,7 +282,7 @@ connectors:
     kafka.table-names=src-data-generator-postgres.public.orders,src-data-generator-postgres.public.products,src-data-generator-postgres.public.restaurants,src-data-generator-postgres.public.users,src-data-generator-postgres.public.order_product
     kafka.nodes=kafka-cluster.ingestion:9092
     kafka.hide-internal-columns=false
-    kafka.confluent-schema-registry-url=http://schema-registry:8081
+  #  kafka.confluent-schema-registry-url=http://schema-registry:8081
   # elk.properties: |-
   #   connector.name=elasticsearch
   #   elasticsearch.host=elasticsearchserver
