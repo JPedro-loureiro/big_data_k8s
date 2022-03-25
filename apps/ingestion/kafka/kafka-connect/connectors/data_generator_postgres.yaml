@@ -28,4 +28,4 @@ spec:
     # auto.create: true
     # auto.evolve: true
     # insert.mode: "upsert"
-    # table.name.format: "yourschema.${topic}"
+    table.name.format: "yourschema.${topic}"
