@@ -27,5 +27,3 @@ spec:
     value.converter: "io.confluent.connect.avro.AvroConverter"
     # auto.create: true
     # auto.evolve: true
-    # insert.mode: "upsert"
-    table.name.format: "public.${topic}"
