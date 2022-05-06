@@ -68,6 +68,7 @@ resource "kubernetes_manifest" "big_data_on_k8s_project" {
         "https://strimzi.io/charts",
         "https://charts.bitnami.com/bitnami",
         "https://prometheus-community.github.io/helm-charts",
+        "https://googlecloudplatform.github.io/spark-on-k8s-operator",
       ]
 
       destinations = [{
