@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://googlecloudplatform.github.io/spark-on-k8s-operator
     targetRevision: 1.3.3
-    chart: spark-on-k8s-operator
+    chart: spark-operator
     helm:
       version: v3
   destination:
