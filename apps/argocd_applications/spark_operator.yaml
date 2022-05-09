@@ -7,7 +7,7 @@ spec:
   project: big-data-on-k8s
   source:
     repoURL: https://googlecloudplatform.github.io/spark-on-k8s-operator
-    targetRevision: 1.1.20
+    targetRevision: 1.1.19
     chart: spark-operator
     helm:
       version: v3
