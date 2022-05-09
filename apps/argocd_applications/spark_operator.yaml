@@ -11,9 +11,9 @@ spec:
     chart: spark-operator
     helm:
       version: v3
-      # parameters:
-      #   - name: "sparkJobNamespace"
-      #     value: "processing"
+      parameters:
+        - name: "sparkJobNamespace"
+          value: "processing"
   destination:
     server: https://kubernetes.default.svc
     namespace: processing
