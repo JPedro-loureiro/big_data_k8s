@@ -1,8 +1,11 @@
-FROM gcr.io/spark-operator/spark-py:v3.0.0
+FROM gcr.io/spark-operator/spark-py:v3.1.1
 
 USER root:root
 
 RUN mkdir -p /app
+
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir delta-spark
 
 COPY app_test.py /app/
 
