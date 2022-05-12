@@ -60,8 +60,8 @@ console:
     tls:
       - secretName: minio-tls-secret
         hosts:
-          - minio.prod.bigdataonk8s.com
-    host: minio.prod.bigdataonk8s.com
+          - minio.dev.bigdataonk8s.com
+    host: minio.dev.bigdataonk8s.com
     path: /
 
 ## MinIO Tenant Definition

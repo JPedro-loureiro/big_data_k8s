@@ -2,6 +2,7 @@
 from delta.tables import *
 from pyspark.sql import SparkSession
 from pyspark import SparkConf
+from time import sleep
 
 # main spark program
 # init application
@@ -36,12 +37,13 @@ if __name__ == '__main__':
 
     # [landing zone area]
     # device and subscription
-    order_products_files = "s3a://datalake/landing-zone/src_data_generator_postgres.public.order_products"
+    sleep(10)
+    order_products_files = "s3a://datalake/Iris.csv"
 
     # read order products data
     # json file from landing zone
     df_order_products = spark.read \
-        .parquet(order_products_files) \
+        .csv(order_products_files) \
         .option("inferSchema", "true") \
         .option("header", "true")
 
