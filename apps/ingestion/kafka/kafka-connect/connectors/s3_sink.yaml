@@ -31,7 +31,8 @@ spec:
     aws.access.key.id: "T11ZDXNGN4MCJF2PZ393"
     aws.secret.access.key: "gvrgSv49v4ZPgBqnOPQFh3iR7rxti+iEC8WOWM10"
     storage.class: "io.confluent.connect.s3.storage.S3Storage"
-    format.class: "io.confluent.connect.s3.format.parquet.ParquetFormat"
+    # format.class: "io.confluent.connect.s3.format.parquet.ParquetFormat"
+    format.class: "io.confluent.connect.s3.format.json.JsonFormat"    
     enhanced.avro.schema.support: True
     schema.generator.class: "io.confluent.connect.storage.hive.schema.DefaultSchemaGenerator"
     partitioner.class: "io.confluent.connect.storage.partitioner.TimeBasedPartitioner"
