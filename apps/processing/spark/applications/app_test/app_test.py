@@ -37,21 +37,32 @@ if __name__ == '__main__':
 
     # [landing zone area]
     # device and subscription
-    sleep(10)
-    order_products_files = "s3a://datalake/Iris.csv"
+    print("Aqui 1!")
+    order_products_files = "s3a://datalake/landing-zone/src_data_generator_postgres.public.order_products/*/*/*/*/"
+    # order_products_files = "s3a://datalake/order_products.snappy.parquet" # Funciona
 
     # read order products data
     # json file from landing zone
+    # df_order_products = spark.read \
+    #     .format("json") \
+    #     .option("inferSchema", "true") \
+    #     .option("header", "true") \
+    #     .json(order_products_files)
+    
     df_order_products = spark.read \
-        .csv(order_products_files) \
-        .option("inferSchema", "true") \
-        .option("header", "true")
+        .parquet(order_products_files)
+    
+    print("Aqui 2!")
 
     # get number of partitions
     print(df_order_products.rdd.getNumPartitions())
 
+    print("Aqui 3!")
+
     # count amount of rows ingested from lake
     print(df_order_products.count())
+
+    print("Aqui 4!")
 
     # [bronze zone area]
     # data lakehouse paradigm
@@ -59,6 +70,8 @@ if __name__ == '__main__':
     write_delta_mode = "overwrite"
     delta_bronze_zone = "s3a://datalake/bronze"
     df_order_products.write.mode(write_delta_mode).format("delta").save(delta_bronze_zone + "/order_products/")
+
+    print("Aqui 5!")
 
     # stop session
     spark.stop()
