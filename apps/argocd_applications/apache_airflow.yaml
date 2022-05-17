@@ -14,7 +14,7 @@ spec:
       parameters:
         # Ingress
         - name: "ingress.enabled"
-          value: true
+          value: "true"
         - name: "ingress.web.annotations"
           value: {
             kubernetes.io/ingress.class: nginx,
