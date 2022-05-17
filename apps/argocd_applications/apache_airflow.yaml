@@ -26,34 +26,34 @@ spec:
         - name: "ingress.web.tls.enabled"
           value: "true"
         - name: "ingress.web.tls.secretName"
-          value: airflow-tls-secret
+          value: "airflow-tls-secret"
         # Workers
         - name: "workers.replicas"
           value: 1
         - name: "workers.persistence.size"
-          value: 10Gi
+          value: "10Gi"
         - name: "workers.resources.limits.cpu"
-          value: 1000m   
+          value: "1000m"   
         - name: "workers.resources.limits.memory"
-          value: 3Gi   
+          value: "3Gi"   
         - name: "workers.resources.requests.cpu"
-          value: 500m   
+          value: "500m"   
         - name: "workers.resources.requests.memory"
-          value: 2Gi
+          value: "2Gi"
         # Scheduler
         - name: "scheduler.replicas"
-          value: 1
+          value: "1"
         - name: "scheduler.resources.limits.cpu"
-          value: 500m
+          value: "500m"
         - name: "scheduler.resources.limits.memory"
-          value: 1Gi
+          value: "1Gi"
         - name: "scheduler.resources.requests.cpu"
-          value: 200m
+          value: "200m"
         - name: "scheduler.resources.requests.memory"
-          value: 1Gi
+          value: "1Gi"
         # WebServer
         - name: "webserver.defaultUser.password"
-          value: admin
+          value: "admin"
   destination:
     server: https://kubernetes.default.svc
     namespace: orchestration
