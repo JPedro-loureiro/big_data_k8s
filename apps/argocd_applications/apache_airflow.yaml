@@ -24,7 +24,7 @@ spec:
         - name: "ingress.web.hosts"
           value: ["airflow.dev.bigdataonk8s.com"]
         - name: "ingress.web.tls.enabled"
-          value: true
+          value: "true"
         - name: "ingress.web.tls.secretName"
           value: airflow-tls-secret
         # Workers
