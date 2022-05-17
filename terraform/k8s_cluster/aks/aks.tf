@@ -118,3 +118,11 @@ resource "azurerm_dns_a_record" "minio" {
   ttl                 = 300
   target_resource_id  = azurerm_public_ip.load_balancer_ip.id
 }
+
+resource "azurerm_dns_a_record" "airflow" {
+  name                = "airflow.${var.env}"
+  zone_name           = azurerm_dns_zone.dns_zone.name
+  resource_group_name = azurerm_resource_group.rg.name
+  ttl                 = 300
+  target_resource_id  = azurerm_public_ip.load_balancer_ip.id
+}
