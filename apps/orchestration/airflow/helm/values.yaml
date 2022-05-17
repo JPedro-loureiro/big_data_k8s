@@ -493,11 +493,11 @@ workers:
 
   resources: 
     limits:
-     cpu: 1000m
-     memory: 3Gi
+     cpu: 750m
+     memory: 2Gi
     requests:
      cpu: 500m
-     memory: 2Gi
+     memory: 1Gi
 
   # Grace period for tasks to finish after SIGTERM is sent from kubernetes
   terminationGracePeriodSeconds: 600
@@ -632,7 +632,7 @@ scheduler:
      memory: 1Gi
     requests:
      cpu: 200m
-     memory: 1Gi
+     memory: 500Gi
 
   # This setting tells kubernetes that its ok to evict
   # when it wants to scale a node down.
@@ -862,13 +862,13 @@ webserver:
       ports:
         - port: "{{ .Values.ports.airflowUI }}"
 
-  resources: {}
-  #   limits:
-  #     cpu: 100m
-  #     memory: 128Mi
-  #   requests:
-  #     cpu: 100m
-  #     memory: 128Mi
+  resources:
+    limits:
+      cpu: 300m
+      memory: 500Mi
+    requests:
+      cpu: 150m
+      memory: 250Mi
 
   # Create initial user.
   defaultUser:
