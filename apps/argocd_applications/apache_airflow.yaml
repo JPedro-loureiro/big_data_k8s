@@ -147,37 +147,37 @@ spec:
         #     tls:
         #       enabled: true
         #       secretName: "airflow-tls-secret"
-        # workers:
-        #   replicas: 1
-        #   persistence:
-        #     size: 10Gi
-        #   resources: 
-        #     limits:
-        #       cpu: 750m
-        #       memory: 2Gi
-        #     requests:
-        #       cpu: 500m
-        #       memory: 1Gi
-        # scheduler:
-        #   replicas: 1
-        #   resources: 
-        #     limits:
-        #       cpu: 500m
-        #       memory: 1Gi
-        #     requests:
-        #       cpu: 200m
-        #       memory: 500Gi
+        workers:
+          replicas: 1
+          persistence:
+            size: 10Gi
+          resources: 
+            limits:
+              cpu: 750m
+              memory: 2Gi
+            requests:
+              cpu: 500m
+              memory: 1Gi
+        scheduler:
+          replicas: 1
+          resources: 
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 200m
+              memory: 500Gi
         webserver:
-        #   replicas: 1
-        #   resources:
-        #     limits:
-        #       cpu: 300m
-        #       memory: 500Mi
-        #     requests:
-        #       cpu: 150m
-        #       memory: 250Mi
-          defaultUser:
-            password: bigdataonk8s
+          replicas: 1
+          resources:
+            limits:
+              cpu: 300m
+              memory: 500Mi
+            requests:
+              cpu: 150m
+              memory: 250Mi
+          # defaultUser:
+          #   password: bigdataonk8s
   destination:
     server: https://kubernetes.default.svc
     namespace: orchestration
