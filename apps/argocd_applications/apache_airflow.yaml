@@ -167,7 +167,7 @@ spec:
         #     requests:
         #       cpu: 200m
         #       memory: 500Gi
-        # webserver:
+        webserver:
         #   replicas: 1
         #   resources:
         #     limits:
@@ -176,8 +176,8 @@ spec:
         #     requests:
         #       cpu: 150m
         #       memory: 250Mi
-        #   defaultUser:
-        #     password: bigdataonk8s
+          defaultUser:
+            password: bigdataonk8s
   destination:
     server: https://kubernetes.default.svc
     namespace: orchestration
