@@ -31,78 +31,78 @@
 
 ###################################################
 
-# apiVersion: "argoproj.io/v1alpha1"
-# kind: Application
-# metadata:
-#   name: apache-airflow
-#   namespace: cicd
-# spec:
-#   project: big-data-on-k8s
-#   source:
-#     repoURL: https://airflow.apache.org/
-#     targetRevision: 1.5.0
-#     chart: airflow
-#     helm:
-#       version: v3
-#       parameters:
-#         # Ingress
-#         - name: "ingress.enabled"
-#           value: "true"
-#         - name: "ingress.web.annotations"
-#           value:
-#             kubernetes.io/ingress.class: "nginx"
-#             nginx.ingress.kubernetes.io/rewrite-target: "/"
-#             cert-manager.io/cluster-issuer: "lets-encrypt-cluster-issuer"
-#         - name: "ingress.web.hosts"
-#           value: 
-#             - "airflow.dev.bigdataonk8s.com"
-#         - name: "ingress.web.tls.enabled"
-#           value: "true"
-#         - name: "ingress.web.tls.secretName"
-#           value: "airflow-tls-secret"
-#         # Workers
-#         - name: "workers.replicas"
-#           value: 1
-#         - name: "workers.persistence.size"
-#           value: "10Gi"
-#         - name: "workers.resources.limits.cpu"
-#           value: "1000m"   
-#         - name: "workers.resources.limits.memory"
-#           value: "3Gi"   
-#         - name: "workers.resources.requests.cpu"
-#           value: "500m"   
-#         - name: "workers.resources.requests.memory"
-#           value: "2Gi"
-#         # Scheduler
-#         - name: "scheduler.replicas"
-#           value: "1"
-#         - name: "scheduler.resources.limits.cpu"
-#           value: "500m"
-#         - name: "scheduler.resources.limits.memory"
-#           value: "1Gi"
-#         - name: "scheduler.resources.requests.cpu"
-#           value: "200m"
-#         - name: "scheduler.resources.requests.memory"
-#           value: "1Gi"
-#         # WebServer
-#         - name: "webserver.defaultUser.password"
-#           value: "admin"
-#   destination:
-#     server: https://kubernetes.default.svc
-#     namespace: orchestration
-#   syncPolicy:
-#     automated:
-#       prune: true
-#       selfHeal: true
-#       allowEmpty: false
-#     syncOptions:
-#       - "Validate=false"
-#       - "CreateNamespace=true"
-#       - "PrunePropagationPolicy=foreground"
-#       - "PruneLast=true"
-#     retry:
-#       limit: 3
-#       backoff:
-#         duration   : "5s"
-#         factor     : 2
-#         maxDuration: "1m"
+apiVersion: "argoproj.io/v1alpha1"
+kind: Application
+metadata:
+  name: apache-airflow
+  namespace: cicd
+spec:
+  project: big-data-on-k8s
+  source:
+    repoURL: https://airflow.apache.org/
+    targetRevision: 1.5.0
+    chart: airflow
+    helm:
+      version: v3
+      # parameters:
+      #   # Ingress
+      #   - name: "ingress.enabled"
+      #     value: "true"
+      #   - name: "ingress.web.annotations"
+      #     value:
+      #       kubernetes.io/ingress.class: "nginx"
+      #       nginx.ingress.kubernetes.io/rewrite-target: "/"
+      #       cert-manager.io/cluster-issuer: "lets-encrypt-cluster-issuer"
+      #   - name: "ingress.web.hosts"
+      #     value: 
+      #       - "airflow.dev.bigdataonk8s.com"
+      #   - name: "ingress.web.tls.enabled"
+      #     value: "true"
+      #   - name: "ingress.web.tls.secretName"
+      #     value: "airflow-tls-secret"
+      #   # Workers
+      #   - name: "workers.replicas"
+      #     value: 1
+      #   - name: "workers.persistence.size"
+      #     value: "10Gi"
+      #   - name: "workers.resources.limits.cpu"
+      #     value: "1000m"   
+      #   - name: "workers.resources.limits.memory"
+      #     value: "3Gi"   
+      #   - name: "workers.resources.requests.cpu"
+      #     value: "500m"   
+      #   - name: "workers.resources.requests.memory"
+      #     value: "2Gi"
+      #   # Scheduler
+      #   - name: "scheduler.replicas"
+      #     value: "1"
+      #   - name: "scheduler.resources.limits.cpu"
+      #     value: "500m"
+      #   - name: "scheduler.resources.limits.memory"
+      #     value: "1Gi"
+      #   - name: "scheduler.resources.requests.cpu"
+      #     value: "200m"
+      #   - name: "scheduler.resources.requests.memory"
+      #     value: "1Gi"
+      #   # WebServer
+      #   - name: "webserver.defaultUser.password"
+      #     value: "admin"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: orchestration
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+      - "Validate=false"
+      - "CreateNamespace=true"
+      - "PrunePropagationPolicy=foreground"
+      - "PruneLast=true"
+    retry:
+      limit: 3
+      backoff:
+        duration   : "5s"
+        factor     : 2
+        maxDuration: "1m"
