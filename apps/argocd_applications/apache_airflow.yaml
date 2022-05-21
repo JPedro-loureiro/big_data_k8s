@@ -11,7 +11,7 @@ spec:
     path: apps/orchestration/airflow/helm
   destination:
     server: https://kubernetes.default.svc
-    namespace: orchestration
+    namespace: orchestration-local
   syncPolicy:
     automated:
       prune: true
@@ -96,7 +96,7 @@ spec:
       #       password: bigdataonk8s
   destination:
     server: https://kubernetes.default.svc
-    namespace: orchestration
+    namespace: orchestration-remote
   syncPolicy:
     automated:
       prune: true
