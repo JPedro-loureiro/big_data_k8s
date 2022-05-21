@@ -147,17 +147,17 @@ spec:
             tls:
               enabled: true
               secretName: "airflow-tls-secret"
-        # workers:
-        #   replicas: 1
-        #   persistence:
-        #     size: 10Gi
-        #   resources: 
-        #     limits:
-        #       cpu: 750m
-        #       memory: 2Gi
-        #     requests:
-        #       cpu: 500m
-        #       memory: 1Gi
+        workers:
+          replicas: 1
+          persistence:
+            size: 10Gi
+          resources: 
+            limits:
+              cpu: 750m
+              memory: 2Gi
+            requests:
+              cpu: 500m
+              memory: 1Gi
         # scheduler:
         #   replicas: 1
         #   resources: 
