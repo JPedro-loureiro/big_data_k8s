@@ -61,8 +61,7 @@ spec:
         - name: "ingress.web.path"
           value: "/"
         - name: "ingress.web.hosts"
-          value: 
-            - "airflow.dev.bigdataonk8s.com"
+          value: "airflow.dev.bigdataonk8s.com"
         - name: "ingress.web.tls.enabled"
           value: "true"
         - name: "ingress.web.tls.secretName"
