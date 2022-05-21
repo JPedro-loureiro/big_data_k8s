@@ -125,7 +125,7 @@ ingress:
 
     # The hostnames or hosts configuration for the web Ingress
     hosts: [
-      airflow.dev.bigdataonk8s.com,
+      airflow.prod.bigdataonk8s.com,
     ]
     # - name: ""
     #   # configs for web Ingress TLS
@@ -225,7 +225,7 @@ rbac:
 
 # Airflow executor
 # Options: LocalExecutor, CeleryExecutor, KubernetesExecutor, CeleryKubernetesExecutor
-executor: "KubernetesExecutor"
+executor: "CeleryExecutor"
 
 # If this is true and using LocalExecutor/KubernetesExecutor/CeleryKubernetesExecutor, the scheduler's
 # service account will have access to communicate with the api-server and launch pods.
