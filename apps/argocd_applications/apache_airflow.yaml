@@ -44,7 +44,11 @@ spec:
     chart: airflow
     helm:
       version: v3
-      # parameters:
+      parameters:
+        - name: "createUserJob.useHelmHooks"
+          value: "false"
+        - name: "migrateDatabaseJob.useHelmHooks"
+          value: "false"
       #   # Ingress
       #   - name: "ingress.enabled"
       #     value: "true"
