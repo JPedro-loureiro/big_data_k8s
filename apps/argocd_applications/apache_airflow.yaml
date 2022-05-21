@@ -144,6 +144,9 @@ spec:
             hosts: [
               airflow.dev.bigdataonk8s.com,
             ]
+            tls:
+              enabled: true
+              secretName: "airflow-tls-secret"
       # parameters:
       #   # # Ingress
       #   # - name: "ingress.enabled"
