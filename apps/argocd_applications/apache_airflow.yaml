@@ -133,11 +133,18 @@ spec:
           useHelmHooks: false
         migrateDatabaseJob:
           useHelmHooks: false
+        ingress:
+        enabled: true
+        web:
+          annotations:
+            kubernetes.io/ingress.class: "nginx"
+            nginx.ingress.kubernetes.io/rewrite-target: "/"
+            cert-manager.io/cluster-issuer: "lets-encrypt-cluster-issuer"
+          path: "/"
+          hosts: [
+            airflow.dev.bigdataonk8s.com,
+          ]
       # parameters:
-      #   - name: "createUserJob.useHelmHooks"
-      #     value: "false"
-      #   - name: "migrateDatabaseJob.useHelmHooks"
-      #     value: "false"
       #   # # Ingress
       #   # - name: "ingress.enabled"
       #   #   value: "true"
