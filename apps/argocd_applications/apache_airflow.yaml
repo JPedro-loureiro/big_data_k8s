@@ -44,11 +44,11 @@ spec:
     chart: airflow
     helm:
       version: v3
-      # values: |
-      #   createUserJob:
-      #     useHelmHooks: false
-      #   migrateDatabaseJob:
-      #     useHelmHooks: false
+      values: |
+        createUserJob:
+          useHelmHooks: false
+        migrateDatabaseJob:
+          useHelmHooks: false
       #   ingress:
       #     enabled: true
       #     web:
