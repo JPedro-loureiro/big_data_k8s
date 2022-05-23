@@ -94,22 +94,22 @@
 #       #       tls:
 #       #         enabled: true
 #       #         secretName: "airflow-tls-secret"
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: orchestration-remote
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-      allowEmpty: false
-    syncOptions:
-      - "Validate=false"
-      - "CreateNamespace=true"
-      - "PrunePropagationPolicy=foreground"
-      - "PruneLast=true"
-    retry:
-      limit: 3
-      backoff:
-        duration   : "5s"
-        factor     : 2
-        maxDuration: "1m"
+  # destination:
+  #   server: https://kubernetes.default.svc
+  #   namespace: orchestration-remote
+  # syncPolicy:
+  #   automated:
+  #     prune: true
+  #     selfHeal: true
+  #     allowEmpty: false
+  #   syncOptions:
+  #     - "Validate=false"
+  #     - "CreateNamespace=true"
+  #     - "PrunePropagationPolicy=foreground"
+  #     - "PruneLast=true"
+  #   retry:
+  #     limit: 3
+  #     backoff:
+  #       duration   : "5s"
+  #       factor     : 2
+  #       maxDuration: "1m"
