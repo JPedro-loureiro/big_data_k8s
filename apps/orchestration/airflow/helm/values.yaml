@@ -125,7 +125,7 @@ ingress:
 
     # The hostnames or hosts configuration for the web Ingress
     hosts: [
-      airflow.prod.bigdataonk8s.com,
+      airflow.qa.bigdataonk8s.com,
     ]
     # - name: ""
     #   # configs for web Ingress TLS

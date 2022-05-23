@@ -23,7 +23,7 @@ resource "kubernetes_ingress_v1" "argocd_ingress" {
   }
   spec {
     rule {
-      host = "argocd.dev.bigdataonk8s.com"
+      host = "argocd.qa.bigdataonk8s.com"
       http {
         path {
           path = "/"
@@ -41,7 +41,7 @@ resource "kubernetes_ingress_v1" "argocd_ingress" {
     }
     tls {
       hosts = [
-        "argocd.dev.bigdataonk8s.com"
+        "argocd.qa.bigdataonk8s.com"
       ]
       secret_name = "argocd-secret"
     }
@@ -69,6 +69,7 @@ resource "kubernetes_manifest" "big_data_on_k8s_project" {
         "https://charts.bitnami.com/bitnami",
         "https://prometheus-community.github.io/helm-charts",
         "https://googlecloudplatform.github.io/spark-on-k8s-operator",
+        "https://airflow.apache.org/",
       ]
 
       destinations = [{
