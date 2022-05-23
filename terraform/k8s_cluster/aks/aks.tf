@@ -32,7 +32,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
 resource "azurerm_kubernetes_cluster_node_pool" "memory_optimized" {
  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_cluster.id
  name                  = "${var.env}memopt"
- node_count            = "1"
+ node_count            = "2"
  vm_size               = "standard_b4ms"
 }
 
