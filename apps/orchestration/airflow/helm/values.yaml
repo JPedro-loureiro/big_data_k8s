@@ -104,7 +104,7 @@ labels: {}
 # Ingress configuration
 ingress:
   # Enable ingress resource
-  enabled: true
+  enabled: false
 
   # Configs for the Ingress of the web Service
   web:
@@ -472,7 +472,7 @@ workers:
     # Enable persistent volumes
     enabled: true
     # Volume size for worker StatefulSet
-    size: 10Gi
+    size: 50Gi
     # If using a custom storageClass, pass name ref to all statefulSets here
     storageClassName:
     # Execute init container to chown log directory.
@@ -493,11 +493,11 @@ workers:
 
   resources: 
     limits:
-     cpu: 750m
-     memory: 2Gi
+     cpu: 1000m
+     memory: 3Gi
     requests:
      cpu: 500m
-     memory: 1Gi
+     memory: 2Gi
 
   # Grace period for tasks to finish after SIGTERM is sent from kubernetes
   terminationGracePeriodSeconds: 600
@@ -632,7 +632,7 @@ scheduler:
      memory: 1Gi
     requests:
      cpu: 200m
-     memory: 500m
+     memory: 1Gi
 
   # This setting tells kubernetes that its ok to evict
   # when it wants to scale a node down.
@@ -863,12 +863,12 @@ webserver:
         - port: "{{ .Values.ports.airflowUI }}"
 
   resources:
-    limits:
-      cpu: 300m
-      memory: 500Mi
-    requests:
-      cpu: 150m
-      memory: 250Mi
+     limits:
+       cpu: 2000m
+       memory: 3Gi
+     requests:
+       cpu: 1500m
+       memory: 3Gi
 
   # Create initial user.
   defaultUser:
@@ -1548,21 +1548,21 @@ dags:
     ## the name of an existing PVC to use
     existingClaim:
   gitSync:
-    enabled: false
+    enabled: true
 
     # git repo clone url
     # ssh examples ssh://git@github.com/apache/airflow.git
     # git@github.com:apache/airflow.git
     # https example: https://github.com/apache/airflow.git
-    repo: https://github.com/apache/airflow.git
-    branch: v2-2-stable
+    repo: https://github.com/JPedro-loureiro/big_data_k8s.git
+    branch: main
     rev: HEAD
-    depth: 1
+    depth: 0
     # the number of consecutive failures allowed before aborting
     maxFailures: 0
     # subpath within the repo where dags are located
     # should be "" if dags are at repo root
-    subPath: "tests/dags"
+    subPath: "apps/orchestration/airflow/dags"
     # if your repo needs a user name password
     # you can load them to a k8s secret like the one below
     #   ---
@@ -1598,7 +1598,7 @@ dags:
     #    <host1>,<ip1> <key1>
     #    <host2>,<ip2> <key2>
     # interval between git sync attempts in seconds
-    wait: 60
+    wait: 30
     containerName: git-sync
     uid: 65533
 
