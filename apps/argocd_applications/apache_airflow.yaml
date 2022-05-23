@@ -88,20 +88,20 @@ spec:
             depth: 0
             subPath: "apps/orchestration/airflow/dags"
             wait: 30
-      #   ingress:
-      #     enabled: true
-      #     web:
-      #       annotations:
-      #         kubernetes.io/ingress.class: "nginx"
-      #         nginx.ingress.kubernetes.io/rewrite-target: "/"
-      #         cert-manager.io/cluster-issuer: "lets-encrypt-cluster-issuer"
-      #       path: "/"
-      #       hosts: [
-      #         airflow.qa.bigdataonk8s.com,
-      #       ]
-      #       tls:
-      #         enabled: true
-      #         secretName: "airflow-tls-secret"
+        ingress:
+          enabled: true
+          web:
+            annotations:
+              kubernetes.io/ingress.class: "nginx"
+              nginx.ingress.kubernetes.io/rewrite-target: "/"
+              cert-manager.io/cluster-issuer: "lets-encrypt-cluster-issuer"
+            path: "/"
+            hosts: [
+              airflow.qa.bigdataonk8s.com,
+            ]
+            tls:
+              enabled: true
+              secretName: "airflow-tls-secret"
   destination:
     server: https://kubernetes.default.svc
     namespace: orchestration-remote
