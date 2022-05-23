@@ -7,7 +7,7 @@ spec:
   project: big-data-on-k8s
   source:
     repoURL: https://airflow.apache.org/
-    targetRevision: 1.5.0
+    targetRevision: 1.6.0
     chart: airflow
     helm:
       version: v3
