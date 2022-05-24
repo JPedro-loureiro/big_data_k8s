@@ -53,7 +53,7 @@ t1 = SparkKubernetesOperator(
     task_id='etl_bronze_submit',
     namespace="processing",
     application_file="etl_bronze_app.yaml",
-    # kubernetes_conn_id="kubernetes_cluster",
+    kubernetes_conn_id="kubernetes_cluster",
     do_xcom_push=True,
     dag=dag,
 )
@@ -61,7 +61,7 @@ t1 = SparkKubernetesOperator(
 t2 = SparkKubernetesSensor(
     task_id='etl_bronze_monitor',
     namespace="processing",
-    # kubernetes_conn_id="kubernetes_cluster",
+    kubernetes_conn_id="kubernetes_cluster",
     application_name="{{ task_instance.xcom_pull(task_ids='etl_bronze_submit')['metadata']['name'] }}",
     dag=dag,
 )
