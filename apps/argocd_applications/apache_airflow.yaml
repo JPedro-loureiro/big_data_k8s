@@ -16,6 +16,7 @@ spec:
           airflow:
             repository: jpedroloureiro/custom-apache-airflow
             tag: 1.0.0
+            pullPolicy: Always
         createUserJob:
           useHelmHooks: false
         migrateDatabaseJob:
