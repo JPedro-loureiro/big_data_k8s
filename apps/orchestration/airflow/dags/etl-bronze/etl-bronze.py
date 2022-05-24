@@ -41,28 +41,28 @@ from airflow.providers.cncf.kubernetes.sensors.spark_kubernetes import SparkKube
 # [START instantiate_dag]
 
 dag = DAG(
-    'etl-bronze',
+    'etl_bronze',
     default_args={'max_active_runs': 1},
-    description='submit spark-pi as sparkApplication on kubernetes',
+    description='submit elt_bronze_app as sparkApplication on kubernetes',
     schedule_interval=timedelta(days=1),
     start_date=datetime(2021, 1, 1),
     catchup=False,
 )
 
 t1 = SparkKubernetesOperator(
-    task_id='etl-bronze-submit',
+    task_id='etl_bronze_submit',
     namespace="processing",
-    application_file="app_test.yaml",
+    application_file="elt_bronze_app.yaml",
     kubernetes_conn_id="kubernetes_cluster",
     do_xcom_push=True,
     dag=dag,
 )
 
 t2 = SparkKubernetesSensor(
-    task_id='spark_pi_monitor',
+    task_id='etl_bronze_monitor',
     namespace="processing",
     kubernetes_conn_id="kubernetes_cluster",
-    application_name="{{ task_instance.xcom_pull(task_ids='etl-bronze-submit')['metadata']['name'] }}",
+    application_name="{{ task_instance.xcom_pull(task_ids='etl_bronze_submit')['metadata']['name'] }}",
     dag=dag,
 )
 t1 >> t2
