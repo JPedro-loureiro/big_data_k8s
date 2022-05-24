@@ -239,10 +239,10 @@ env: []
 #   value: ""
 
 # Secrets for all airflow containers
-secret: []
-# - envName: ""
-#   secretName: ""
-#   secretKey: ""
+secret: 
+  - envName: "AIRFLOW_CONN_KUBERNETES"
+    secretName: "kubernetes_cluster_helm"
+    secretKey: ""
 
 # Enables selected built-in secrets that are set via environment variables by default.
 # Those secrets are provided by the Helm Chart secrets by default but in some cases you
