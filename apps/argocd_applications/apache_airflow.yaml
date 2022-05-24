@@ -60,7 +60,7 @@ spec:
             depth: 0
             subPath: "apps/orchestration/airflow/dags"
             wait: 30
-        ingressClassName:
+        ingress:
           web:
             enabled: true
             annotations:
@@ -69,11 +69,20 @@ spec:
               cert-manager.io/cluster-issuer: "lets-encrypt-cluster-issuer"
             path: "/"
             hosts: [
-              airflow.bigdataonk8s.com,
+              airflow.qa.bigdataonk8s.com,
             ]
             tls:
               enabled: true
               secretName: "airflow-tls-secret"
+        secret: 
+          - envName: "AIRFLOW_CONN_KUBERNETES_CLUSTER"
+            secretName: "kubernetes_cluster_conn"
+            secretKey: "AIRFLOW_CONN_KUBERNETES_CLUSTER"
+        extraSecrets:
+          kubernetes_cluster_conn:
+            data: |
+              AIRFLOW_CONN_KUBERNETES: 'a3ViZXJuZXRlczovLz9fX2V4dHJhX189JTdCJTIyZXh0cmFfX2t1YmVybmV0ZXNfX2luX2NsdXN0ZXIlMjIlM0ErdHJ1ZSU3RAo='
+
   destination:
     server: https://kubernetes.default.svc
     namespace: orchestration

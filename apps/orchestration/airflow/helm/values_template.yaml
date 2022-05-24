@@ -240,9 +240,9 @@ env: []
 
 # Secrets for all airflow containers
 secret: 
-  - envName: "AIRFLOW_CONN_KUBERNETES"
-    secretName: "kubernetes_cluster_helm"
-    secretKey: ""
+  - envName: "AIRFLOW_CONN_KUBERNETES_CLUSTER"
+    secretName: "kubernetes_cluster_conn"
+    secretKey: "AIRFLOW_CONN_KUBERNETES_CLUSTER"
 
 # Enables selected built-in secrets that are set via environment variables by default.
 # Those secrets are provided by the Helm Chart secrets by default but in some cases you
@@ -265,19 +265,11 @@ enableBuiltInSecretEnvVars:
 #    * key (can be templated) is the name of the secret that will be created
 #    * value: an object with the standard 'data' or 'stringData' key (or both).
 #          The value associated with those keys must be a string (can be templated)
-extraSecrets: {}
-# eg:
-# extraSecrets:
-#   '{{ .Release.Name }}-airflow-connections':
-#     type: 'Opaque'
-#     data: |
-#       AIRFLOW_CONN_GCP: 'base64_encoded_gcp_conn_string'
-#       AIRFLOW_CONN_AWS: 'base64_encoded_aws_conn_string'
-#     stringData: |
-#       AIRFLOW_CONN_OTHER: 'other_conn'
-#   '{{ .Release.Name }}-other-secret-name-suffix':
-#     data: |
-#        ...
+extraSecrets:
+  kubernetes_cluster_conn:
+    data: |
+      AIRFLOW_CONN_KUBERNETES: 'a3ViZXJuZXRlczovLz9fX2V4dHJhX189JTdCJTIyZXh0cmFfX2t1YmVybmV0ZXNfX2luX2NsdXN0ZXIlMjIlM0ErdHJ1ZSU3RAo='
+
 
 # Extra ConfigMaps that will be managed by the chart
 # (You can use them with extraEnv or extraEnvFrom or some of the extraVolumes values).
