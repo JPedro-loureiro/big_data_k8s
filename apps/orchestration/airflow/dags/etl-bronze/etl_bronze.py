@@ -49,7 +49,7 @@ def get_new_app_manifest(
     with open(template_path, "r") as template:
         try:
             template_content = yaml.safe_load(template)
-            template_content["spec"]["executor"]["env"][0]["value"] = table_name
+            template_content["spec"]["driver"]["env"][0]["value"] = table_name
             new_template_content = yaml.dump(template_content)
         except yaml.YAMLError as exc:
             print(exc)
