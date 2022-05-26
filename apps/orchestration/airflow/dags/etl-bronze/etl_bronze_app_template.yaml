@@ -25,7 +25,7 @@ spec:
       version: 3.1.1
     serviceAccount: spark-operator-spark
     env:
-      - name: TABLE_NAME
+      - name: "TABLE_NAME"
         value: "{{table_name}}"
   executor:
     cores: 1
