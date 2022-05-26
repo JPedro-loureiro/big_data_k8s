@@ -25,6 +25,7 @@ Spark-on-k8s operator is required to be already installed on Kubernetes
 https://github.com/GoogleCloudPlatform/spark-on-k8s-operator
 """
 
+import yaml
 from datetime import datetime, timedelta
 
 # [START import_module]
@@ -32,13 +33,32 @@ from datetime import datetime, timedelta
 from airflow import DAG
 
 # Operators; we need this to operate!
+from airflow.operators.python_operator import PythonOperator
 from airflow.providers.cncf.kubernetes.operators.spark_kubernetes import SparkKubernetesOperator
 from airflow.providers.cncf.kubernetes.sensors.spark_kubernetes import SparkKubernetesSensor
 
 # [END import_module]
 
+# [START auxiliary functions]
 
-# [START instantiate_dag]
+
+def get_new_app_manifest(
+    template_path: str,
+    table_name: str
+):
+    with open(template_path, "r") as template:
+        try:
+            template_content = yaml.safe_load(template)
+            template_content["spec"]["executor"]["env"][0]["value"] = table_name
+            new_template_content = yaml.dump(template_content)
+        except yaml.YAMLError as exc:
+            print(exc)
+        template.close()
+
+    return new_template_content
+
+# [END auxiliary functions]
+
 
 dag = DAG(
     'etl_bronze',
@@ -49,10 +69,24 @@ dag = DAG(
     catchup=False,
 )
 
+# get_new_mainfest = PythonOperator(
+#     dag=dag,
+#     task_id="get_new_manifest",
+#     python_callable=get_new_app_manifest,
+#     op_kwargs={
+#         "template_path": "apps/orchestration/airflow/dags/etl-bronze/etl_bronze_app_template.yaml",
+#         "table_name": "order_products"
+#     }
+# )
+
 t1 = SparkKubernetesOperator(
     task_id='etl_bronze_submit',
     namespace="processing",
-    application_file="etl_bronze_app.yaml",
+    # application_file="etl_bronze_app.yaml",
+    application_file=get_new_app_manifest(
+        template_path="apps/orchestration/airflow/dags/etl-bronze/etl_bronze_app_template.yaml",
+        table_name="order_products"
+    ),
     kubernetes_conn_id="kubernetes_cluster",
     do_xcom_push=True,
     dag=dag,

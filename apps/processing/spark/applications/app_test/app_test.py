@@ -1,8 +1,8 @@
 # import libraries
+import os
 from delta.tables import *
 from pyspark.sql import SparkSession
 from pyspark import SparkConf
-from time import sleep
 
 # main spark program
 # init application
@@ -32,46 +32,27 @@ if __name__ == '__main__':
     # set log level
     spark.sparkContext.setLogLevel("INFO")
 
-    # set location of files
-    # minio data lake engine
+    # get environment variables
+    table_name = os.getenv('TABLE_NAME')
 
     # [landing zone area]
-    # device and subscription
-    print("Aqui 1!")
-    order_products_files = "s3a://datalake/landing-zone/src_data_generator_postgres.public.order_products/*/*/*/*/"
-    # order_products_files = "s3a://datalake/order_products.snappy.parquet" # Funciona
+    files_path = f"s3a://datalake/landing-zone/src_data_generator_postgres.public.{table_name}/*/*/*/*/"
 
-    # read order products data
-    # json file from landing zone
-    # df_order_products = spark.read \
-    #     .format("json") \
-    #     .option("inferSchema", "true") \
-    #     .option("header", "true") \
-    #     .json(order_products_files)
-    
-    df_order_products = spark.read \
-        .parquet(order_products_files)
-    
-    print("Aqui 2!")
+    df = spark.read \
+        .parquet(files_path)
 
     # get number of partitions
-    print(df_order_products.rdd.getNumPartitions())
-
-    print("Aqui 3!")
+    print(df.rdd.getNumPartitions())
 
     # count amount of rows ingested from lake
-    print(df_order_products.count())
-
-    print("Aqui 4!")
+    print(df.count())
 
     # [bronze zone area]
     # data lakehouse paradigm
     # need to read the entire landing zone
     write_delta_mode = "overwrite"
     delta_bronze_zone = "s3a://datalake/bronze"
-    df_order_products.write.mode(write_delta_mode).format("delta").save(delta_bronze_zone + "/order_products/")
-
-    print("Aqui 5!")
+    df.write.mode(write_delta_mode).format("delta").save(delta_bronze_zone + f"/{table_name}/")
 
     # stop session
     spark.stop()
