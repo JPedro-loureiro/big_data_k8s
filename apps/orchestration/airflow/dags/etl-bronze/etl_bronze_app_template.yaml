@@ -24,12 +24,12 @@ spec:
     labels:
       version: 3.1.1
     serviceAccount: spark-operator-spark
+    env:
+      - name: TABLE_NAME
+        value: "{{table_name}}"
   executor:
     cores: 1
     instances: 1
     memory: "512m"
     labels:
       version: 3.1.1
-    env:
-      - name: TABLE_NAME
-        value: "{{table_name}}"
