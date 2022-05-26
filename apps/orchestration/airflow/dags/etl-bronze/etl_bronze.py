@@ -84,7 +84,7 @@ t1 = SparkKubernetesOperator(
     namespace="processing",
     # application_file="etl_bronze_app.yaml",
     application_file=get_new_app_manifest(
-        template_path="apps/orchestration/airflow/dags/etl-bronze/etl_bronze_app_template.yaml",
+        template_path="etl_bronze_app_template.yaml",
         table_name="order_products"
     ),
     kubernetes_conn_id="kubernetes_cluster",
