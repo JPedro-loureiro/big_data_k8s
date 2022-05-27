@@ -74,14 +74,14 @@ spec:
             tls:
               enabled: true
               secretName: "airflow-tls-secret"
-        # secret: 
-        #   - envName: "AIRFLOW_CONN_KUBERNETES_CLUSTER"
-        #     secretName: "kubernetes-cluster-conn"
-        #     secretKey: "AIRFLOW_CONN_KUBERNETES_CLUSTER"
-        # extraSecrets:
-        #   kubernetes-cluster-conn:
-        #     data: |
-        #       AIRFLOW_CONN_KUBERNETES_CLUSTER: 'a3ViZXJuZXRlczovLz9fX2V4dHJhX189eyJleHRyYV9fa3ViZXJuZXRlc19faW5fY2x1c3RlciI6K3RydWV9Cg=='
+        secret: 
+          - envName: "AIRFLOW_CONN_KUBERNETES_CLUSTER"
+            secretName: "kubernetes-cluster-conn"
+            secretKey: "AIRFLOW_CONN_KUBERNETES_CLUSTER"
+        extraSecrets:
+          kubernetes-cluster-conn:
+            data: |
+              AIRFLOW_CONN_KUBERNETES_CLUSTER: 'a3ViZXJuZXRlczovLz9fX2V4dHJhX189eyJleHRyYV9fa3ViZXJuZXRlc19faW5fY2x1c3RlciI6K3RydWV9Cg=='
 
   destination:
     server: https://kubernetes.default.svc
