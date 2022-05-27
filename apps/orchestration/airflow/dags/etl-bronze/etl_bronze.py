@@ -1,30 +1,3 @@
-#
-# Licensed to the Apache Software Foundation (ASF) under one
-# or more contributor license agreements.  See the NOTICE file
-# distributed with this work for additional information
-# regarding copyright ownership.  The ASF licenses this file
-# to you under the Apache License, Version 2.0 (the
-# "License"); you may not use this file except in compliance
-# with the License.  You may obtain a copy of the License at
-#
-#   http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing,
-# software distributed under the License is distributed on an
-# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-# KIND, either express or implied.  See the License for the
-# specific language governing permissions and limitations
-# under the License.
-"""
-This is an example DAG which uses SparkKubernetesOperator and SparkKubernetesSensor.
-In this example, we create two tasks which execute sequentially.
-The first task is to submit sparkApplication on Kubernetes cluster(the example uses spark-pi application).
-and the second task is to check the final state of the sparkApplication that submitted in the first state.
-
-Spark-on-k8s operator is required to be already installed on Kubernetes
-https://github.com/GoogleCloudPlatform/spark-on-k8s-operator
-"""
-
 import yaml
 from datetime import datetime, timedelta
 
@@ -40,6 +13,14 @@ from airflow.providers.cncf.kubernetes.sensors.spark_kubernetes import SparkKube
 # [END import_module]
 
 # [START auxiliary functions]
+
+tables = [
+    "order_products",
+    "orders",
+    "products",
+    "restaurants",
+    "users",
+]
 
 
 def get_new_app_manifest(
@@ -69,23 +50,25 @@ dag = DAG(
     catchup=False,
 )
 
-t1 = SparkKubernetesOperator(
-    task_id='etl_bronze_submit',
-    namespace="processing",
-    application_file=get_new_app_manifest(
-        template_path="/opt/airflow/dags/repo/apps/orchestration/airflow/dags/etl-bronze/etl_bronze_app_template.yaml",
-        table_name="order_products"
-    ),
-    kubernetes_conn_id="kubernetes_cluster",
-    do_xcom_push=True,
-    dag=dag,
-)
+for table in tables:
+    t1 = SparkKubernetesOperator(
+        task_id=f'{table}_from_landing_to_bronze',
+        namespace="processing",
+        application_file=get_new_app_manifest(
+            template_path="/opt/airflow/dags/repo/apps/orchestration/airflow/dags/etl-bronze/etl_bronze_app_template.yaml",
+            table_name=table
+        ),
+        kubernetes_conn_id="kubernetes_cluster",
+        do_xcom_push=True,
+        dag=dag,
+    )
 
-t2 = SparkKubernetesSensor(
-    task_id='etl_bronze_monitor',
-    namespace="processing",
-    kubernetes_conn_id="kubernetes_cluster",
-    application_name="{{ task_instance.xcom_pull(task_ids='etl_bronze_submit')['metadata']['name'] }}",
-    dag=dag,
-)
-t1 >> t2
+    t2 = SparkKubernetesSensor(
+        task_id='etl_bronze_monitor',
+        namespace="processing",
+        kubernetes_conn_id="kubernetes_cluster",
+        application_name=f"{{ task_instance.xcom_pull(task_ids='{table}_from_landing_to_bronze')['metadata']['name'] }}",
+        dag=dag,
+    )
+
+    t1 >> t2
