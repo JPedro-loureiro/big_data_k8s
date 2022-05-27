@@ -64,7 +64,7 @@ for table in tables:
     )
 
     t2 = SparkKubernetesSensor(
-        task_id='etl_bronze_monitor',
+        task_id=f'{table}_bronze_monitor',
         namespace="processing",
         kubernetes_conn_id="kubernetes_cluster",
         application_name=f"{{ task_instance.xcom_pull(task_ids='{table}_from_landing_to_bronze')['metadata']['name'] }}",
