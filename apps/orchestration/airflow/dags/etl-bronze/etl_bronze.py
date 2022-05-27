@@ -7,6 +7,7 @@ from airflow import DAG
 
 # Operators; we need this to operate!
 from airflow.operators.python_operator import PythonOperator
+from airflow.operators.dummy_operator import DummyOperator
 from airflow.providers.cncf.kubernetes.operators.spark_kubernetes import SparkKubernetesOperator
 from airflow.providers.cncf.kubernetes.sensors.spark_kubernetes import SparkKubernetesSensor
 
@@ -50,8 +51,10 @@ dag = DAG(
     catchup=False,
 )
 
+start_task = DummyOperator(task_id="start")
+
 for table in tables:
-    t1 = SparkKubernetesOperator(
+    from_landning_to_bronze = SparkKubernetesOperator(
         task_id=f'{table}_from_landing_to_bronze',
         namespace="processing",
         application_file=get_new_app_manifest(
@@ -63,7 +66,7 @@ for table in tables:
         dag=dag,
     )
 
-    t2 = SparkKubernetesSensor(
+    bronze_monitor = SparkKubernetesSensor(
         task_id=f'{table}_bronze_monitor',
         namespace="processing",
         kubernetes_conn_id="kubernetes_cluster",
@@ -71,4 +74,4 @@ for table in tables:
         dag=dag,
     )
 
-    t1 >> t2
+    start_task >> from_landning_to_bronze >> bronze_monitor
