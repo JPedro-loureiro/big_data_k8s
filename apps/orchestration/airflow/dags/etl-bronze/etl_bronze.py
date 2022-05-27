@@ -69,20 +69,9 @@ dag = DAG(
     catchup=False,
 )
 
-# get_new_mainfest = PythonOperator(
-#     dag=dag,
-#     task_id="get_new_manifest",
-#     python_callable=get_new_app_manifest,
-#     op_kwargs={
-#         "template_path": "apps/orchestration/airflow/dags/etl-bronze/etl_bronze_app_template.yaml",
-#         "table_name": "order_products"
-#     }
-# )
-
 t1 = SparkKubernetesOperator(
     task_id='etl_bronze_submit',
     namespace="processing",
-    # application_file="etl_bronze_app.yaml",
     application_file=get_new_app_manifest(
         template_path="/opt/airflow/dags/repo/apps/orchestration/airflow/dags/etl-bronze/etl_bronze_app_template.yaml",
         table_name="order_products"
