@@ -1,7 +1,7 @@
 apiVersion: "sparkoperator.k8s.io/v1beta2"
 kind: SparkApplication
 metadata:
-  name: "{{table_name}}_landing_to_bronze"
+  name: "{{table_name}}-landing-to-bronze"
   namespace: processing
 spec:
   type: Python
