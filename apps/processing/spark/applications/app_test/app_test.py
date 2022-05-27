@@ -1,8 +1,11 @@
 # import libraries
 import os
+import time
 from delta.tables import *
 from pyspark.sql import SparkSession
 from pyspark import SparkConf
+
+time.sleep(60)
 
 # main spark program
 # init application
