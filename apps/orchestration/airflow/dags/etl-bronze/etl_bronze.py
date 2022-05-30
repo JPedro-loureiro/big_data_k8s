@@ -77,7 +77,7 @@ for table in tables:
         task_id=f'{table}_bronze_monitor',
         namespace="processing",
         kubernetes_conn_id="kubernetes_cluster",
-        application_name=f"{{ task_instance.xcom_pull(task_ids='{app_table_name}_from_landing_to_bronze')['metadata']['name'] }}",
+        application_name=f"{{ task_instance.xcom_pull(task_ids='{app_table_name}-landing-to-bronze')['metadata']['name'] }}",
         dag=dag,
     )
 
