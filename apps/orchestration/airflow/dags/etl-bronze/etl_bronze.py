@@ -78,6 +78,8 @@ for table in tables:
         namespace="processing",
         kubernetes_conn_id="kubernetes_cluster",
         application_name=f"{{ task_instance.xcom_pull(task_ids='{app_table_name}-landing-to-bronze')['metadata']['name'] }}",
+        retries=3,
+        retry_delay=timedelta(seconds=10),
         dag=dag,
     )
 
