@@ -18,7 +18,8 @@ spec:
     onSubmissionFailureRetries: 5
     onSubmissionFailureRetryInterval: 20
   driver:
-    cores: 0.2
+    # cores: 0.2
+    coreRequest: "200m"
     coreLimit: "250m"
     memory: "200m"
     labels:
@@ -29,7 +30,8 @@ spec:
       TABLE_NAME: "{{table_name}}" # table_name
   executor:
     instances: 1
-    cores: 0.2
+    # cores: 0.2
+    coreRequest: "200m"
     coreLimit: "250m"
     memory: "200m"
     labels:
