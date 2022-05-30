@@ -8,11 +8,15 @@ from pyspark import SparkConf
 # init application
 if __name__ == '__main__':
 
+    # get environment variables
+    app_table_name = os.getenv('APP_TABLE_NAME')
+    table_name = os.getenv('TABLE_NAME')
+
     # init session
     # set configs
     spark = SparkSession \
         .builder \
-        .appName("app_test") \
+        .appName(f"{app_table_name}") \
         .config("spark.hadoop.fs.s3a.endpoint", "http://minio.datalake.svc.cluster.local:9000/") \
         .config("spark.hadoop.fs.s3a.access.key", "T11ZDXNGN4MCJF2PZ393") \
         .config("spark.hadoop.fs.s3a.secret.key", "gvrgSv49v4ZPgBqnOPQFh3iR7rxti+iEC8WOWM10") \
@@ -31,9 +35,6 @@ if __name__ == '__main__':
 
     # set log level
     spark.sparkContext.setLogLevel("INFO")
-
-    # get environment variables
-    table_name = os.getenv('TABLE_NAME')
 
     # [landing zone area]
     files_path = f"s3a://datalake/landing-zone/src_data_generator_postgres.public.{table_name}/*/*/*/*/"

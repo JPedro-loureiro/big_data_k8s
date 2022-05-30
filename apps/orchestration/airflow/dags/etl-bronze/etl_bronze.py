@@ -26,14 +26,16 @@ tables = [
 
 def get_new_app_manifest(
     template_path: str,
-    table_name: str
+    app_table_name: str,
+    table_name: str,
 ):
     with open(template_path, "r") as template:
         try:
             template_content = yaml.safe_load(template)
             # Setting spark application name
-            template_content["metadata"]["name"] = f"{table_name}-landing-to-bronze"
+            template_content["metadata"]["name"] = f"{app_table_name}-landing-to-bronze"
             # Setting table name
+            template_content["spec"]["driver"]["envVars"]["APP_TABLE_NAME"] = app_table_name
             template_content["spec"]["driver"]["envVars"]["TABLE_NAME"] = table_name
             new_template_content = yaml.dump(template_content)
         except yaml.YAMLError as exc:
@@ -57,13 +59,14 @@ dag = DAG(
 start_task = DummyOperator(task_id="start")
 
 for table in tables:
-    table = table.replace("_", "-")
+    app_table_name = table.replace("_", "-")
     from_landning_to_bronze = SparkKubernetesOperator(
         task_id=f'{table}_from_landing_to_bronze',
         namespace="processing",
         application_file=get_new_app_manifest(
             template_path="/opt/airflow/dags/repo/apps/orchestration/airflow/dags/etl-bronze/etl_bronze_app_template.yaml",
-            table_name=table
+            app_table_name=app_table_name,
+            table_name=table,
         ),
         kubernetes_conn_id="kubernetes_cluster",
         do_xcom_push=True,
@@ -74,7 +77,7 @@ for table in tables:
         task_id=f'{table}_bronze_monitor',
         namespace="processing",
         kubernetes_conn_id="kubernetes_cluster",
-        application_name=f"{{ task_instance.xcom_pull(task_ids='{table}_from_landing_to_bronze')['metadata']['name'] }}",
+        application_name=f"{{ task_instance.xcom_pull(task_ids='{app_table_name}_from_landing_to_bronze')['metadata']['name'] }}",
         dag=dag,
     )
 
