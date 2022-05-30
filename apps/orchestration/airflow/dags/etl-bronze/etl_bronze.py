@@ -30,7 +30,6 @@ def get_new_app_manifest(
 ):
     with open(template_path, "r") as template:
         try:
-            table_name = table_name.replace("_", "-")
             template_content = yaml.safe_load(template)
             # Setting spark application name
             template_content["metadata"]["name"] = f"{table_name}-landing-to-bronze"
@@ -58,6 +57,7 @@ dag = DAG(
 start_task = DummyOperator(task_id="start")
 
 for table in tables:
+    table = table.replace("_", "-")
     from_landning_to_bronze = SparkKubernetesOperator(
         task_id=f'{table}_from_landing_to_bronze',
         namespace="processing",
