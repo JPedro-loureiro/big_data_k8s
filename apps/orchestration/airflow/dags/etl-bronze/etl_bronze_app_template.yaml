@@ -18,8 +18,8 @@ spec:
     onSubmissionFailureRetries: 5
     onSubmissionFailureRetryInterval: 20
   driver:
-    cores: 1
-    coreLimit: "200m"
+    cores: 0.2
+    coreLimit: "250m"
     memory: "200m"
     labels:
       version: 3.1.1
@@ -28,9 +28,9 @@ spec:
       APP_TABLE_NAME: "{{app_table_name}}" # app-table-name
       TABLE_NAME: "{{table_name}}" # table_name
   executor:
-    cores: 1
     instances: 1
-    coreLimit: "200m"
+    cores: 0.2
+    coreLimit: "250m"
     memory: "200m"
     labels:
       version: 3.1.1
