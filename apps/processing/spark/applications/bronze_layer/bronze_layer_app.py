@@ -42,18 +42,13 @@ if __name__ == '__main__':
     df = spark.read \
         .parquet(files_path)
 
-    # get number of partitions
-    print(df.rdd.getNumPartitions())
-
-    # count amount of rows ingested from lake
-    print(df.count())
-
     # [bronze zone area]
     # data lakehouse paradigm
     # need to read the entire landing zone
     write_delta_mode = "overwrite"
     delta_bronze_zone = "s3a://datalake/bronze"
-    df.write.mode(write_delta_mode).format("delta").save(delta_bronze_zone + f"/{table_name}/")
+    # df.write.mode(write_delta_mode).format("delta").save(f"{delta_bronze_zone}/{table_name}/")
+    df.write.mode(write_delta_mode).format("json").save(f"{delta_bronze_zone}/{table_name}/")
 
     # stop session
     spark.stop()

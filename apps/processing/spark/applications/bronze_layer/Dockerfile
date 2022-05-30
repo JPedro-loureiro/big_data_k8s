@@ -7,7 +7,7 @@ RUN mkdir -p /app
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir delta-spark
 
-COPY app_test.py /app/
+COPY bronze_layer_app.py /app/
 
 COPY ./jars/ /opt/spark/jars
 

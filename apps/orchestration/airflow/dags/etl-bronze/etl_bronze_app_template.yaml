@@ -7,7 +7,7 @@ spec:
   type: Python
   pythonVersion: "3"
   mode: cluster
-  image: "jpedroloureiro/spark_app_test:3.0.0"
+  image: "jpedroloureiro/bronze_layer_app:3.0.0"
   imagePullPolicy: Always
   mainApplicationFile: "local:///app/app_test.py"
   sparkVersion: "3.1.1"
