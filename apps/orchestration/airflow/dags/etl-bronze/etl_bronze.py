@@ -32,7 +32,7 @@ def get_new_app_manifest(
         try:
             template_content = yaml.safe_load(template)
             # Setting spark application name
-            template_content["metadata"]["name"] = f"{table_name}-landing-to-bronze"
+            template_content["metadata"]["name"] = f"{table_name.replace("_", "-")}-landing-to-bronze"
             # Setting table name
             template_content["spec"]["driver"]["envVars"]["TABLE_NAME"] = table_name
             new_template_content = yaml.dump(template_content)
