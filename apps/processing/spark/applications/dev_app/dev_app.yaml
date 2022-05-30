@@ -1,15 +1,15 @@
 apiVersion: "sparkoperator.k8s.io/v1beta2"
 kind: SparkApplication
 metadata:
-  name: "{{app_table_name}}-landing-to-bronze"
+  name: "dev_app"
   namespace: processing
 spec:
   type: Python
   pythonVersion: "3"
   mode: cluster
-  image: "jpedroloureiro/bronze_layer_app:3.0.0"
+  image: "jpedroloureiro/dev_app:3.0.0"
   imagePullPolicy: Always
-  mainApplicationFile: "local:///app/bronze_layer_app.py"
+  mainApplicationFile: "local:///app/app_test.py"
   sparkVersion: "3.1.1"
   restartPolicy:
     type: OnFailure
