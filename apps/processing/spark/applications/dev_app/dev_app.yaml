@@ -1,15 +1,15 @@
 apiVersion: "sparkoperator.k8s.io/v1beta2"
 kind: SparkApplication
 metadata:
-  name: "dev_app"
+  name: "dev-app"
   namespace: processing
 spec:
   type: Python
   pythonVersion: "3"
   mode: cluster
-  image: "jpedroloureiro/dev_app:3.0.0"
+  image: "jpedroloureiro/dev_app:1.0.0"
   imagePullPolicy: Always
-  mainApplicationFile: "local:///app/app_test.py"
+  mainApplicationFile: "local:///app/dev_app.py"
   sparkVersion: "3.1.1"
   restartPolicy:
     type: OnFailure
@@ -25,9 +25,6 @@ spec:
     labels:
       version: 3.1.1
     serviceAccount: spark-operator-spark
-    envVars:
-      APP_TABLE_NAME: "{{app_table_name}}" # app-table-name
-      TABLE_NAME: "{{table_name}}" # table_name
   executor:
     instances: 1
     # cores: 0.2

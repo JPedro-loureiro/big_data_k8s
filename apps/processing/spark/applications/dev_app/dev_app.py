@@ -34,8 +34,14 @@ if __name__ == '__main__':
     print(SparkConf().getAll())
 
     # set log level
-    spark.sparkContext.setLogLevel("INFO")
+    spark.sparkContext.setLogLevel("WARN")
 
-    silver_df = spark.read.json("s3a://datalake/bronze/ order_products/")
+    silver_df = spark.read.format("delta").load("s3a://datalake/bronze/products/")
 
     silver_df.printSchema()
+
+    silver_df.groupBy("restaurant_id") \
+        .avg("price") \
+        .show(10)
+
+    spark.stop()
