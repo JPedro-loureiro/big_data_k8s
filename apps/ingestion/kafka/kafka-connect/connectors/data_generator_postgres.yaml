@@ -19,11 +19,18 @@ spec:
     database.password: "adminpassword"
     database.dbname: "ifood"
     database.server.name: "src_data_generator_postgres"
-    # include.schema.changes: true
     plugin.name: "pgoutput"
+    # Schema registry
     key.converter.schema.registry.url: "http://schema-registry:8081"
     value.converter.schema.registry.url: "http://schema-registry:8081"
     key.converter: "io.confluent.connect.avro.AvroConverter"
     value.converter: "io.confluent.connect.avro.AvroConverter"
     # auto.create: true
     # auto.evolve: true
+    # include.schema.changes: true
+    # SMT
+    transforms: "unwrap"
+    transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState"
+    transforms.unwrap.drop.tombstones": "false"
+    transforms.unwrap.delete.handling.mode": "rewrite"
+    transforms.unwrap.add.fields": "op,db,table,schema,source.ts_ms"
