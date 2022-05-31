@@ -283,6 +283,28 @@ connectors:
     kafka.nodes=kafka-cluster.ingestion:9092
     kafka.hide-internal-columns=false
   #  kafka.confluent-schema-registry-url=http://schema-registry:8081
+  
+  minio.properties: |-
+     connector.name=hive-hadoop2
+     hive.metastore=file
+     hive.s3-file-system-type=TRINO
+     hive.metastore.catalog.dir=s3://trino/
+     hive.allow-drop-table=true
+     hive.s3.aws-access-key=T11ZDXNGN4MCJF2PZ393
+     hive.s3.aws-secret-key=gvrgSv49v4ZPgBqnOPQFh3iR7rxti+iEC8WOWM10
+     hive.s3.endpoint=http://minio.datalake.svc.cluster.local:9000
+     hive.s3.path-style-access=true
+     hive.s3.ssl.enabled=false
+     hive.s3select-pushdown.enabled=true
+     hive.allow-add-column=true
+     hive.allow-drop-column=true
+     hive.allow-drop-table=true
+     hive.allow-rename-table=true
+     hive.allow-rename-column=true
+     hive.s3.multipart.min-file-size=5GB
+     hive.s3.multipart.min-part-size=5GB
+     hive.s3.max-connections=5000
+  
   # elk.properties: |-
   #   connector.name=elasticsearch
   #   elasticsearch.host=elasticsearchserver
