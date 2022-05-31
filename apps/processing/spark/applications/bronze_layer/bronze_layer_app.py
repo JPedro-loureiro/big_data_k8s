@@ -47,8 +47,7 @@ if __name__ == '__main__':
     # need to read the entire landing zone
     write_delta_mode = "overwrite"
     delta_bronze_zone = "s3a://datalake/bronze"
-    # df.write.mode(write_delta_mode).format("delta").save(f"{delta_bronze_zone}/{table_name}/")
-    df.write.mode(write_delta_mode).format("json").save(f"{delta_bronze_zone}/{table_name}/")
+    df.write.mode(write_delta_mode).format("delta").save(f"{delta_bronze_zone}/{table_name}/")
 
     # stop session
     spark.stop()
