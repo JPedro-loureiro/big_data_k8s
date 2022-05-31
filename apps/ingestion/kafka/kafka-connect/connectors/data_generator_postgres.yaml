@@ -30,7 +30,7 @@ spec:
     # include.schema.changes: true
     # SMT
     transforms: "unwrap"
-    transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState"
-    transforms.unwrap.drop.tombstones": "false"
-    transforms.unwrap.delete.handling.mode": "rewrite"
-    transforms.unwrap.add.fields": "op,db,table,schema,source.ts_ms"
+    transforms.unwrap.type: "io.debezium.transforms.ExtractNewRecordState"
+    transforms.unwrap.drop.tombstones: "false"
+    transforms.unwrap.delete.handling.mode: "rewrite"
+    transforms.unwrap.add.fields: "op,db,table,schema,source.ts_ms"
