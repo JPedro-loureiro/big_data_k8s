@@ -1,7 +1,7 @@
 ---
 ## You can override the default chart name (i.e., .Charts.name) when desired using the following parameter.
 ## This is the only way to have more than one deployment of this
-nameOverride: hive-metastore
+nameOverride: null
 
 ## Number of Hive Metastore instances.
 ## Following the documentation, given Hive Metastore is stateless we could have more than one instance.
