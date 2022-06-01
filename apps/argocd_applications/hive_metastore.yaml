@@ -2,7 +2,7 @@ apiVersion: "argoproj.io/v1alpha1"
 kind: Application
 metadata:
   name: hive-metastore
-  namespace: data-exploration
+  namespace: cicd
 spec:
   project: big-data-on-k8s
   source:
