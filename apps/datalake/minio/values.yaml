@@ -222,11 +222,11 @@ consoleIngress:
 
   path: /
   hosts:
-    - minio.prod.bigdataonk8s.com
+    - minio.blu.bigdataonk8s.com
   tls:
    - secretName: minio-tls-secret
      hosts:
-       - minio.prod.bigdataonk8s.com
+       - minio.blu.bigdataonk8s.com
 
 ## Node labels for pod assignment
 ## Ref: https://kubernetes.io/docs/user-guide/node-selection/

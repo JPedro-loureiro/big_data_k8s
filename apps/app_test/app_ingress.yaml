@@ -10,7 +10,7 @@ spec:
   tls:
   - secretName: app-tls-secret
     hosts:
-      - app-test.prod.bigdataonk8s.com
+      - app-test.blu.bigdataonk8s.com
   rules:
     - http:
         paths:
@@ -21,4 +21,4 @@ spec:
               name: hello-kubernetes
               port:
                 number: 80
-      host: app-test.prod.bigdataonk8s.com
+      host: app-test.blu.bigdataonk8s.com
