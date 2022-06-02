@@ -52,6 +52,9 @@ EXPOSE 9083
 
 WORKDIR ${METASTORE_HOME}
 
+# create metastore backend tables and insert data
+RUN bin/schematool -initSchema -dbType derby
+
 # Apply Hive custom configurations and start Metastore Service through entrypoint.sh file 
 #
 # We need to use the exec form to avoid running our command in a subshell and omitting signals,

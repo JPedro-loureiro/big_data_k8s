@@ -47,7 +47,7 @@ spec:
             connector.name=delta-lake
             hive.metastore.uri=thrift://hive-metastore.data-exploration.svc.cluster.local:9083
             # hive.metastore.catalog.dir=s3a://trino/
-            hive.s3-file-system-type=TRINO
+            # hive.s3-file-system-type=TRINO
             hive.s3.aws-access-key=T11ZDXNGN4MCJF2PZ393
             hive.s3.aws-secret-key=gvrgSv49v4ZPgBqnOPQFh3iR7rxti+iEC8WOWM10
             hive.s3.endpoint=http://minio.datalake.svc.cluster.local:9000
