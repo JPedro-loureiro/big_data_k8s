@@ -37,6 +37,24 @@
           <name>hive.metastore.uris</name>
           <value>{{ $metastore_uris }}</value>
         </property>
+
+        <property>
+            <name>fs.s3a.access.key</name>
+            <value>{{ .Env.FS_S3A_ACCESS_KEY }}</value>
+        </property>
+        <property>
+            <name>fs.s3a.secret.key</name>
+            <value>{{ .Env.FS_S3A_SECRET_KEY }}</value>
+        </property>
+        <property>
+            <name>fs.s3a.endpoint</name>
+            <value>{{ .Env.FS_S3A_ENDPOINT }}</value>
+        </property>
+        <property>
+            <name>fs.s3a.path.style.access</name>
+            <value>{{ .Env.FS_S3A_PATH_STYLE_ACCESS }}</value>
+        </property>
+
       {{- if not (index .Env  "HIVE_WAREHOUSE_DIR")  }}
         <property>
           <name>hive.metastore.warehouse.dir</name>

@@ -18,6 +18,11 @@ image:
 env:
   HIVE_DB_EXTERNAL: "false"
   HIVE_DB_NAME: metastore_db
+  FS_S3A_ACCESS_KEY: T11ZDXNGN4MCJF2PZ393
+  FS_S3A_SECRET_KEY: gvrgSv49v4ZPgBqnOPQFh3iR7rxti+iEC8WOWM10
+  FS_S3A_ENDPOINT: "http://minio.datalake.svc.cluster.local:9000"
+  FS_S3A_PATH_STYLE_ACCESS: "true"
+
 
 ## Resource requests and limits: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 resources:
