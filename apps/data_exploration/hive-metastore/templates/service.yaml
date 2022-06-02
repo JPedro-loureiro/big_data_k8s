@@ -6,7 +6,13 @@ metadata:
     {{- include "hive-metastore.labels" $ | trim | nindent 4 }}
 
 spec:
-  {{ .Values.service.type }}
+  # {{ .Values.service.type }}
+  type: ClusterIP
+  ports:
+    - name: thrift
+      port: 9083
+      targetPort: 9083
+      protocol: TCP
 
   selector:
     {{- include "hive-metastore.selectorLabels" . | nindent 4 }}
