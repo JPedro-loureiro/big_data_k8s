@@ -70,6 +70,7 @@ resource "kubernetes_manifest" "big_data_on_k8s_project" {
         "https://prometheus-community.github.io/helm-charts",
         "https://googlecloudplatform.github.io/spark-on-k8s-operator",
         "https://airflow.apache.org/",
+        "https://valeriano-manassero.github.io/helm-charts",
       ]
 
       destinations = [{
