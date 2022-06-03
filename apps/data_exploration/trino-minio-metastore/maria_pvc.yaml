@@ -3,7 +3,6 @@ kind: PersistentVolumeClaim
 metadata:
   name: maria-pv-claim
 spec:
-  storageClassName: pure-block
   accessModes:
     - ReadWriteOnce
   resources:
