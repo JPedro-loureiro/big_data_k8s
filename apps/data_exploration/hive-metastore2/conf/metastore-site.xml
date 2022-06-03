@@ -23,7 +23,7 @@
 
     <property>
         <name>javax.jdo.option.ConnectionURL</name>
-        <value>jdbc:mysql://mariadb:3306/metastore_db</value>
+        <value>jdbc:mysql://mariadb.data-exploration.svc.cluster.local:3306/metastore_db</value>
     </property>
 
     <property>
@@ -38,15 +38,15 @@
 
     <property>
         <name>fs.s3a.access.key</name>
-        <value>accesskey</value>
+        <value>T11ZDXNGN4MCJF2PZ393</value>
     </property>
     <property>
         <name>fs.s3a.secret.key</name>
-        <value>secretkey</value>
+        <value>gvrgSv49v4ZPgBqnOPQFh3iR7rxti+iEC8WOWM10</value>
     </property>
     <property>
         <name>fs.s3a.endpoint</name>
-        <value>http://minio:9000</value>
+        <value>http://minio.datalake.svc.cluster.local:9000</value>
     </property>
     <property>
         <name>fs.s3a.path.style.access</name>
