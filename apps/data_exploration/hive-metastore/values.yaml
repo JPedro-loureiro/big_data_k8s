@@ -15,16 +15,16 @@ image:
   pullPolicy: Always
 
 
-env:
-  # HIVE_DB_EXTERNAL: "false"
-  # HIVE_DB_NAME: metastore_db
+# env:
+#   HIVE_DB_EXTERNAL: "false"
+#   HIVE_DB_NAME: metastore_db
 
 # env:
   HIVE_DB_EXTERNAL: "true"
-  HIVE_DB_HOST: "my-postgresql.data-generator.svc.cluster.local:5432"
-  HIVE_DB_NAME: metastore
-  HIVE_DB_USER: metastore
-  HIVE_DB_PASS: metastore123
+  HIVE_DB_HOST: "postgres-hive-metastore-postgresql.data-exploration.svc.cluster.local:5432"
+  HIVE_DB_NAME: metastore_db
+  HIVE_DB_USER: hive
+  HIVE_DB_PASS: hive123
   HIVE_CONF_PARAMS: hive.metastore.event.db.notification.api.auth:false;hadoop.proxyuser.hive.hosts:HS2_HOST;hadoop.proxyuser.hive.groups:*;datanucleus.autoStartMechanism:SchemaTable
 
 

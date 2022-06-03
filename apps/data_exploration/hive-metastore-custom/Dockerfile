@@ -9,11 +9,6 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install Gomplate
-RUN curl -sfSL https://github.com/hairyhenderson/gomplate/releases/download/v3.6.0/gomplate_linux-amd64 \
-      -o /usr/local/bin/gomplate \
-    && chmod 755 /usr/local/bin/gomplate
-
 # Set Hadoop/HiveMetastore variables and Classpath
 ENV HADOOP_HOME="/opt/hadoop"
 ENV METASTORE_HOME="/opt/hive-metastore"
@@ -47,12 +42,14 @@ RUN cp /opt/postgresql-jdbc.jar ${METASTORE_HOME}/lib/ && chmod -R 775 ${METASTO
 COPY entrypoint.sh ${METASTORE_HOME}/bin/
 RUN chmod 775 ${METASTORE_HOME}/bin/entrypoint.sh
 
+COPY ./configs/metastore-site.xml ${METASTORE_HOME}/conf/metastore-site.xml
+
 # Metastore URI Port
 EXPOSE 9083
 
 WORKDIR ${METASTORE_HOME}
 
-# RUN bin/schematool -dbType postgres -initSchema
+RUN bin/schematool -dbType postgres -initSchema
 
 # Apply Hive custom configurations and start Metastore Service through entrypoint.sh file 
 #
