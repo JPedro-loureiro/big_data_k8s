@@ -61,10 +61,10 @@ spec:
           subPath: mysql.properties
         resources:
           requests:
-            memory: 2Gi
-            cpu: "2"
+            memory: 1Gi
+            cpu: "1"
           limits:
-            memory: 3Gi
+            memory: 2Gi
             cpu: "2"
         imagePullPolicy: Always
       volumes:
@@ -128,10 +128,10 @@ spec:
           mountPath: /tmp
         resources:
           requests:
-            memory: 2Gi
-            cpu: "2"
+            memory: 1Gi
+            cpu: "1"
           limits:
-            memory: 3Gi
+            memory: 2Gi
             cpu: "2"
         imagePullPolicy: Always
       volumes:
