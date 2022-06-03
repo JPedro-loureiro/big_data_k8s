@@ -1,4 +1,3 @@
-# {{- if eq .Values.env.HIVE_DB_EXTERNAL "true" }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -7,4 +6,3 @@ metadata:
     {{- include "hive-metastore.labels" $ | trim | nindent 4 }}
 data:
 {{ (.Files.Glob (printf "configsets/*" )).AsConfig | indent 2 }}
-# {{- end }}
