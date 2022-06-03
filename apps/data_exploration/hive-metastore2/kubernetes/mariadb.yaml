@@ -19,7 +19,7 @@ spec:
         - name: mariadb
           image: mariadb:latest
           ports:
-            - containerPort: 9083
+            - containerPort: 3306
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: admin
