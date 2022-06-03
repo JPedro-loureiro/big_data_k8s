@@ -52,7 +52,7 @@ EXPOSE 9083
 
 WORKDIR ${METASTORE_HOME}
 
-# RUN bin/schematool -dbType postgres -initSchema
+RUN bin/schematool -dbType postgres -initSchema
 
 # Apply Hive custom configurations and start Metastore Service through entrypoint.sh file 
 #
