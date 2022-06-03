@@ -51,11 +51,11 @@ spec:
         args: ["-p", "9083"]
         resources:
           requests:
-            memory: "500m"
-            cpu: "0.5"
+            memory: "1000m"
+            cpu: "1"
           limits:
-            memory: "1500m"
-            cpu: "1.5"
+            memory: "2000m"
+            cpu: "2"
         imagePullPolicy: Always
       volumes:
         - name: metastore-cfg-vol
