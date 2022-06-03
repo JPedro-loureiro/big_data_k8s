@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
       - name: metastore
-        image: joshuarobinson/hivemetastore
+        image: jpedroloureiro/hive-metastore:1.0.0
         env:
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
