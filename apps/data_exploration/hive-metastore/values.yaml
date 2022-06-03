@@ -19,7 +19,7 @@ image:
 #   HIVE_DB_EXTERNAL: "false"
 #   HIVE_DB_NAME: metastore_db
 
-# env:
+env:
   HIVE_DB_EXTERNAL: "true"
   HIVE_DB_HOST: "postgres-hive-metastore-postgresql.data-exploration.svc.cluster.local:5432"
   HIVE_DB_NAME: metastore_db
