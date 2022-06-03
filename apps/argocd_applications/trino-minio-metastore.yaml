@@ -11,7 +11,7 @@ spec:
     path: apps/data_exploration/trino-minio-metastore
   destination:
     server: https://kubernetes.default.svc
-    namespace: trino-minio-metastore
+    namespace: data-exploration
   syncPolicy:
     automated:
       prune: true
