@@ -10,9 +10,9 @@ replicaCount: 1
 
 ## Default Hive image and tag. Please build image locally before applying this.
 image:
-  name: hive-metastore
-  tag: latest
-  pullPolicy: IfNotPresent
+  name: jpedroloureiro/hive-metastore
+  tag: 1.0.0
+  pullPolicy: Always
 
 
 env:
