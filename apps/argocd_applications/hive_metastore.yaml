@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/JPedro-loureiro/big_data_k8s
     targetRevision: HEAD
-    path: apps/data_exploration/hive-metastore2/kubernetes
+    path: apps/data_exploration/hive-metastore
   destination:
     server: https://kubernetes.default.svc
     namespace: data-exploration
