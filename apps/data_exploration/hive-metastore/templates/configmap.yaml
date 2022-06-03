@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ include "hive-metastore.name" . }}-conf-templates
-  labels:
-    {{- include "hive-metastore.labels" $ | trim | nindent 4 }}
-data:
-{{ (.Files.Glob (printf "configsets/*" )).AsConfig | indent 2 }}
