@@ -33,11 +33,11 @@ spec:
         - containerPort: 9083
         resources:
           requests:
-            memory: "5000m"
-            cpu: "1"
+            memory: "500m"
+            cpu: "250m"
           limits:
-            memory: "5000m"
-            cpu: "2"
+            memory: "1000m"
+            cpu: "750m"
         env:
           - name: METASTORE_DB_HOSTNAME
             value: mariadb
