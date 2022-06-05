@@ -367,10 +367,10 @@ buckets:
     # set versioning for
     # bucket [true|false]
     versioning: true
-  # - name: bucket2
-  #   policy: none
-  #   purge: false
-  #   versioning: true
+  - name: hive-metastore
+    policy: none
+    purge: false
+    versioning: true
 
 ## Additional Annotations for the Kubernetes Job makeBucketJob
 makeBucketJob:
