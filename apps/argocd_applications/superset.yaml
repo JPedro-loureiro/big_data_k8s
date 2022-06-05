@@ -11,24 +11,24 @@ spec:
     targetRevision: 0.6.2
     helm:
       version: v3
-      # values: |
-      #   replicaCount: 1
-      #   init:
-      #     adminUser:
-      #       password: bigdataonk8s
-      #   ingress:
-      #     enabled: false
-      #     annotations: {
-      #         kubernetes.io/ingress.class: nginx,
-      #         nginx.ingress.kubernetes.io/rewrite-target: /,
-      #         cert-manager.io/cluster-issuer: lets-encrypt-cluster-issuer,
-      #       }
-      #     hosts:
-      #       - superset.blu.bigdataonk8s.com
-      #     tls:
-      #       - secretName: superset-tls-secret
-      #         hosts:
-      #           - superset.blu.bigdataonk8s.com
+      values: |
+        replicaCount: 1
+        init:
+          adminUser:
+            password: bigdataonk8s
+        ingress:
+          enabled: false
+          annotations: {
+              kubernetes.io/ingress.class: nginx,
+              nginx.ingress.kubernetes.io/rewrite-target: /,
+              cert-manager.io/cluster-issuer: lets-encrypt-cluster-issuer,
+            }
+          hosts:
+            - superset.blu.bigdataonk8s.com
+          tls:
+            - secretName: superset-tls-secret
+              hosts:
+                - superset.blu.bigdataonk8s.com
   destination:
     server: https://kubernetes.default.svc
     namespace: dataviz
