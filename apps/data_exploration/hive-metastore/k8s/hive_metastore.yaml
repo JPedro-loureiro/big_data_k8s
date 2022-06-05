@@ -31,13 +31,13 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 9083
-        resources:
-          requests:
-            memory: "500m"
-            cpu: "250m"
-          limits:
-            memory: "1000m"
-            cpu: "750m"
+        # resources:
+        #   requests:
+        #     memory: "500m"
+        #     cpu: "250m"
+        #   limits:
+        #     memory: "1000m"
+        #     cpu: "750m"
         env:
           - name: METASTORE_DB_HOSTNAME
             value: mariadb

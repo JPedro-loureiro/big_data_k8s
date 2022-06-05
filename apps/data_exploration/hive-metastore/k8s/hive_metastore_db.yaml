@@ -38,13 +38,13 @@ spec:
           value: metastore_db
         ports:
         - containerPort: 3306
-        resources:
-          requests:
-            memory: "500m"
-            cpu: "500m"
-          limits:
-            memory: "4000m"
-            cpu: "1000m"
+        # resources:
+        #   requests:
+        #     memory: "500m"
+        #     cpu: "500m"
+        #   limits:
+        #     memory: "4000m"
+        #     cpu: "1000m"
         volumeMounts:
         - name: mariadb-for-hive
           mountPath: /var/lib/mysql
