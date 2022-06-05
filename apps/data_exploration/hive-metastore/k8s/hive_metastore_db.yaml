@@ -43,7 +43,7 @@ spec:
             memory: "500m"
             cpu: "500m"
           limits:
-            memory: "3000m"
+            memory: "3GiB"
             cpu: "1000m"
         volumeMounts:
         - name: mariadb-for-hive
