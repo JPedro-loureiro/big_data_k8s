@@ -40,11 +40,11 @@ spec:
         - containerPort: 3306
         resources:
           requests:
-            memory: 500Mi
-            cpu: 1000m
+            memory: "500m"
+            cpu: "250m"
           limits:
-            memory: 1000Mi
-            cpu: 500m
+            memory: "1000m"
+            cpu: "750m"
         volumeMounts:
         - name: mariadb-for-hive
           mountPath: /var/lib/mysql
