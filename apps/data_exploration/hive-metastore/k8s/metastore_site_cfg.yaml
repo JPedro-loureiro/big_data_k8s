@@ -51,4 +51,8 @@ data:
           <name>fs.s3a.path.style.access</name>
           <value>true</value>
       </property>
+      <property>
+        <name>metastore.warehouse.dir</name>
+        <value>s3a://hive-metastore/warehouse/</value>
+    </property>
     </configuration>
