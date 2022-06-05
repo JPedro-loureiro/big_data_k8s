@@ -11,7 +11,7 @@ spec:
     path: apps/data_exploration/hive-metastore/k8s
   destination:
     server: https://kubernetes.default.svc
-    namespace: data-exploration
+    namespace: metastore
   syncPolicy:
     automated:
       prune: true
