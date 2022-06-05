@@ -24,7 +24,7 @@ spec:
         workers:
           replicas: 1
           persistence:
-            size: 50Gi
+            size: 8Gi
           resources: 
             limits:
               cpu: 1000m
