@@ -13,6 +13,10 @@ spec:
       version: v3
       values: |
         replicaCount: 1
+        image:
+          repository: jpedroloureiro/apache-superset
+          tag: 1.0.0
+          pullPolicy: Always
         init:
           adminUser:
             password: bigdataonk8s
@@ -29,14 +33,6 @@ spec:
             - secretName: superset-tls-secret
               hosts:
                 - superset.dev.bigdataonk8s.com
-        bootstrapScript: |
-          #!/bin/bash
-          rm -rf /var/lib/apt/lists/* && \
-          pip install \
-            psycopg2-binary==2.9.1 \
-            redis==3.5.3 && \
-            sqlalchemy-trino && \
-          if [ ! -f ~/bootstrap ]; then echo "Running Superset with uid {{ .Values.runAsUser }}" > ~/bootstrap; fi
   destination:
     server: https://kubernetes.default.svc
     namespace: dataviz
