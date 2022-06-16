@@ -20,7 +20,8 @@ spec:
       src_data_generator_postgres.public.products,
       src_data_generator_postgres.public.restaurants,
       src_data_generator_postgres.public.users,
-      src_data_generator_postgres.public.order_products"
+      src_data_generator_postgres.public.order_products,
+      acidentes_de_transito"
     s3.region: "us-east-1"
     s3.bucket.name: "datalake"
     topics.dir: "landing-zone"
