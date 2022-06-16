@@ -21,7 +21,7 @@ spec:
     offset.strategy: "name"
     skip.headers: "1"
     file.encoding: "ISO-8859-1"
-    internal.kafka.reporter.bootstrap.servers: "broker:29092"
+    internal.kafka.reporter.bootstrap.servers: "localhost:9092"
     internal.kafka.reporter.topic: "connect-file-pulse-status"
     fs.cleanup.policy.class: "io.streamthoughts.kafka.connect.filepulse.clean.LogCleanupPolicy"
     # key.converter: "io.confluent.connect.avro.AvroConverter"
