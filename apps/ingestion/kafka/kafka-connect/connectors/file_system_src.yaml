@@ -1,0 +1,22 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: src-file-system
+  labels:
+    # The strimzi.io/cluster label identifies the KafkaConnect instance
+    # in which to create this connector. That KafkaConnect instance
+    # must have the strimzi.io/use-connector-resources annotation
+    # set to true.
+    strimzi.io/cluster: kafka-connect
+spec:
+  class: com.github.mmolimar.kafka.connect.fs.FsSourceConnector
+  tasksMax: 1
+  config:
+    fs.uris: "file:///opt/data"
+    topic: "acidentes_de_transito"
+    policy.class: "simple"
+    file_reader.class: "csv"
+    file_reader.delimited.settings.header: True
+    file_reader.delimited.settings.header_names: "id,n_da_ocorrencia,tipo_de_ocorrencia,km,trecho,sentido,tipo_de_acidente,automovel,bicicleta,caminhao,moto,onibus,outros,tracao_animal,transporte_de_cargas_especiais,trator_maquinas,utilitarios,ilesos,levemente_feridos,moderadamente_feridos,gravemente_feridos,mortos,rodovia,data_hora"
+    file_reader.delimited.settings.schema: "int,string,string,string,string,string,string,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,string,string,"
+    file_reader.delimited.encoding: "ISO-8859-1"
