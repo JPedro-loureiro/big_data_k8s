@@ -19,14 +19,14 @@ spec:
     policy.class: "com.github.mmolimar.kafka.connect.fs.policy.SimplePolicy"
     policy.recursive: True
     policy.regexp: "^.*\\.csv$"
-    policy.batch_size: 0
+    policy.batch_size: 1
     policy.cleanup=: "none"
     file_reader.class: "com.github.mmolimar.kafka.connect.fs.file.reader.CsvFileReader"
     file_reader.delimited.settings.header: True
     file_reader.delimited.settings.header_names: "id,n_da_ocorrencia,tipo_de_ocorrencia,km,trecho,sentido,tipo_de_acidente,automovel,bicicleta,caminhao,moto,onibus,outros,tracao_animal,transporte_de_cargas_especiais,trator_maquinas,utilitarios,ilesos,levemente_feridos,moderadamente_feridos,gravemente_feridos,mortos,rodovia,data_hora"
     file_reader.delimited.settings.schema: "int,string,string,string,string,string,string,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,string,string,"
     file_reader.delimited.encoding: "ISO-8859-1"
-    file_reader.batch_size: 0
+    file_reader.batch_size: 100000
     # key.converter: "io.confluent.connect.avro.AvroConverter"
     # key.converter.schema.registry.url: "http://schema-registry:8081"
     # value.converter: "io.confluent.connect.avro.AvroConverter"
