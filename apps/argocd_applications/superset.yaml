@@ -52,3 +52,5 @@ spec:
         duration   : "5s"
         factor     : 2
         maxDuration: "1m"
+
+# trino://trino@trino.data-exploration.svc.cluster.local:8080
