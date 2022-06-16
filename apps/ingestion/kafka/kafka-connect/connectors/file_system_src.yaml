@@ -1,7 +1,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaConnector
 metadata:
-  name: src-file-system
+  name: src-file-system-file-pulse
   labels:
     # The strimzi.io/cluster label identifies the KafkaConnect instance
     # in which to create this connector. That KafkaConnect instance
@@ -9,25 +9,56 @@ metadata:
     # set to true.
     strimzi.io/cluster: kafka-connect
 spec:
-  class: com.github.mmolimar.kafka.connect.fs.FsSourceConnector
+  class: io.streamthoughts.kafka.connect.filepulse.source.FilePulseSourceConnector
   tasksMax: 1
   config:
-    fs.uris: "file:///opt/data"
+    fs.scan.directory.path: "/opt/data"
     topic: "acidentes_de_transito"
-    # policy.class: "com.github.mmolimar.kafka.connect.fs.policy.CronPolicy"
-    # policy.cron.expression: "0 1 * * * ? *" # Quartz cron format
-    policy.class: "com.github.mmolimar.kafka.connect.fs.policy.SimplePolicy"
-    policy.recursive: True
-    policy.regexp: "^.*\\.csv$"
-    policy.batch_size: 0
-    policy.cleanup=: "none"
-    file_reader.class: "com.github.mmolimar.kafka.connect.fs.file.reader.CsvFileReader"
-    file_reader.delimited.settings.header: True
-    file_reader.delimited.settings.header_names: "id,n_da_ocorrencia,tipo_de_ocorrencia,km,trecho,sentido,tipo_de_acidente,automovel,bicicleta,caminhao,moto,onibus,outros,tracao_animal,transporte_de_cargas_especiais,trator_maquinas,utilitarios,ilesos,levemente_feridos,moderadamente_feridos,gravemente_feridos,mortos,rodovia,data_hora"
-    file_reader.delimited.settings.schema: "int,string,string,string,string,string,string,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,string,string,"
-    file_reader.delimited.encoding: "ISO-8859-1"
-    file_reader.batch_size: 0
-    key.converter: "io.confluent.connect.avro.AvroConverter"
-    key.converter.schema.registry.url: "http://schema-registry:8081"
-    value.converter: "io.confluent.connect.avro.AvroConverter"
-    value.converter.schema.registry.url: "http://schema-registry:8081"
+    fs.scan.interval.ms: "10000"
+    fs.scan.filters: "io.streamthoughts.kafka.connect.filepulse.scanner.local.filter.RegexFileListFilter"
+    file.filter.regex.pattern: ".*\\.csv$"
+    task.reader.class: "io.streamthoughts.kafka.connect.filepulse.reader.RowFileInputReader"
+    offset.strategy: "name"
+    skip.headers: "1"
+    file.encoding: "ISO-8859-1"
+    internal.kafka.reporter.bootstrap.servers: "broker:29092"
+    internal.kafka.reporter.topic: "connect-file-pulse-status"
+    fs.cleanup.policy.class: "io.streamthoughts.kafka.connect.filepulse.clean.LogCleanupPolicy"
+    # key.converter: "io.confluent.connect.avro.AvroConverter"
+    # key.converter.schema.registry.url: "http://schema-registry:8081"
+    # value.converter: "io.confluent.connect.avro.AvroConverter"
+    # value.converter.schema.registry.url: "http://schema-registry:8081"
+
+# apiVersion: kafka.strimzi.io/v1beta2
+# kind: KafkaConnector
+# metadata:
+#   name: src-file-system
+#   labels:
+#     # The strimzi.io/cluster label identifies the KafkaConnect instance
+#     # in which to create this connector. That KafkaConnect instance
+#     # must have the strimzi.io/use-connector-resources annotation
+#     # set to true.
+#     strimzi.io/cluster: kafka-connect
+# spec:
+#   class: com.github.mmolimar.kafka.connect.fs.FsSourceConnector
+#   tasksMax: 1
+#   config:
+#     fs.uris: "file:///opt/data"
+#     topic: "acidentes_de_transito"
+#     # policy.class: "com.github.mmolimar.kafka.connect.fs.policy.CronPolicy"
+#     # policy.cron.expression: "0 1 * * * ? *" # Quartz cron format
+#     policy.class: "com.github.mmolimar.kafka.connect.fs.policy.SimplePolicy"
+#     policy.recursive: True
+#     policy.regexp: "^.*\\.csv$"
+#     policy.batch_size: 0
+#     policy.cleanup=: "none"
+#     file_reader.class: "com.github.mmolimar.kafka.connect.fs.file.reader.CsvFileReader"
+#     file_reader.delimited.settings.header: True
+#     file_reader.delimited.settings.header_names: "id,n_da_ocorrencia,tipo_de_ocorrencia,km,trecho,sentido,tipo_de_acidente,automovel,bicicleta,caminhao,moto,onibus,outros,tracao_animal,transporte_de_cargas_especiais,trator_maquinas,utilitarios,ilesos,levemente_feridos,moderadamente_feridos,gravemente_feridos,mortos,rodovia,data_hora"
+#     file_reader.delimited.settings.schema: "int,string,string,string,string,string,string,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,string,string,"
+#     file_reader.delimited.encoding: "ISO-8859-1"
+#     file_reader.batch_size: 0
+#     key.converter: "io.confluent.connect.avro.AvroConverter"
+#     key.converter.schema.registry.url: "http://schema-registry:8081"
+#     value.converter: "io.confluent.connect.avro.AvroConverter"
+#     value.converter.schema.registry.url: "http://schema-registry:8081"
