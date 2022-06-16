@@ -14,7 +14,7 @@ spec:
   config:
     fs.uris: "file:///opt/data"
     topic: "acidentes_de_transito"
-    policy.class: "simple"
+    # policy.class: "simple"
     file_reader.class: "csv"
     file_reader.delimited.settings.header: True
     file_reader.delimited.settings.header_names: "id,n_da_ocorrencia,tipo_de_ocorrencia,km,trecho,sentido,tipo_de_acidente,automovel,bicicleta,caminhao,moto,onibus,outros,tracao_animal,transporte_de_cargas_especiais,trator_maquinas,utilitarios,ilesos,levemente_feridos,moderadamente_feridos,gravemente_feridos,mortos,rodovia,data_hora"
