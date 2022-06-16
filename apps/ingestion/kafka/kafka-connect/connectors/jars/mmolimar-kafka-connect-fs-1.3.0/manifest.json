@@ -1,0 +1,37 @@
+{
+  "name" : "kafka-connect-fs",
+  "version" : "1.3.0",
+  "title" : "Kafka Connect FileSystem",
+  "description" : "Kafka Connect FileSystem Connector is a source connector for reading records from\ndifferent sort of file formats and from different file system types and load them\ninto Kafka.\n\nThe following file types are supported: Parquet, Avro, ORC, SequenceFile,\nCobol / EBCDIC, other binary files, CSV, TSV, Fixed-width, JSON, XML, YAML and Text.\n\nAlso, the connector has built-in support for file systems such as HDFS, S3 (directly\nor via messages from SNS/SQS queues due to S3 event notifications), Google Cloud\nStorage, Azure Blob Storage, Azure Data Lake Store, FTP, SFTP and local file system,\namong others.",
+  "owner" : {
+    "username" : "mmolimar",
+    "type" : "user",
+    "name" : "Mario Molina",
+    "url" : "https://github.com/mmolimar"
+  },
+  "support" : {
+    "summary" : "This connector is supported by the open source community.",
+    "url" : "https://github.com/mmolimar/kafka-connect-fs/issues",
+    "provider_name" : "Mario Molina"
+  },
+  "tags" : [ "s3", "orc", "ftp", "csv", "google", "filesystem", "parquet", "sequence", "txt", "cobol", "gcs", "tsv", "xml", "binary", "files", "hdfs", "json", "sftp", "fixed", "hadoop", "aws", "azure", "avro", "yaml" ],
+  "features" : {
+    "supported_encodings" : [ "any" ],
+    "single_message_transforms" : true,
+    "confluent_control_center_integration" : true,
+    "kafka_connect_api" : true
+  },
+  "documentation_url" : "https://kafka-connect-fs.readthedocs.io",
+  "source_url" : "https://github.com/mmolimar/kafka-connect-fs",
+  "docker_image" : {
+    "namespace" : "mmolimar",
+    "name" : "kafka-connect-fs",
+    "tag" : "1.3.0"
+  },
+  "license" : [ {
+    "name" : "Apache License 2.0",
+    "url" : "https://github.com/mmolimar/kafka-connect-fs/blob/master/LICENSE"
+  } ],
+  "component_types" : [ "source" ],
+  "release_date" : "2021-02-15"
+}
