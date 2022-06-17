@@ -11,6 +11,7 @@ if __name__ == '__main__':
     # get environment variables
     app_table_name = os.getenv('APP_TABLE_NAME')
     table_name = os.getenv('TABLE_NAME')
+    full_table_name = os.getenv('FULL_TABLE_NAME')
 
     # init session
     # set configs
@@ -37,7 +38,7 @@ if __name__ == '__main__':
     spark.sparkContext.setLogLevel("INFO")
 
     # [landing zone area]
-    files_path = f"s3a://datalake/landing-zone/src_data_generator_postgres.public.{table_name}/*/*/*/*/"
+    files_path = f"s3a://datalake/landing-zone/{full_table_name}/*/*/*/*/"
 
     df = spark.read \
         .parquet(files_path)

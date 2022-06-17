@@ -28,6 +28,7 @@ spec:
     envVars:
       APP_TABLE_NAME: "{{app_table_name}}" # app-table-name
       TABLE_NAME: "{{table_name}}" # table_name
+      FULL_TABLE_NAME: "{{full_table_name}}" # db.schema.table_name
   executor:
     instances: 1
     # cores: 0.2

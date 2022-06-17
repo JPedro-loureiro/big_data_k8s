@@ -16,11 +16,12 @@ from airflow.providers.cncf.kubernetes.sensors.spark_kubernetes import SparkKube
 # [START auxiliary functions]
 
 tables = [
-    "order_products",
-    "orders",
-    "products",
-    "restaurants",
-    "users",
+    "src_data_generator_postgres.public.order_products",
+    "src_data_generator_postgres.public.orders",
+    "src_data_generator_postgres.public.products",
+    "src_data_generator_postgres.public.restaurants",
+    "src_data_generator_postgres.public.users",
+    "acidentes_antt",
 ]
 
 
@@ -28,6 +29,7 @@ def get_new_app_manifest(
     template_path: str,
     app_table_name: str,
     table_name: str,
+    full_table_name: str,
 ):
     with open(template_path, "r") as template:
         try:
@@ -37,6 +39,7 @@ def get_new_app_manifest(
             # Setting table name
             template_content["spec"]["driver"]["envVars"]["APP_TABLE_NAME"] = app_table_name
             template_content["spec"]["driver"]["envVars"]["TABLE_NAME"] = table_name
+            template_content["spec"]["driver"]["envVars"]["FULL_TABLE_NAME"] = full_table_name
             new_template_content = yaml.dump(template_content)
         except yaml.YAMLError as exc:
             print(exc)
@@ -58,15 +61,18 @@ dag = DAG(
 
 start_task = DummyOperator(task_id="start")
 
-for table in tables:
-    app_table_name = table.replace("_", "-")
+for full_table_name in tables:
+    table_name = full_table_name.split(".")[-1]
+    app_table_name = table_name.replace("_", "-")
+
     from_landning_to_bronze = SparkKubernetesOperator(
-        task_id=f'{table}_from_landing_to_bronze',
+        task_id=f'{table_name}_from_landing_to_bronze',
         namespace="processing",
         application_file=get_new_app_manifest(
             template_path="/opt/airflow/dags/repo/apps/orchestration/airflow/dags/etl-bronze/etl_bronze_app_template.yaml",
             app_table_name=app_table_name,
-            table_name=table,
+            table_name=table_name,
+            full_table_name=full_table_name,
         ),
         kubernetes_conn_id="kubernetes_cluster",
         do_xcom_push=True,
@@ -74,10 +80,10 @@ for table in tables:
     )
 
     bronze_monitor = SparkKubernetesSensor(
-        task_id=f'{table}_bronze_monitor',
+        task_id=f'{table_name}_bronze_monitor',
         namespace="processing",
         kubernetes_conn_id="kubernetes_cluster",
-        application_name=f"{{{{ task_instance.xcom_pull(task_ids='{table}_from_landing_to_bronze')['metadata']['name'] }}}}",
+        application_name=f"{{{{ task_instance.xcom_pull(task_ids='{table_name}_from_landing_to_bronze')['metadata']['name'] }}}}",
         retries=3,
         retry_delay=timedelta(seconds=10),
         dag=dag,
