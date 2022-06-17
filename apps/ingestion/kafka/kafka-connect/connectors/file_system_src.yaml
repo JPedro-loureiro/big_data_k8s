@@ -33,3 +33,8 @@ spec:
     key.converter.schema.registry.url: "http://schema-registry:8081"
     value.converter: "io.confluent.connect.avro.AvroConverter"
     value.converter.schema.registry.url: "http://schema-registry:8081"
+    filters: "ParseCSVLine"
+    filters.ParseCSVLine.type: "io.streamthoughts.kafka.connect.filepulse.filter.CSVFilter"
+    filters.ParseCSVLine.extract.column.name: "headers"
+    filters.ParseCSVLine.separator: ","
+    filters.ParseCSVLine.trim.column: "true"
