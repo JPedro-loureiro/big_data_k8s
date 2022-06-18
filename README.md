@@ -2,5 +2,5 @@
 [Intro]
 
 ## Roadmap:
-* Kafka connect
-* kafka schema registry
+* Automating the creation of schemas and tables in trino/hive
+* Enable spark applications to use hive
