@@ -5,13 +5,7 @@ metadata:
   annotations:
     argocd.argoproj.io/hook: PostSync
 spec:
-  selector:
-    matchLabels:
-      name: datalake-tables-generator
   template:
-    metadata:
-      labels:
-        name: datalake-tables-generator
     spec:
       containers:
         - name: datalake-tables-generator
