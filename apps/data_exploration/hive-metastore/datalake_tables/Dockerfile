@@ -1,7 +1,5 @@
 FROM python:3.8
 
-RUN mkdir -p /datalake_tables/
-
 WORKDIR /datalake_tables/
 
 COPY sql_ddl/ ./sql_ddl/
