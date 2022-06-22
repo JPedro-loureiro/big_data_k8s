@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Job
 metadata:
-  name: datalake-tables-generator
+  generateName: datalake-tables-generator
   annotations:
     argocd.argoproj.io/hook: PostSync
     argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
