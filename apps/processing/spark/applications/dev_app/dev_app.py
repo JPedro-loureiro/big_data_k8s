@@ -34,14 +34,16 @@ if __name__ == '__main__':
     print(SparkConf().getAll())
 
     # set log level
-    spark.sparkContext.setLogLevel("WARN")
+    spark.sparkContext.setLogLevel("INFO")
 
-    silver_df = spark.read.format("delta").load("s3a://datalake/bronze/products/")
+    df = (
+        spark.read.format("parquet")
+        .option("encoding", "ISO-8859-1")
+        .load("s3a://datalake/landing-zone/acidentes_antt/*/*/*/*/")
+    )
 
-    silver_df.printSchema()
+    df.printSchema()
 
-    silver_df.groupBy("restaurant_id") \
-        .avg("price") \
-        .show(10)
+    df.select("tipo_de_acidente", "tipo_de_ocorrencia").show(10)
 
     spark.stop()

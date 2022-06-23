@@ -21,7 +21,6 @@ spec:
     offset.policy.class: "io.streamthoughts.kafka.connect.filepulse.offset.DefaultSourceOffsetPolicy"
     offset.attributes.string: "name"
     skip.headers: "1"
-    file.encoding: "ISO_8859_1"
     tasks.reader.class: "io.streamthoughts.kafka.connect.filepulse.fs.reader.LocalRowFileInputReader"
     fs.cleanup.policy.class: "io.streamthoughts.kafka.connect.filepulse.fs.clean.LogCleanupPolicy"
     tasks.file.status.storage.class: "io.streamthoughts.kafka.connect.filepulse.state.KafkaFileObjectStateBackingStore"
