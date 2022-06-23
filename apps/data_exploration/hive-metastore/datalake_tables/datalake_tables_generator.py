@@ -22,6 +22,9 @@ for schema in os.listdir(current_path):
     )
     cur = conn.cursor()
 
+    cur.execute(f"CREATE SCHEMA IF NOT EXISTS minio.{schema}")
+    cur.fetchall()
+
     for sql_file_path in os.listdir(f"{current_path}/{schema}/"):
 
         with open(f"{current_path}/{schema}/{sql_file_path}", "r") as sql_file:
