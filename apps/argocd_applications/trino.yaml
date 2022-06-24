@@ -63,8 +63,8 @@ spec:
           hive.properties: |-
             connector.name=hive
             hive.metastore.uri=thrift://hive-metastore.data-exploration.svc.cluster.local:9083
-          mariadb.properties: |-
-            connector.name=hive_metastore
+          hive_metastore.properties: |-
+            connector.name=mariadb
             connection-url=jdbc:mariadb://mariadb.data-exploration.svc.cluster.local:3306
             connection-user=admin
             connection-password=admin
