@@ -28,6 +28,9 @@ if __name__ == '__main__':
         .config("spark.delta.logStore.class", "org.apache.spark.sql.delta.storage.S3SingleDriverLogStore") \
         .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
         .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
+        .config("hive.metastore.uris", "thrift://hive-metastore.data-exploration.svc.cluster.local:9083") \
+        .config("spark.sql.warehouse.dir", "s3a://hive-metastore/warehouse/") \
+        .enableHiveSupport() \
         .getOrCreate()
 
     # show configured parameters
@@ -36,9 +39,12 @@ if __name__ == '__main__':
     # set log level
     spark.sparkContext.setLogLevel("INFO")
 
+    schema = spark.sql("select * from bronze.acidentes_antt limit 0").schema
+    print(schema)
+
     df = (
         spark.read.format("parquet")
-        .option("encoding", "ISO-8859-1")
+        .schema(schema)
         .load("s3a://datalake/landing-zone/acidentes_antt/*/*/*/*/")
     )
 
