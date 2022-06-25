@@ -2,7 +2,30 @@
 import os
 from delta.tables import *
 from pyspark.sql import SparkSession
+from pyspark.sql.types import StructType
+from pyspark.sql.functions import col
 from pyspark import SparkConf
+
+
+def enforce_schema(
+    data_frame,
+    table_schema: StructType,
+    df_schema: StructType,
+):
+    for df_column in df_schema:
+        for table_column in table_schema:
+            if (
+                df_column.name == table_column.name
+                and df_column.dataType != table_column.dataType
+            ):
+                data_frame = data_frame.withColumn(
+                    table_column.name,
+                    col(table_column.name).cast(table_column.dataType)
+                )
+                print(f"{table_column.name} was casted from {df_column.dataType} dataType to {table_column.dataType}")
+
+    return data_frame
+
 
 # main spark program
 # init application
@@ -12,9 +35,6 @@ if __name__ == '__main__':
     app_table_name = os.getenv('APP_TABLE_NAME')
     table_name = os.getenv('TABLE_NAME')
     full_table_name = os.getenv('FULL_TABLE_NAME')
-
-    # funcs
-    def 
 
     # init session
     # set configs
@@ -33,9 +53,9 @@ if __name__ == '__main__':
         .config("spark.delta.logStore.class", "org.apache.spark.sql.delta.storage.S3SingleDriverLogStore")
         .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
         .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
-        # .config("hive.metastore.uris", "thrift://hive-metastore.data-exploration.svc.cluster.local:9083")
-        # .config("spark.sql.warehouse.dir", "s3a://hive-metastore/warehouse/")
-        # .enableHiveSupport()
+        .config("hive.metastore.uris", "thrift://hive-metastore.data-exploration.svc.cluster.local:9083")
+        .config("spark.sql.warehouse.dir", "s3a://hive-metastore/warehouse/")
+        .enableHiveSupport()
         .getOrCreate()
     )
 
@@ -60,12 +80,17 @@ if __name__ == '__main__':
 
     df = (
         spark.read.format("parquet")
-        # .schema(table_schema)
         .load(files_path)
     )
 
     # get DataFrame schema
     df_schema = df.schema
+
+    # Enforce Hive table schema to DataFrame schema
+    if table_name == "acidentes_antt":
+        df = enforce_schema(df, table_schema, df_schema)
+
+    print(f"New DataFrame schema: {df.schema}")
 
     # [bronze zone area]
     print(f"Writing {table_name} to bronze layer.")
