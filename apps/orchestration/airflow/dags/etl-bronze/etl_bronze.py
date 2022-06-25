@@ -16,11 +16,11 @@ from airflow.providers.cncf.kubernetes.sensors.spark_kubernetes import SparkKube
 # [START auxiliary functions]
 
 tables = [
-    "src_data_generator_postgres.public.order_products",
-    "src_data_generator_postgres.public.orders",
-    "src_data_generator_postgres.public.products",
-    "src_data_generator_postgres.public.restaurants",
-    "src_data_generator_postgres.public.users",
+    # "src_data_generator_postgres.public.order_products",
+    # "src_data_generator_postgres.public.orders",
+    # "src_data_generator_postgres.public.products",
+    # "src_data_generator_postgres.public.restaurants",
+    # "src_data_generator_postgres.public.users",
     "acidentes_antt",
 ]
 
