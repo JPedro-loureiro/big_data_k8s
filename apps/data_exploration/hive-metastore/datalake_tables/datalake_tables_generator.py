@@ -7,7 +7,7 @@ from trino.dbapi import connect
 TRINO_HOST = "trino.data-exploration.svc.cluster.local"
 TRINO_PORT = "8080"
 TRINO_USERNAME = "trino"
-TRINO_CATALOG = "minio"
+TRINO_CATALOG = "delta_lake"
 
 current_path = f"{os.getcwd()}/sql_ddl/"
 for schema in os.listdir(current_path):
@@ -22,7 +22,7 @@ for schema in os.listdir(current_path):
     )
     cur = conn.cursor()
 
-    cur.execute(f"CREATE SCHEMA IF NOT EXISTS minio.{schema}")
+    cur.execute(f"CREATE SCHEMA IF NOT EXISTS {TRINO_CATALOG}.{schema}")
     cur.fetchall()
 
     for sql_file_path in os.listdir(f"{current_path}/{schema}/"):
