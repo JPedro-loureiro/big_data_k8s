@@ -1,7 +1,8 @@
--- CREATE TABLE delta_lake.bronze.restaurants(
+-- CREATE TABLE delta_lake.bronze.orders(
 -- 	id integer,
--- 	name varchar,
--- 	tel_number varchar,
+-- 	user_id integer,
+--     order_date TIMESTAMP(3) WITH TIME ZONE,
+-- 	order_price real,
 -- 	created_at bigint,
 -- 	updated_at bigint,
 -- 	__op varchar,
@@ -12,5 +13,6 @@
 -- 	__deleted varchar
 -- )
 -- WITH (
---   location = 's3a://datalake/bronze/restaurants/'
+--   location = 's3a://datalake/bronze/orders/'
 -- )
+select 1

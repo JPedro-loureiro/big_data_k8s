@@ -17,3 +17,4 @@
 -- WITH (
 --   location = 's3a://datalake/bronze/users/'
 -- )
+select 1
