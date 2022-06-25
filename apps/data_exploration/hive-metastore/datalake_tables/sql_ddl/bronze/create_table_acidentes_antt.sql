@@ -1,4 +1,4 @@
-CREATE TABLE minio.bronze.acidentes_antt(
+CREATE TABLE delta_lake.bronze.acidentes_antt(
 	id integer,
 	n_da_ocorrencia varchar,
     tipo_de_ocorrencia varchar,

@@ -1,8 +1,7 @@
-CREATE TABLE delta_lake.bronze.products(
+CREATE TABLE delta_lake.bronze.order_products(
 	id integer,
-	name varchar,
-	restaurant_id integer,
-	price real,
+	order_id integer,
+    product_id integer,
 	created_at bigint,
 	updated_at bigint,
 	__op varchar,
@@ -14,5 +13,5 @@ CREATE TABLE delta_lake.bronze.products(
 	test_col varchar
 )
 WITH (
-  location = 's3a://datalake/bronze/products/'
+  location = 's3a://datalake/bronze/order_products/'
 )
