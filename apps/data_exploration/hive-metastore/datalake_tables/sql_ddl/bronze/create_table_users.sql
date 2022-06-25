@@ -1,7 +1,7 @@
 CREATE TABLE delta_lake.bronze.users(
 	id integer,
 	name varchar,
-    birth_date date,
+    birth_date integer,
 	tel_number varchar,
     email varchar,
     password varchar,
@@ -12,8 +12,7 @@ CREATE TABLE delta_lake.bronze.users(
 	__table varchar,
 	__schema varchar,
 	__source_ts_ms bigint,
-	__deleted varchar,
-	test_col varchar
+	__deleted varchar
 )
 WITH (
   location = 's3a://datalake/bronze/users/'

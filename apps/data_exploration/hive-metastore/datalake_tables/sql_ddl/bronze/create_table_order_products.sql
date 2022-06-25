@@ -9,8 +9,7 @@ CREATE TABLE delta_lake.bronze.order_products(
 	__table varchar,
 	__schema varchar,
 	__source_ts_ms bigint,
-	__deleted varchar,
-	test_col varchar
+	__deleted varchar
 )
 WITH (
   location = 's3a://datalake/bronze/order_products/'
