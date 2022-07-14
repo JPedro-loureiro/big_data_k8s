@@ -87,8 +87,7 @@ if __name__ == '__main__':
     df_schema = df.schema
 
     # Enforce Hive table schema to DataFrame schema
-    if table_name == "acidentes_antt":
-        df = enforce_schema(df, table_schema, df_schema)
+    df = enforce_schema(df, table_schema, df_schema)
 
     print(f"New DataFrame schema: {df.schema}")
 

@@ -23,7 +23,7 @@ resource "kubernetes_ingress_v1" "argocd_ingress" {
   }
   spec {
     rule {
-      host = "argocd.tcc.bigdataonk8s.com"
+      host = "argocd.blu.bigdataonk8s.com"
       http {
         path {
           path = "/"
@@ -41,7 +41,7 @@ resource "kubernetes_ingress_v1" "argocd_ingress" {
     }
     tls {
       hosts = [
-        "argocd.tcc.bigdataonk8s.com"
+        "argocd.blu.bigdataonk8s.com"
       ]
       secret_name = "argocd-secret"
     }
